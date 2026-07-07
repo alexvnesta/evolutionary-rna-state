@@ -36,9 +36,12 @@ MD5s in `raw/checksums.json`.
 
 - WES median coverage 140× — `S1B.AvgCov` median = 140.3 ✅
 - median 489 non-synonymous mutations — `S1B.TotalNonSyn` median = 489 (n=38, range 73–3985) ✅
-- BRCA2 enriched in responders — `S1B.BRCA2mutant?` present ✅
+- BRCA2 responder-enrichment — cross-tab of `S1B.BRCA2mutant?` × Response:
+  6 R / 1 NR among BRCA2-mutant vs 15 R / 16 NR among WT (directional
+  enrichment confirmed; formal significance not tested here) ✅
 - IPRES = MAPKi-induced EMT/angiogenesis/wound-response gene sets — present in S2B/S2C ✅
-- Response classes — S1A irRECIST CR 7 / PR 14 / PD 17 ✅
+- Response classes — S1A irRECIST CR 7 / PR 14 / PD 17 (38 patients with a
+  non-null irRECIST call in the 42-row S1A table; **not** a WES-defined subset) ✅
 
 Header rows in the raw workbooks start at row 3 (0-indexed 2); title and blank
 rows above were dropped during extraction. Reproduce via

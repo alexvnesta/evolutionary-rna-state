@@ -42,10 +42,18 @@ panels). Kept in `raw/`; parse specific pages on demand.
 ## Verification (against the paper)
 
 - Two treatment arms (anti-PD-1 mono; anti-PD-1/anti-CTLA-4 combo) — S1/S2 ✅
-- Clinical tables are **patient-level**: 54 mono + 51 combo = 105 patients.
-  The paper's "n=63 / n=57" are **biopsy-level** counts (158 biopsies across
-  timepoints); reconciles with our run catalog (91 RNA runs / 75 patients ⊂ 105
-  clinical patients). Not a discrepancy — the patient-vs-sample distinction.
+- Clinical tables are **patient-level**: 54 mono + 51 combo = 105 patients
+  (verified: mmc2 S1 contains exactly 54 non-null patient rows numbered 1–54, so
+  extraction was not clipped). The paper abstract's "n=63 / n=57" are larger than
+  these patient counts; the most likely explanation is that those are
+  biopsy/sample-level counts (the study spans multiple biopsy timepoints), but
+  **this has not been confirmed against the Gide 2019 main text or a biopsy
+  manifest in-session** — treat the patient-vs-sample reconciliation as a
+  hypothesis, not a settled fact.
+- RNA-seq accession **PRJEB23709** — verified via ENA: study title "Biomarkers
+  of response and resistance to checkpoint blockade immunotherapy in metastatic
+  melanoma", RNA-Seq, Homo sapiens.
+- PMID **30753825** — verified via EuropePMC lookup on DOI 10.1016/j.ccell.2019.01.003.
 - RECIST/PFS/OS present per patient ✅
 
 Header row auto-detected per sheet; column-name newlines flattened. Reproduce
