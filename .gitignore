@@ -73,3 +73,27 @@ credentials.json
 #     not .git, because the build sandbox forbids any path named .git.
 #     On a normal machine rename .gitmeta -> .git for a standard repo.) ---
 .gitmeta/
+
+# --- Nextflow transient launch state (logs, cache, work) ---
+.nextflow/
+.nextflow.log*
+.nextflow_home/
+work/
+
+# --- Pipeline reference indices / downloaded references (large, regenerable) ---
+# These are built/downloaded by the pipeline arm and exceed GitHub's file limits;
+# they live locally only. Commit the code that builds them, not the artifacts.
+refs/
+reference/
+gencode*.fa*
+*.ssi
+*.bin
+*.solv
+
+# --- Pipeline run outputs (large; keep code under pipelines/, not its outputs) ---
+pipelines/**/work/
+pipelines/**/results/
+pipelines/**/.nextflow*
+
+# --- Stray kernel image previews accidentally landing at repo root ---
+/_view_*.png
