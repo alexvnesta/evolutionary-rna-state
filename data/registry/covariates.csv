@@ -1,0 +1,8 @@
+covariate,source,cohorts,role_in_analysis
+True TMB,TMB_NONSYNONYMOUS + MUTATION_COUNT (iAtlas),Riaz/Hugo/Liu/DFCI,confounder to beat (vs RNA proxy)
+Tumor purity,PURITY (DFCI); FACETS in Riaz supplement,DFCI (+Riaz supp),composition confound
+Ploidy / WGD,PLOIDY + GISTIC CNA (DFCI),DFCI,genome-instability axis
+Clonal architecture,MUTS_CLONAL / MUTS_SUBCLONAL (DFCI); PyClone CCF (Riaz supp),DFCI (+Riaz supp),clonal-evolution backing
+Immune/stromal composition,de novo deconvolution (CIBERSORTx-style) from RNA,Gide/Riaz/Hugo,composition confound (built in pipeline)
+Cytolytic activity,"geomean(GZMA,PRF1) from RNA",all RNA cohorts,immune-axis benchmark
+Published response signatures,"IPRES (Hugo), IFN-γ/Ayers, TIDE (iAtlas TIDE_RESPONDER)",all,benchmarks to beat

@@ -1,0 +1,7 @@
+rna_phenotype,data_source,cohorts_with_data,status
+Alternative splicing,"SPLICE_NEOANTIGEN (iAtlas, per-sample) + de novo from RNA raw reads",Gide/Riaz/Hugo/Liu,proxy available now; raw-read quant in pipeline
+Intron retention,de novo from RNA raw reads (IRFinder-style),Gide/Riaz/Hugo,raw-read pipeline only
+RNA editing,"de novo from RNA raw reads (REDItools-style, Alu sites)",Gide/Riaz/Hugo,raw-read pipeline only
+TE / ERV activation,ERV_NEOANTIGEN (iAtlas) + de novo TE quant,Gide/Riaz/Hugo/Liu,proxy available now; raw-read quant in pipeline
+Fusion transcripts,FUSION_NEOANTIGEN (iAtlas) + de novo (Arriba/STAR-Fusion),Gide/Riaz/Hugo/Liu,proxy available now; raw-read pipeline
+Cryptic / non-canonical ORFs,de novo from RNA raw reads,Gide/Riaz/Hugo,raw-read pipeline only

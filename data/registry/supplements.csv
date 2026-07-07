@@ -1,0 +1,9 @@
+cohort,item,contents,access,status
+Riaz 2017,Table S1,WES sample metadata & depth (150x),Cell mmc (publisher),needed only for raw-CCF; else iAtlas covers
+Riaz 2017,Table S2/S3,per-patient mutation & neoantigen load,Cell mmc (publisher),iAtlas MAF covers most
+Riaz 2017,PyClone output,"per-SNV CCF, clonal vs subclonal",Cell mmc (publisher),request if phylogeny figure needed
+Hugo 2016,Table S1A/B/C,"WES 140x, 489 nsSNV, neoepitope loads",Cell mmc (publisher),iAtlas MAF covers
+Hugo 2016,Table S2B,IPRES signature gene sets (GSVA),Cell mmc (publisher),reconstruct signature for benchmark
+Gide 2019,mass cytometry,EOMES+CD69+CD45RO+ effector-memory T-cell sig,Cancer Cell mmc,optional composition benchmark
+DFCI 2019,cBioPortal,"clonal/subclonal counts, purity, ploidy, CNA",cBioPortal API (pulled),IN HAND
+all iAtlas,cBioPortal API,"per-category neoantigen, TMB, response, survival, TIDE",cBioPortal API (pulled),IN HAND
