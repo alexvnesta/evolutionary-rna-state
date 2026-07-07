@@ -1,0 +1,46 @@
+{
+  "riaz_clonality.csv": {
+    "source": "data/supplements/riaz2017/clean/riaz2017_S3.csv (Riaz 2017 Table S3 somatic MAF)",
+    "method": "Purity-free CCF proxy. Per patient: clonal VAF peak = higher-mean component of a 2-component GMM on tumor VAF (Taf), or 90th percentile when <20 mutations. CCF_proxy=clip(VAF/peak,0,1). Clonal if CCF>=0.8. QC: Tcov>=20, 0<VAF<=1.",
+    "n_patients": 68,
+    "n_with_rna": 53,
+    "n_rna_and_labeled": 51,
+    "testable_R": 11,
+    "testable_N": 40,
+    "join_key": "patient_id (Pt## namespace shared with Riaz RNA run_catalog)",
+    "caveat": "No published FACETS purity in supplements -> proxy is purity-uncorrected; absolute CCF not comparable across patients with very different purity. Continuous mean_ccf/heterogeneity_index are the primary metrics; the CCF>=0.8 clonal call is a coarse threshold (hence high subclonal_fraction). For production, recompute with PyClone-VI + FACETS/ASCAT purity.",
+    "columns": [
+      "patient_id",
+      "n_mutations",
+      "clonal_vaf_peak",
+      "method",
+      "n_clonal",
+      "n_subclonal",
+      "subclonal_fraction",
+      "mean_ccf",
+      "heterogeneity_index",
+      "has_rna_seq",
+      "recist",
+      "response_NR"
+    ]
+  },
+  "gide_id_crosswalk.csv": {
+    "source": "data/catalog/run_catalog.csv (ENA PRJEB23709) x data/cbioportal/gide2019...clinical.tsv (iAtlas)",
+    "method": "Deterministic (arm, patient-number) join, VALIDATED by clinical fingerprint: 75/75 patients match with 100% concordance on treatment arm, timepoint-set structure (57 PRE-only / 16 paired / 2 ON-only), and response label. ENA PD1_N<->iAtlas PD0N (mono); ENA ipiPD1_N<->iAtlas iPiN (combo).",
+    "n_runs": 91,
+    "n_patients": 75,
+    "roundtrip_sampleId_match": "91/91 (100%)",
+    "join_key": "run_accession/sample_title (ENA) -> iatlas_sampleId (iAtlas)",
+    "columns": [
+      "run_accession",
+      "sample_accession",
+      "sample_title",
+      "ena_patient_id",
+      "iatlas_patient_id",
+      "iatlas_sampleId",
+      "arm",
+      "tp",
+      "resp_NR"
+    ]
+  }
+}

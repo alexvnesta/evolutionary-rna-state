@@ -66,3 +66,27 @@ pipelines discard the non-reference signal we are after:
 - Response (RECIST): all five (Gide/Hugo/Liu 100%, Riaz 92%).
 
 See `coverage_verified.csv` for the full matrix.
+
+## Derived data joins (for the analysis sessions)
+
+Two joins that unblock analysis directions named in `HANDOFF_rna_state_next.md`.
+Provenance and method detail: `_joins_provenance.json`.
+
+- **`riaz_clonality.csv`** — per-patient clonal architecture reconstructed from
+  the Riaz Table S3 somatic MAF (tumor VAF `Taf`). For each of 68 patients:
+  clonal VAF peak (2-component GMM, or 90th-percentile fallback at <20
+  mutations), `n_clonal`/`n_subclonal` (CCF≥0.8 threshold), `subclonal_fraction`,
+  continuous `mean_ccf`, and a `heterogeneity_index` (CCF spread, an
+  intratumoral-heterogeneity proxy). Joins to the Riaz RNA cohort on the shared
+  `Pt##` patient namespace: **51 patients carry both RNA-seq and a labeled
+  response (11 R / 40 N)** — the test set for the RNA-by-clonality interaction.
+  Caveat: no published FACETS purity in the supplements, so CCF is
+  purity-uncorrected; the continuous metrics are primary and the clonal call is
+  coarse. Recompute with PyClone-VI + purity for production.
+- **`gide_id_crosswalk.csv`** — run-level map from ENA PRJEB23709 identifiers
+  (`run_accession`, `sample_title` = `ipiPD1_N`/`PD1_N`) to iAtlas
+  `iatlas_sampleId` (`PD0N_Pre`, `iPiN_On`). Lets expression keyed on
+  SRA/trial IDs join to the cBioPortal burden/neoantigen features. Built as a
+  deterministic (arm, patient-number) map and **validated by clinical
+  fingerprint: 75/75 patients concordant on treatment arm, timepoint structure,
+  and response; all 91 runs round-trip to valid iAtlas sample IDs.**
