@@ -1,9 +1,27 @@
-cohort,item,contents,access,status
-Riaz 2017,Table S1,WES sample metadata & depth (150x),Cell mmc (publisher),needed only for raw-CCF; else iAtlas covers
-Riaz 2017,Table S2/S3,per-patient mutation & neoantigen load,Cell mmc (publisher),iAtlas MAF covers most
-Riaz 2017,PyClone output,"per-SNV CCF, clonal vs subclonal",Cell mmc (publisher),request if phylogeny figure needed
-Hugo 2016,Table S1A/B/C,"WES 140x, 489 nsSNV, neoepitope loads",Cell mmc (publisher),iAtlas MAF covers
-Hugo 2016,Table S2B,IPRES signature gene sets (GSVA),Cell mmc (publisher),reconstruct signature for benchmark
-Gide 2019,mass cytometry,EOMES+CD69+CD45RO+ effector-memory T-cell sig,Cancer Cell mmc,optional composition benchmark
-DFCI 2019,cBioPortal,"clonal/subclonal counts, purity, ploidy, CNA",cBioPortal API (pulled),IN HAND
-all iAtlas,cBioPortal API,"per-category neoantigen, TMB, response, survival, TIDE",cBioPortal API (pulled),IN HAND
+cohort,study,citation,sheet,clean_csv,rows,cols,status
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S1A,clean/hugo2016_S1A.csv,42,22,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S1B,clean/hugo2016_S1B.csv,39,45,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S1C,clean/hugo2016_S1C.csv,37,6,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S1D,clean/hugo2016_S1D.csv,25393,17,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S1E,clean/hugo2016_S1E.csv,36,11,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S2A,clean/hugo2016_S2A.csv,693,7,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S2B,clean/hugo2016_S2B.csv,72,7,IN HAND — extracted & verified
+hugo2016,Hugo et al. 2016,"Cell, PMID 26997480",S2C,clean/hugo2016_S2C.csv,19,3,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S1,clean/riaz2017_S1.csv,68,40,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S2,clean/riaz2017_S2.csv,73,12,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S3,clean/riaz2017_S3.csv,28589,11,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S4,clean/riaz2017_S4.csv,80,7,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S5A,clean/riaz2017_S5A.csv,41477,8,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S5B,clean/riaz2017_S5B.csv,4492,8,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S6A,clean/riaz2017_S6A.csv,189,6,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S6B,clean/riaz2017_S6B.csv,1384,6,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S6C,clean/riaz2017_S6C.csv,475,6,IN HAND — extracted & verified
+riaz2017,Riaz et al. 2017,"Cell, PMID 29033130",Table S6D,clean/riaz2017_S6D.csv,2670,6,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S1. PD-1 Patient,clean/gide2019_S1_PD1_clinical.csv,54,15,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S2. PD-1+CTLA-4 patients,clean/gide2019_S2_comboclinical.csv,51,15,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S3. PD1-DEgenes,clean/gide2019_S3_PD1_DEgenes.csv,310,14,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S4. PD1_GSEA-KEGG,clean/gide2019_S4_PD1_KEGG.csv,12,7,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S5. PD1+CTLA4-DEgenes,clean/gide2019_S5_combo_DEgenes.csv,328,13,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S6. ipiPD1_GSEA-KEGG,clean/gide2019_S6_combo_KEGG.csv,11,7,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S7. Venn_PRE,clean/gide2019_S7_Venn_PRE.csv,123,3,IN HAND — extracted & verified
+gide2019,Gide et al. 2019,"Cancer Cell, PMID 30753825",Table S8. Venn_EDT,clean/gide2019_S8_Venn_EDT.csv,133,3,IN HAND — extracted & verified

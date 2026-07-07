@@ -1,0 +1,32 @@
+{
+  "mmc1.xlsx": {
+    "bytes": 38376,
+    "md5": "81c0e845556690a16ca37269a3bfe11b",
+    "artifact_version_id": "700fbc0a-cef0-4fe5-a5cf-c32be3718ab8"
+  },
+  "mmc2.xlsx": {
+    "bytes": 17205,
+    "md5": "efae0b674ca5cd1b754346aadabb00a0",
+    "artifact_version_id": "9a21cd0b-fbcd-4c03-a59b-b73908fe55bc"
+  },
+  "mmc3.xlsx": {
+    "bytes": 2346244,
+    "md5": "0a3f47690de76709ae9cd4ed459a9f82",
+    "artifact_version_id": "ee5531e1-3f1b-4c3a-8474-4a6148b6cba3"
+  },
+  "mmc4.xlsx": {
+    "bytes": 13395,
+    "md5": "341a8f3d14190911c36e241c2bceb8be",
+    "artifact_version_id": "38121212-0f12-4a67-9fea-72438986fe6c"
+  },
+  "mmc5.xlsx": {
+    "bytes": 2399575,
+    "md5": "1943d9642073cc471af5143848304365",
+    "artifact_version_id": "5abd2da9-fc1f-43a3-a3c1-4b496309a301"
+  },
+  "mmc6.xlsx": {
+    "bytes": 384275,
+    "md5": "a6b0219b159fb6f8889b8dc203c2ebe0",
+    "artifact_version_id": "3c93fce8-837c-4d4d-8566-9811942fb190"
+  }
+}

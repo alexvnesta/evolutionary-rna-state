@@ -29,6 +29,15 @@ results/large/**
 *.npz
 *.zarr
 
+# --- Published supplements: commit cleaned CSVs + docs + small raw; ignore large raw binaries ---
+# Large raw publisher files are preserved locally; MD5s recorded in each raw/checksums.json.
+data/supplements/**/raw/*.xls
+data/supplements/**/raw/*.pdf
+data/supplements/riaz2017/raw/mmc3.xlsx
+data/supplements/riaz2017/raw/mmc5.xlsx
+data/supplements/riaz2017/raw/mmc6.xlsx
+!data/supplements/**/raw/checksums.json
+
 # --- Python ---
 __pycache__/
 *.py[cod]

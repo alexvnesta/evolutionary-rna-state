@@ -1,0 +1,169 @@
+[
+  {
+    "file": "mmc1.xlsx",
+    "sheet": "Table S1",
+    "rows": 68,
+    "cols": 40,
+    "csv": "clean/riaz2017_S1.csv",
+    "columns": [
+      "Patient",
+      "Type",
+      "SAMPLE",
+      "TOTAL_READS",
+      "MEAN_TARGET_COVERAGE",
+      "PCT_TARGET_BASES_20X",
+      "PCT_TARGET_BASES_30X",
+      "PCT_TARGET_BASES_40X",
+      "PCT_TARGET_BASES_50X",
+      "PCT_TARGET_BASES_100X"
+    ]
+  },
+  {
+    "file": "mmc2.xlsx",
+    "sheet": "Table S2",
+    "rows": 73,
+    "cols": 12,
+    "csv": "clean/riaz2017_S2.csv",
+    "columns": [
+      "Patient",
+      "Cohort",
+      "Response",
+      "Dead/Alive (Dead = True)",
+      "Time to Death (weeks)",
+      "Subtype",
+      "Mutational Subtype",
+      "M Stage",
+      "Mutation Load",
+      "Neo-antigen Load"
+    ]
+  },
+  {
+    "file": "mmc3.xlsx",
+    "sheet": "Table S3",
+    "rows": 28589,
+    "cols": 11,
+    "csv": "clean/riaz2017_S3.csv",
+    "columns": [
+      "Patient",
+      "Hugo Symbol",
+      "Chromosome",
+      "Start",
+      "End",
+      "Variant Classification",
+      "HGVS_c",
+      "HGVS_p",
+      "Tcov",
+      "Tac"
+    ]
+  },
+  {
+    "file": "mmc4.xlsx",
+    "sheet": "Table S4",
+    "rows": 80,
+    "cols": 7,
+    "csv": "clean/riaz2017_S4.csv",
+    "columns": [
+      "Patient",
+      "Pre-treatment Exome",
+      "On-treatment Exome",
+      "Pre-treatment TCR-Seq",
+      "On-treatment TCR-Seq",
+      "Pre-treatment RNA-Seq",
+      "On-treatment RNA-Seq"
+    ]
+  },
+  {
+    "file": "mmc5.xlsx",
+    "sheet": "Table S5A",
+    "rows": 41477,
+    "cols": 8,
+    "csv": "clean/riaz2017_S5A.csv",
+    "columns": [
+      "Patient",
+      "Hugo Symbol",
+      "WT Peptide",
+      "MT Peptide",
+      "WT Allele",
+      "MT Allele",
+      "WT Score",
+      "MT Score"
+    ]
+  },
+  {
+    "file": "mmc5.xlsx",
+    "sheet": "Table S5B",
+    "rows": 4492,
+    "cols": 8,
+    "csv": "clean/riaz2017_S5B.csv",
+    "columns": [
+      "Patient",
+      "Hugo Symbol",
+      "WT Peptide",
+      "MT Peptide",
+      "WT Allele",
+      "MT Allele",
+      "WT Score",
+      "MT Score"
+    ]
+  },
+  {
+    "file": "mmc6.xlsx",
+    "sheet": "Table S6A",
+    "rows": 189,
+    "cols": 6,
+    "csv": "clean/riaz2017_S6A.csv",
+    "columns": [
+      "symbol",
+      "baseMean",
+      "log2 Fold Change",
+      "lfcSE",
+      "pvalue",
+      "padj"
+    ]
+  },
+  {
+    "file": "mmc6.xlsx",
+    "sheet": "Table S6B",
+    "rows": 1384,
+    "cols": 6,
+    "csv": "clean/riaz2017_S6B.csv",
+    "columns": [
+      "symbol",
+      "baseMean",
+      "log2 Fold Change",
+      "lfcSE",
+      "pvalue",
+      "padj"
+    ]
+  },
+  {
+    "file": "mmc6.xlsx",
+    "sheet": "Table S6C",
+    "rows": 475,
+    "cols": 6,
+    "csv": "clean/riaz2017_S6C.csv",
+    "columns": [
+      "symbol",
+      "baseMean",
+      "log2 Fold Change",
+      "lfcSE",
+      "pvalue",
+      "padj"
+    ]
+  },
+  {
+    "file": "mmc6.xlsx",
+    "sheet": "Table S6D",
+    "rows": 2670,
+    "cols": 6,
+    "csv": "clean/riaz2017_S6D.csv",
+    "columns": [
+      "symbol",
+      "baseMean",
+      "log2 Fold Change",
+      "lfcSE",
+      "pvalue",
+      "padj"
+    ]
+  }
+]

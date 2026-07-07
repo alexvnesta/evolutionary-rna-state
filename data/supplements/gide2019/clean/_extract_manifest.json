@@ -1,0 +1,126 @@
+[
+  {
+    "file": "mmc2.xlsx",
+    "sheet": "Table S1. PD-1 Patient",
+    "rows": 54,
+    "cols": 15,
+    "csv": "clean/gide2019_S1_PD1_clinical.csv",
+    "columns": [
+      "Patient no.",
+      "Age (Years)",
+      "Sex",
+      "Treatment",
+      "Best RECIST response",
+      "Progression Free Survival (Days)",
+      "Overall Survival (Days)",
+      "Site of PRE Biopsy"
+    ]
+  },
+  {
+    "file": "mmc3.xlsx",
+    "sheet": "Table S2. PD-1+CTLA-4 patients",
+    "rows": 51,
+    "cols": 15,
+    "csv": "clean/gide2019_S2_comboclinical.csv",
+    "columns": [
+      "Patient no.",
+      "Age (Years)",
+      "Sex",
+      "Treatment",
+      "Best RECIST response",
+      "Progression Free Survival (Days)",
+      "Overall Survival (Days)",
+      "Site of PRE Biopsy"
+    ]
+  },
+  {
+    "file": "mmc4.xlsx",
+    "sheet": "Table S3. PD1-DEgenes",
+    "rows": 310,
+    "cols": 14,
+    "csv": "clean/gide2019_S3_PD1_DEgenes.csv",
+    "columns": [
+      "Gene",
+      "Chromosome",
+      "Start",
+      "End",
+      "adj. p value",
+      "ID",
+      "Cluster",
+      "Description"
+    ]
+  },
+  {
+    "file": "mmc5.xlsx",
+    "sheet": "Table S4. PD1_GSEA-KEGG",
+    "rows": 12,
+    "cols": 7,
+    "csv": "clean/gide2019_S4_PD1_KEGG.csv",
+    "columns": [
+      "KEGG pathway",
+      "SIZE",
+      "ES",
+      "NES",
+      "NOM p value",
+      "FDR q value",
+      "DE genes (adj. p value < 0.05)"
+    ]
+  },
+  {
+    "file": "mmc6.xlsx",
+    "sheet": "Table S5. PD1+CTLA4-DEgenes",
+    "rows": 328,
+    "cols": 13,
+    "csv": "clean/gide2019_S5_combo_DEgenes.csv",
+    "columns": [
+      "Gene",
+      "Chromosome",
+      "Start",
+      "End",
+      "adj. p value",
+      "ID",
+      "Description",
+      "Pre-Responders (n=24)"
+    ]
+  },
+  {
+    "file": "mmc7.xlsx",
+    "sheet": "Table S6. ipiPD1_GSEA-KEGG",
+    "rows": 11,
+    "cols": 7,
+    "csv": "clean/gide2019_S6_combo_KEGG.csv",
+    "columns": [
+      "KEGG pathway",
+      "SIZE",
+      "ES",
+      "NES",
+      "NOM p value",
+      "FDR q value",
+      "DE genes (adj. p value < 0.05)"
+    ]
+  },
+  {
+    "file": "mmc8.xlsx",
+    "sheet": "Table S7. Venn_PRE",
+    "rows": 123,
+    "cols": 3,
+    "csv": "clean/gide2019_S7_Venn_PRE.csv",
+    "columns": [
+      "Responders (R)",
+      "Non-responders (NR)",
+      "Both Responders and Non-responders"
+    ]
+  },
+  {
+    "file": "mmc9.xlsx",
+    "sheet": "Table S8. Venn_EDT",
+    "rows": 133,
+    "cols": 3,
+    "csv": "clean/gide2019_S8_Venn_EDT.csv",
+    "columns": [
+      "Responders (R)",
+      "Non-responders (NR)",
+      "Both Responder and Non-responders"
+    ]
+  }
+]

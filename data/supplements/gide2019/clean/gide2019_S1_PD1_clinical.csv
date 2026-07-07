@@ -1,0 +1,55 @@
+Patient no.,Age (Years),Sex,Treatment,Best RECIST response,Progression Free Survival (Days),Overall Survival (Days),Site of PRE Biopsy,Days to EDT Biopsy,Site of EDT Biopsy,Progressed,Last Followup Status,RNA Sequencing,Immunofluorescence Panel 1,Immunofluorescence Panel 2
+1,48,F,Nivolumab,PD ,9,147,LN,7,SQ,Yes,"Dead, melanoma",-,PRE ,PRE and EDT
+2,61,F,Pembrolizumab,PD,13,65,SQ,-,-,Yes,"Dead, melanoma",PRE,-,-
+3,50,M,Nivolumab,PD,23,59,SQ,15,SQ,Yes,"Dead, melanoma",PRE,EDT,EDT
+4,84,M,Pembrolizumab,PD ,23,22,SQ,9,SQ,Yes,"Dead, melanoma",PRE,PRE and EDT,PRE and EDT
+5,67,M,Pembrolizumab,PD,39,155,SQ,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+6,68,M,Nivolumab,PD,42,94,LN,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+7,57,F,Nivolumab,PD,47,80,LN,19,SQ,Yes,"Dead, melanoma",PRE,PRE and EDT,EDT
+8,85,F,Nivolumab,PD ,58,58,SQ,6,SQ,Yes,"Dead, melanoma",PRE and EDT,PRE and EDT,PRE
+9,70,F,Pembrolizumab,PD ,71,99,SQ,-,-,Yes,"Dead, melanoma",PRE,-,-
+10,90,M,Pembrolizumab,PD ,76,551,SQ,7,SQ,Yes,Alive,PRE and EDT,PRE,PRE
+11,66,M,Pembrolizumab,PD,78,166,SQ,-,-,Yes,"Dead, melanoma",PRE,-,-
+12,52,M,Pembrolizumab,SD,80,199,SQ,14,SQ,Yes,"Dead, melanoma",PRE,PRE and EDT,PRE and EDT
+13,69,M,Pembrolizumab,PD,82,96,SQ,6,SQ,Yes,"Dead, melanoma",PRE and EDT,PRE and EDT,PRE and EDT
+14,58,M,Pembrolizumab,PD,83,993,Mucosa,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+15,76,F,Pembrolizumab,PD,84,300,SQ,-,-,Yes,Dead,PRE,-,-
+16,55,M,Pembrolizumab,PD,84,169,LN,-,-,Yes,"Dead, melanoma",PRE,-,-
+17,37,M,Pembrolizumab,PD,96,258,SQ,9,Spine,Yes,"Dead, melanoma",PRE and EDT,PRE and EDT,PRE
+18,62,M,Pembrolizumab,PD,100,228,SQ,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+19,54,M,Pembrolizumab,SD,125,385,SQ,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+20,45,F,Pembrolizumab,PR,156,553,Brain,-,-,Yes,"Dead, melanoma",-,PRE,PRE
+21,67,M,Pembrolizumab,SD,166,551,SQ,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+22,69,F,Pembrolizumab,SD,176,379,SQ,-,-,Yes,Alive,-,PRE,PRE
+23,40,M,Nivolumab,SD,191,191,SQ,10,SQ,Yes,"Dead, melanoma",PRE,PRE and EDT,PRE and EDT
+24,54,F,Pembrolizumab,SD,197,407,SQ,28,SQ,Yes,"Dead, melanoma",-,PRE and EDT,PRE and EDT
+25,49,M,Nivolumab,PR,271,897,SQ,43,SQ,Yes,"Dead, melanoma",PRE and EDT,PRE and EDT,PRE and EDT
+26,89,F,Pembrolizumab,CR ,275,275,SQ,10,SQ,No,Alive,-,PRE and EDT,PRE and EDT
+27,76,M,Pembrolizumab,PR,314,1067,SQ,-,-,Yes,"Dead, melanoma",PRE,-,-
+28,81,M,Pembrolizumab,PR,324,324,SQ,44,SQ,No,Alive,-,PRE and EDT,PRE and EDT
+29,55,M,Pembrolizumab,SD,335,825,SQ,68,SQ,Yes,"Dead, melanoma",PRE and EDT,-,-
+30,86,F,Pembrolizumab,SD ,358,581,SQ,-,-,Yes,Alive,PRE,PRE,PRE
+31,74,F,Nivolumab,PR,365,365,SQ,-,-,No,Alive,-,PRE,PRE
+32,69,F,Pembrolizumab,CR ,460,460,Brain,14,SQ,No,Alive,-,PRE,EDT
+33,76,M,Pembrolizumab,CR ,477,477,LN,-,-,No,Alive,-,PRE,PRE
+34,78,M,Pembrolizumab,PR,544,878,LN,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+35,55,F,Pembrolizumab,PR,586,1091,SQ,-,-,Yes,Alive,PRE,-,-
+36,76,M,Nivolumab,PR,590,607,SQ,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+37,66,M,Pembrolizumab,CR,647,910,SQ,7,SQ,Yes,Alive,-,PRE and EDT,PRE and EDT
+38,69,F,Pembrolizumab,PR,755,1547,SQ,-,-,Yes,Alive,PRE,-,-
+39,72,M,Pembrolizumab,SD,815,815,SQ,-,-,No,Alive,-,PRE,PRE
+40,78,M,Pembrolizumab,PR,845,845,SQ,-,-,No,Alive,PRE,PRE,PRE
+41,61,F,Pembrolizumab,PR,870,886,SQ,10,SQ,Yes,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+42,59,F,Pembrolizumab,CR,891,891,SQ,-,-,No,Alive,PRE,-,-
+43,63,M,Pembrolizumab,CR,905,905,SQ,-,-,No,Alive,-,PRE,PRE
+44,45,F,Pembrolizumab,PR,1075,1075,LN,-,-,No,Alive,PRE,-,-
+45,82,M,Pembrolizumab,PR,1085,1085,SQ,-,-,No,Alive,PRE,-,-
+46,71,M,Pembrolizumab,PR,1098,1098,SQ,-,-,No,Alive,PRE,PRE,PRE
+47,62,M,Pembrolizumab,PR,1174,1174,SQ,7,SQ,No,Alive,PRE and EDT,-,-
+48,40,M,Pembrolizumab,PR,1189,1189,SQ,3,LN,No,Alive,PRE and EDT,-,-
+49,72,F,Nivolumab,CR,1328,1328,SQ,2,SQ,No,Alive,PRE,PRE and EDT,PRE and EDT
+50,86,M,Nivolumab,CR,1342,1342,SQ,-,-,No,Alive,PRE,PRE,PRE
+51,64,M,Nivolumab,CR,1397,1397,SQ,-,-,No,Alive,-,PRE,PRE
+52,63,F,Pembrolizumab,PR,1553,1553,SQ,-,-,No,Alive,PRE,PRE,PRE
+53,71,F,Pembrolizumab,CR,1589,1589,LN,-,-,No,Alive,PRE,-,-
+54,52,F,Pembrolizumab,PR,1603,1603,SQ,-,-,No,Alive,PRE,PRE,PRE

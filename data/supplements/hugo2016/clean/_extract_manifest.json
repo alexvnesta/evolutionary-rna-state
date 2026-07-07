@@ -1,0 +1,121 @@
+[
+  {
+    "sheet": "S1A",
+    "rows": 42,
+    "cols": 22,
+    "file": "clean/hugo2016_S1A.csv",
+    "columns": [
+      "Patient ID",
+      "irRECIST",
+      "Study site",
+      "Gender",
+      "Age",
+      "Disease Status",
+      "Overall Survival",
+      "Vital Status"
+    ]
+  },
+  {
+    "sheet": "S1B",
+    "rows": 39,
+    "cols": 45,
+    "file": "clean/hugo2016_S1B.csv",
+    "columns": [
+      "Patient ID",
+      "BRCA2mutant?",
+      "IPRES signature",
+      "Response",
+      "Purity",
+      "Ploidy",
+      "AvgCov",
+      "PctCov15"
+    ]
+  },
+  {
+    "sheet": "S1C",
+    "rows": 37,
+    "cols": 6,
+    "file": "clean/hugo2016_S1C.csv",
+    "columns": [
+      "Peptide sequence",
+      "HLA type",
+      "Gene",
+      "AA mut",
+      "mutPos",
+      "Ref"
+    ]
+  },
+  {
+    "sheet": "S1D",
+    "rows": 25393,
+    "cols": 17,
+    "file": "clean/hugo2016_S1D.csv",
+    "columns": [
+      "Chr",
+      "Pos",
+      "NucMut",
+      "Sample",
+      "Gene",
+      "Transcript",
+      "Detail",
+      "MutType"
+    ]
+  },
+  {
+    "sheet": "S1E",
+    "rows": 36,
+    "cols": 11,
+    "file": "clean/hugo2016_S1E.csv",
+    "columns": [
+      "Gene",
+      "RatioRtoNR",
+      "NumHitsR",
+      "PvalR",
+      "pAdjR",
+      "LorR",
+      "NumHitsNR",
+      "PvalNR"
+    ]
+  },
+  {
+    "sheet": "S2A",
+    "rows": 693,
+    "cols": 7,
+    "file": "clean/hugo2016_S2A.csv",
+    "columns": [
+      "Gene",
+      "Pval",
+      "FDR",
+      "Stats",
+      "diffAvg",
+      "avg.R",
+      "avg.NR"
+    ]
+  },
+  {
+    "sheet": "S2B",
+    "rows": 72,
+    "cols": 7,
+    "file": "clean/hugo2016_S2B.csv",
+    "columns": [
+      "Geneset",
+      "Pval",
+      "FDR",
+      "Stats",
+      "diffAvg",
+      "avg.NR",
+      "avg.R"
+    ]
+  },
+  {
+    "sheet": "S2C",
+    "rows": 19,
+    "cols": 3,
+    "file": "clean/hugo2016_S2C.csv",
+    "columns": [
+      "Geneset",
+      "Detail",
+      "Gene Listing"
+    ]
+  }
+]

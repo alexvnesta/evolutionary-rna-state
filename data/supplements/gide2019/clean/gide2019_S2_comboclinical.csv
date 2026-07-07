@@ -1,0 +1,52 @@
+Patient no.,Age (Years),Sex,Treatment,Best RECIST response,Progression Free Survival (Days),Overall Survival (Days),Site of PRE Biopsy,Days to EDT Biopsy,Site of EDT Biopsy,Progressed,Last Followup Status,RNA Sequencing,Immunofluorescence Panel 1,Immunofluorescence Panel 2
+1,42,F,Ipilimumab + Pembrolizumab,PD,15,689,SQ,7,SQ,Yes,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+2,41,M,Ipilimumab + Pembrolizumab,PD,34,530,LN,-,-,Yes,Alive,PRE,PRE,PRE
+3,58,F,Ipilimumab + Nivolumab,PD,37,300,Lung,-,-,Yes,Alive,-,PRE,PRE
+4,48,M,Ipilimumab + Nivolumab,PD,39,129,SQ,12,SQ,Yes,Alive,EDT,PRE and EDT,PRE and EDT
+5,49,F,Ipilimumab + Pembrolizumab,PD,40,93,LN,6,SQ,Yes,"Dead, melanoma",-,PRE and EDT,PRE and EDT
+6,75,M,Ipilimumab + Nivolumab,PD,41,108,LN,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+7,59,M,Ipilimumab + Nivolumab,PR,81,169,SQ,8,SQ,Yes,Alive,PRE,PRE and EDT,PRE and EDT
+8,55,M,Ipilimumab + Pembrolizumab,PD,81,637,LN,-,-,Yes,Alive,PRE,PRE,PRE
+9,56,M,Ipilimumab + Pembrolizumab,PD,81,156,LN,9,SQ,Yes,"Dead, melanoma",EDT,EDT,EDT
+10,51,M,Ipilimumab + Pembrolizumab,PD,81,176,LN,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+11,62,M,Ipilimumab + Nivolumab,PD,82,221,LN,-,-,Yes,Alive,-,PRE,PRE
+12,55,F,Ipilimumab + Nivolumab,PD,82,293,Lung,-,-,Yes,Alive,PRE,PRE,PRE
+13,68,F,Ipilimumab + Nivolumab,PR,108,357,SQ,8,SQ,Yes,"Dead, melanoma",PRE and EDT,PRE and EDT,PRE and EDT
+14,47,F,Ipilimumab + Pembrolizumab,SD,123,691,SQ,-,-,Yes,Alive,PRE,PRE,PRE
+15,57,M,Ipilimumab + Pembrolizumab,SD,152,660,SQ,-,-,Yes,"Dead, melanoma",PRE,PRE,PRE
+16,39,F,Ipilimumab + Pembrolizumab,PR,168,558,LN,-,-,Yes,Alive,-,PRE,PRE
+17,48,F,Ipilimumab + Nivolumab,PR,196,196,LN,-,-,No,Alive,PRE,PRE,PRE
+18,58,M,Ipilimumab + Pembrolizumab,PR,278,278,Lung,-,-,No,Alive,-,-,PRE
+19,56,M,Ipilimumab + Pembrolizumab,SD,301,635,SQ,15,SQ,Yes,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+20,57,M,Ipilimumab + Pembrolizumab,SD,386,538,LN,-,-,Yes,Alive,PRE,-,-
+21,63,M,Ipilimumab + Nivolumab,PR,410,410,SQ,-,-,No,Alive,PRE,PRE,PRE
+22,59,F,Ipilimumab + Pembrolizumab,PR,487,706,LN,7,LN,Yes,Alive,-,PRE and EDT,PRE and EDT
+23,51,F,Ipilimumab + Pembrolizumab,PR,506,506,Brain,-,-,No,Alive,PRE,PRE,-
+24,34,M,Ipilimumab + Nivolumab,PR,509,1203,LN,-,-,Yes,Alive,PRE,PRE,PRE
+25,67,F,Ipilimumab + Pembrolizumab,SD,518,518,LN,-,-,No,"Dead, melanoma",PRE,PRE,PRE
+26,75,M,Ipilimumab + Pembrolizumab,CR,544,544,LN,-,-,No,Alive,PRE,PRE,PRE
+27,49,M,Ipilimumab + Pembrolizumab,CR,546,546,Abdomen,5,SQ,No,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+28,33,M,Ipilimumab + Pembrolizumab,CR,553,553,LN,7,LN,No,Alive,-,PRE and EDT,PRE and EDT
+29,66,F,Ipilimumab + Pembrolizumab,CR,567,567,LN,-,-,No,Alive,-,PRE,PRE
+30,56,M,Ipilimumab + Pembrolizumab,PR,573,573,Small intestine,-,-,No,Alive,-,-,PRE
+31,45,M,Ipilimumab + Pembrolizumab,CR,588,588,Lung,-,-,No,Alive,-,PRE,PRE
+32,71,M,Ipilimumab + Pembrolizumab,CR,597,597,LN,-,-,No,Alive,PRE,PRE,PRE
+33,73,M,Ipilimumab + Pembrolizumab,PR,609,609,SQ,9,SQ,No,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+34,51,M,Ipilimumab + Pembrolizumab,CR,623,623,Lung,-,-,No,Alive,PRE,PRE,PRE
+35,72,M,Ipilimumab + Pembrolizumab,CR,627,627,SQ,9,SQ,No,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+36,74,F,Ipilimumab + Pembrolizumab,CR,637,637,SQ,6,SQ,No,Alive,PRE and EDT,PRE and EDT,PRE and EDT
+37,76,M,Ipilimumab + Pembrolizumab,PR,637,637,LN,-,-,No,Alive,PRE,PRE,PRE
+38,59,F,Ipilimumab + Pembrolizumab,CR,650,650,SQ,-,-,No,Alive,-,PRE,-
+39,33,M,Ipilimumab + Nivolumab,CR,657,657,LN,-,-,No,Alive,-,PRE,PRE
+40,81,M,Ipilimumab + Pembrolizumab,PR,671,671,SQ,-,-,No,Alive,-,PRE,PRE
+41,57,F,Ipilimumab + Pembrolizumab,PR,672,672,SQ,4,SQ,No,Alive,-,PRE and EDT,PRE and EDT
+42,71,M,Ipilimumab + Pembrolizumab,PR,692,692,Lung,-,-,No,Alive,-,PRE,PRE
+43,53,F,Ipilimumab + Pembrolizumab,CR,693,693,SQ,-,-,No,Alive,-,PRE,PRE
+44,68,M,Ipilimumab + Pembrolizumab,PR,695,695,SQ,-,-,No,Alive,PRE,PRE,PRE
+45,70,M,Ipilimumab + Pembrolizumab,CR,721,721,Mucosa,8,SQ,No,Alive,PRE,PRE and EDT,PRE and EDT
+46,54,F,Ipilimumab + Pembrolizumab,CR,721,721,Lung,-,-,No,Alive,PRE ,PRE,PRE
+47,24,F,Ipilimumab + Pembrolizumab,PR,732,732,SQ,-,-,No,Alive,PRE,PRE,PRE
+48,72,M,Ipilimumab + Pembrolizumab,PR,737,737,SQ,-,-,No,Alive,-,PRE,PRE
+49,36,M,Ipilimumab + Pembrolizumab,CR,775,775,LN,-,-,No,Alive,PRE,PRE,PRE
+50,68,M,Ipilimumab + Pembrolizumab,PR,904,904,LN,-,-,No,Alive,PRE,PRE,PRE
+51,64,M,Ipilimumab + Pembrolizumab,PR,1379,1379,Liver,-,-,No,Alive,-,PRE,PRE

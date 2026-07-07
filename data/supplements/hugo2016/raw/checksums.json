@@ -1,0 +1,17 @@
+{
+  "mmc1.xls": {
+    "bytes": 15276032,
+    "md5": "b74e1cc2e0e19c2c2139538c859a8846",
+    "artifact_version_id": "8738ae63-07f6-4170-8494-bd39cec20f4a"
+  },
+  "mmc2.xlsx": {
+    "bytes": 159256,
+    "md5": "91d0b14878e27a87e255962e4a1d0b6e",
+    "artifact_version_id": "d19b3f88-00dc-4f5d-bfcd-87140db7c60a"
+  },
+  "mmc3.pdf": {
+    "bytes": 4323975,
+    "md5": "736043ed153f037d03f228b9046081fe",
+    "artifact_version_id": "eab09ad7-a4f5-4a98-a11b-6ac54f13ba0a"
+  }
+}
