@@ -1,0 +1,722 @@
+[
+  {
+    "run": "ERR2208952",
+    "file": "ERR2208952_1.fastq.gz",
+    "bytes": 2661849103,
+    "md5": "f00b3a20363154fa2942d561bf5f9e82",
+    "expected_md5": "f00b3a20363154fa2942d561bf5f9e82",
+    "seconds": 1831.4,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208952",
+    "file": "ERR2208952_2.fastq.gz",
+    "bytes": 2752676391,
+    "md5": "b880689f4232a60a6aa9b70857fb0162",
+    "expected_md5": "b880689f4232a60a6aa9b70857fb0162",
+    "seconds": 1695.8,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208969",
+    "file": "ERR2208969_1.fastq.gz",
+    "bytes": 2728355459,
+    "md5": "f262fd9e01b5bd9e8928962b8a105022",
+    "expected_md5": "f262fd9e01b5bd9e8928962b8a105022",
+    "seconds": 808.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208969",
+    "file": "ERR2208969_2.fastq.gz",
+    "bytes": 2730598545,
+    "md5": "57dfea1e8dca823141c94877b59d574b",
+    "expected_md5": "57dfea1e8dca823141c94877b59d574b",
+    "seconds": 1641.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208972",
+    "file": "ERR2208972_1.fastq.gz",
+    "bytes": 2721278429,
+    "md5": "196cadb5f797ad16fd77309c06af36ba",
+    "expected_md5": "196cadb5f797ad16fd77309c06af36ba",
+    "seconds": 1683.6,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208972",
+    "file": "ERR2208972_2.fastq.gz",
+    "bytes": 2813884705,
+    "md5": "9ec39b069ab80fefe5dde159176c9e59",
+    "expected_md5": "9ec39b069ab80fefe5dde159176c9e59",
+    "seconds": 1599.3,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208961",
+    "file": "ERR2208961_1.fastq.gz",
+    "bytes": 2783494653,
+    "md5": "1cc25edd388a9cc274a00bb7f9b47544",
+    "expected_md5": "1cc25edd388a9cc274a00bb7f9b47544",
+    "seconds": 1011.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208961",
+    "file": "ERR2208961_2.fastq.gz",
+    "bytes": 2794421121,
+    "md5": "fb55eb8e9acc4532d13fee8eebb721fc",
+    "expected_md5": "fb55eb8e9acc4532d13fee8eebb721fc",
+    "seconds": 1747.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208970",
+    "file": "ERR2208970_1.fastq.gz",
+    "bytes": 2751376603,
+    "md5": "639ab0519feb4a40a8221c4abb6dfbf4",
+    "expected_md5": "639ab0519feb4a40a8221c4abb6dfbf4",
+    "seconds": 698.9,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208970",
+    "file": "ERR2208970_2.fastq.gz",
+    "bytes": 2848475583,
+    "md5": "38d3cfb80bc0d9c602f78f69cfe6aa23",
+    "expected_md5": "38d3cfb80bc0d9c602f78f69cfe6aa23",
+    "seconds": 418.9,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208946",
+    "file": "ERR2208946_1.fastq.gz",
+    "bytes": 2746261972,
+    "md5": "6b5d59621ab86875ed47633964b9f0b7",
+    "expected_md5": "6b5d59621ab86875ed47633964b9f0b7",
+    "seconds": 416.7,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208946",
+    "file": "ERR2208946_2.fastq.gz",
+    "bytes": 2872390128,
+    "md5": "c073cb29d941d1467681773d53e1f614",
+    "expected_md5": "c073cb29d941d1467681773d53e1f614",
+    "seconds": 1627.6,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208962",
+    "file": "ERR2208962_1.fastq.gz",
+    "bytes": 2817794023,
+    "md5": "00ab5597256e8248a4505ffe3486b920",
+    "expected_md5": "00ab5597256e8248a4505ffe3486b920",
+    "seconds": 762.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208962",
+    "file": "ERR2208962_2.fastq.gz",
+    "bytes": 2918320118,
+    "md5": "924e073b1b6d42aee7dc8b66b5fa1061",
+    "expected_md5": "924e073b1b6d42aee7dc8b66b5fa1061",
+    "seconds": 1674.8,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208953",
+    "file": "ERR2208953_1.fastq.gz",
+    "bytes": 2891312684,
+    "md5": "dc3e17e40e3d58bd7a45d40e80da4e56",
+    "expected_md5": "dc3e17e40e3d58bd7a45d40e80da4e56",
+    "seconds": 390.4,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208953",
+    "file": "ERR2208953_2.fastq.gz",
+    "bytes": 2972259025,
+    "md5": "22e7402c779fef8f12febfdb8259cedc",
+    "expected_md5": "22e7402c779fef8f12febfdb8259cedc",
+    "seconds": 1263.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208968",
+    "file": "ERR2208968_1.fastq.gz",
+    "bytes": 2706928741,
+    "md5": "e60925011ec6d4717f112840526e927f",
+    "expected_md5": "e60925011ec6d4717f112840526e927f",
+    "seconds": 1745.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208968",
+    "file": "ERR2208968_2.fastq.gz",
+    "bytes": 2843100084,
+    "md5": "76811cc23f22caed3a62382fbd71bcf1",
+    "expected_md5": "76811cc23f22caed3a62382fbd71bcf1",
+    "seconds": 506.8,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208977",
+    "file": "ERR2208977_1.fastq.gz",
+    "bytes": 2831781164,
+    "md5": "6a4682c50c23cfcab63f2b1d3a46a6be",
+    "expected_md5": "6a4682c50c23cfcab63f2b1d3a46a6be",
+    "seconds": 751.3,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208977",
+    "file": "ERR2208977_2.fastq.gz",
+    "bytes": 2969786351,
+    "md5": "a65620465ac86ca4decdf0b55d6af020",
+    "expected_md5": "a65620465ac86ca4decdf0b55d6af020",
+    "seconds": 490.8,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208933",
+    "file": "ERR2208933_1.fastq.gz",
+    "bytes": 2846978778,
+    "md5": "8a4c186c2f98aa952411fbbba7badf2b",
+    "expected_md5": "8a4c186c2f98aa952411fbbba7badf2b",
+    "seconds": 501.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208933",
+    "file": "ERR2208933_2.fastq.gz",
+    "bytes": 3009638610,
+    "md5": "95f5a8bdaa15cf39104f60e1667f8b90",
+    "expected_md5": "95f5a8bdaa15cf39104f60e1667f8b90",
+    "seconds": 1207.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208929",
+    "file": "ERR2208929_1.fastq.gz",
+    "bytes": 2929762391,
+    "md5": "b8f38fba4a667f85a935c228e20c880d",
+    "expected_md5": "b8f38fba4a667f85a935c228e20c880d",
+    "seconds": 1589.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208929",
+    "file": "ERR2208929_2.fastq.gz",
+    "bytes": 3031868636,
+    "md5": "725be1f47ed89761e11b1ce91503bd15",
+    "expected_md5": "725be1f47ed89761e11b1ce91503bd15",
+    "seconds": 622.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208930",
+    "file": "ERR2208930_1.fastq.gz",
+    "bytes": 2950745961,
+    "md5": "d80308a4794d7de631f98c2279738a93",
+    "expected_md5": "d80308a4794d7de631f98c2279738a93",
+    "seconds": 894.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208930",
+    "file": "ERR2208930_2.fastq.gz",
+    "bytes": 3062959135,
+    "md5": "9f896ebd4d686230ccd6f7955fd1399a",
+    "expected_md5": "9f896ebd4d686230ccd6f7955fd1399a",
+    "seconds": 2012.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208936",
+    "file": "ERR2208936_1.fastq.gz",
+    "bytes": 2975616837,
+    "md5": "5f6a86424045e8438b54ff7111d83044",
+    "expected_md5": "5f6a86424045e8438b54ff7111d83044",
+    "seconds": 1695.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208936",
+    "file": "ERR2208936_2.fastq.gz",
+    "bytes": 3040460840,
+    "md5": "668cdfb608c06dd4e62e56da28c1aedc",
+    "expected_md5": "668cdfb608c06dd4e62e56da28c1aedc",
+    "seconds": 2001.8,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208940",
+    "file": "ERR2208940_1.fastq.gz",
+    "bytes": 2983995411,
+    "md5": "74f73bb49e3b01a2a49db8722d02f5ba",
+    "expected_md5": "74f73bb49e3b01a2a49db8722d02f5ba",
+    "seconds": 1951.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208940",
+    "file": "ERR2208940_2.fastq.gz",
+    "bytes": 3048171845,
+    "md5": "e681b7ed1258baf5aa1f5d7c1ad2b647",
+    "expected_md5": "e681b7ed1258baf5aa1f5d7c1ad2b647",
+    "seconds": 403.4,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208943",
+    "file": "ERR2208943_1.fastq.gz",
+    "bytes": 3063410658,
+    "md5": "4f97dced81a169a9ff47dacf6b76dd0d",
+    "expected_md5": "4f97dced81a169a9ff47dacf6b76dd0d",
+    "seconds": 1985.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208943",
+    "file": "ERR2208943_2.fastq.gz",
+    "bytes": 3197271154,
+    "md5": "d0d0239131898f52d3302af01eda2755",
+    "expected_md5": "d0d0239131898f52d3302af01eda2755",
+    "seconds": 458.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208912",
+    "file": "ERR2208912_1.fastq.gz",
+    "bytes": 2695108949,
+    "md5": "5394e257e04d63856b93e9b14552dad2",
+    "expected_md5": "5394e257e04d63856b93e9b14552dad2",
+    "seconds": 1560.9,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208912",
+    "file": "ERR2208912_2.fastq.gz",
+    "bytes": 2791808478,
+    "md5": "3f3c4b38ecfce8071a9d940a139019b4",
+    "expected_md5": "3f3c4b38ecfce8071a9d940a139019b4",
+    "seconds": 841.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208909",
+    "file": "ERR2208909_1.fastq.gz",
+    "bytes": 2678566263,
+    "md5": "9365fba09ac651bbc9969db26719a223",
+    "expected_md5": "9365fba09ac651bbc9969db26719a223",
+    "seconds": 780.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208909",
+    "file": "ERR2208909_2.fastq.gz",
+    "bytes": 2861259692,
+    "md5": "32e9fb1b09dc6a60e58f447ad29732e4",
+    "expected_md5": "32e9fb1b09dc6a60e58f447ad29732e4",
+    "seconds": 1855.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208918",
+    "file": "ERR2208918_1.fastq.gz",
+    "bytes": 2960515652,
+    "md5": "f4643858e4eedbe858dd34136c16c84a",
+    "expected_md5": "f4643858e4eedbe858dd34136c16c84a",
+    "seconds": 1913.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208918",
+    "file": "ERR2208918_2.fastq.gz",
+    "bytes": 3021385702,
+    "md5": "ee4da089fef463058cbb23aca7481070",
+    "expected_md5": "ee4da089fef463058cbb23aca7481070",
+    "seconds": 1584.9,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208923",
+    "file": "ERR2208923_1.fastq.gz",
+    "bytes": 3067423615,
+    "md5": "9be0a12e8f91032aed5226e893494928",
+    "expected_md5": "9be0a12e8f91032aed5226e893494928",
+    "seconds": 866.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208923",
+    "file": "ERR2208923_2.fastq.gz",
+    "bytes": 3145795643,
+    "md5": "26bf9577546990fb3e9b99d1791402a1",
+    "expected_md5": "26bf9577546990fb3e9b99d1791402a1",
+    "seconds": 2046.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208902",
+    "file": "ERR2208902_1.fastq.gz",
+    "bytes": 3125370783,
+    "md5": "839ca4d2e6059bdc3ae5afb48c1e161d",
+    "expected_md5": "839ca4d2e6059bdc3ae5afb48c1e161d",
+    "seconds": 1970.8,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208902",
+    "file": "ERR2208902_2.fastq.gz",
+    "bytes": 3285535835,
+    "md5": "c570f887fef2a5960cf5668c5bd31fe4",
+    "expected_md5": "c570f887fef2a5960cf5668c5bd31fe4",
+    "seconds": 1279.9,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208915",
+    "file": "ERR2208915_1.fastq.gz",
+    "bytes": 3157468765,
+    "md5": "94e20814762aafc6f70260603312cad3",
+    "expected_md5": "94e20814762aafc6f70260603312cad3",
+    "seconds": 1981.7,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208915",
+    "file": "ERR2208915_2.fastq.gz",
+    "bytes": 3295073299,
+    "md5": "e32346f268cf376ee109cd291422e8ec",
+    "expected_md5": "e32346f268cf376ee109cd291422e8ec",
+    "seconds": 1998.5,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208906",
+    "file": "ERR2208906_1.fastq.gz",
+    "bytes": 3164278353,
+    "md5": "62e6f10b50ad44d274002573fbab9319",
+    "expected_md5": "62e6f10b50ad44d274002573fbab9319",
+    "seconds": 1672.9,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208906",
+    "file": "ERR2208906_2.fastq.gz",
+    "bytes": 3295190814,
+    "md5": "07a424e8be7dd17591aad42d8c55be83",
+    "expected_md5": "07a424e8be7dd17591aad42d8c55be83",
+    "seconds": 1969.3,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208916",
+    "file": "ERR2208916_1.fastq.gz",
+    "bytes": 3200230106,
+    "md5": "2289971197a7854d25776bdb06de94d8",
+    "expected_md5": "2289971197a7854d25776bdb06de94d8",
+    "seconds": 806.6,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208916",
+    "file": "ERR2208916_2.fastq.gz",
+    "bytes": 3338354000,
+    "md5": "77a2150040a29dff8faf47e1279f9f22",
+    "expected_md5": "77a2150040a29dff8faf47e1279f9f22",
+    "seconds": 867.6,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208926",
+    "file": "ERR2208926_1.fastq.gz",
+    "bytes": 2912710122,
+    "md5": "5621b97b89158f918dc2dbaa10d5f64a",
+    "expected_md5": "5621b97b89158f918dc2dbaa10d5f64a",
+    "seconds": 1664.6,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208926",
+    "file": "ERR2208926_2.fastq.gz",
+    "bytes": 3014707784,
+    "md5": "03b151703d47d3817b5c1f7476e29c44",
+    "expected_md5": "03b151703d47d3817b5c1f7476e29c44",
+    "seconds": 861.3,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208897",
+    "file": "ERR2208897_1.fastq.gz",
+    "bytes": 2894404499,
+    "md5": "a0f4d1b71bb884bfef3456af3d07e639",
+    "expected_md5": "a0f4d1b71bb884bfef3456af3d07e639",
+    "seconds": 497.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208897",
+    "file": "ERR2208897_2.fastq.gz",
+    "bytes": 3049780648,
+    "md5": "dcdb1f0ccf16defd4f4d16f51c57c76b",
+    "expected_md5": "dcdb1f0ccf16defd4f4d16f51c57c76b",
+    "seconds": 455.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208898",
+    "file": "ERR2208898_1.fastq.gz",
+    "bytes": 3117406006,
+    "md5": "ec32d218b1f5859da77ba6cbbc95b311",
+    "expected_md5": "ec32d218b1f5859da77ba6cbbc95b311",
+    "seconds": 655.1,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208898",
+    "file": "ERR2208898_2.fastq.gz",
+    "bytes": 3136289008,
+    "md5": "46aec3b749709b044d3372561f8e8018",
+    "expected_md5": "46aec3b749709b044d3372561f8e8018",
+    "seconds": 2007.4,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208893",
+    "file": "ERR2208893_1.fastq.gz",
+    "bytes": 3065553952,
+    "md5": "fdda165f9504f62afb1bb647f46a6e46",
+    "expected_md5": "fdda165f9504f62afb1bb647f46a6e46",
+    "seconds": 614.3,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208893",
+    "file": "ERR2208893_2.fastq.gz",
+    "bytes": 3236649928,
+    "md5": "090de951bd71336170f56cf59e7f04b9",
+    "expected_md5": "090de951bd71336170f56cf59e7f04b9",
+    "seconds": 375.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208894",
+    "file": "ERR2208894_1.fastq.gz",
+    "bytes": 3079387140,
+    "md5": "59cb87618d101184175c8c58e7cf686a",
+    "expected_md5": "59cb87618d101184175c8c58e7cf686a",
+    "seconds": 1989.6,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208894",
+    "file": "ERR2208894_2.fastq.gz",
+    "bytes": 3298027425,
+    "md5": "d1e71b0365b4570a29b83c6556f42940",
+    "expected_md5": "d1e71b0365b4570a29b83c6556f42940",
+    "seconds": 1888.0,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208889",
+    "file": "ERR2208889_1.fastq.gz",
+    "bytes": 3545165883,
+    "md5": "98bcc1af135b2ba83152bb08aca99e17",
+    "expected_md5": "98bcc1af135b2ba83152bb08aca99e17",
+    "seconds": 2124.2,
+    "status": "ok"
+  },
+  {
+    "run": "ERR2208889",
+    "file": "ERR2208889_2.fastq.gz",
+    "bytes": 3637456891,
+    "md5": "743905ecdafa3bdb2f909ac5ccdfa568",
+    "expected_md5": "743905ecdafa3bdb2f909ac5ccdfa568",
+    "seconds": 886.6,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088929",
+    "file": "SRR5088929_1.fastq.gz",
+    "bytes": 1752830567,
+    "md5": "9cefb88e75b28c8fa0e1ce6e24e316e2",
+    "expected_md5": "9cefb88e75b28c8fa0e1ce6e24e316e2",
+    "seconds": 1125.7,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088929",
+    "file": "SRR5088929_2.fastq.gz",
+    "bytes": 1904803052,
+    "md5": "bd6fb74feb0d4482dd9be892c0010340",
+    "expected_md5": "bd6fb74feb0d4482dd9be892c0010340",
+    "seconds": 1223.5,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088843",
+    "file": "SRR5088843_1.fastq.gz",
+    "bytes": 2016546006,
+    "md5": "6592d79dc5d76a29a03846764ec31ee2",
+    "expected_md5": "6592d79dc5d76a29a03846764ec31ee2",
+    "seconds": 1426.5,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088843",
+    "file": "SRR5088843_2.fastq.gz",
+    "bytes": 2134095483,
+    "md5": "97bf2d9b00f92dc581ecc9dd2ff048b4",
+    "expected_md5": "97bf2d9b00f92dc581ecc9dd2ff048b4",
+    "seconds": 1389.1,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088861",
+    "file": "SRR5088861_1.fastq.gz",
+    "bytes": 2018912452,
+    "md5": "235fcd25b6e1b01ba8f5ea5b192dd7d5",
+    "expected_md5": "235fcd25b6e1b01ba8f5ea5b192dd7d5",
+    "seconds": 1283.7,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088861",
+    "file": "SRR5088861_2.fastq.gz",
+    "bytes": 2138460045,
+    "md5": "ea5ed0e6fc279138fc419950597ca4e3",
+    "expected_md5": "ea5ed0e6fc279138fc419950597ca4e3",
+    "seconds": 1233.8,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088924",
+    "file": "SRR5088924_1.fastq.gz",
+    "bytes": 2079553084,
+    "md5": "09165ae24d2ef6e14fa2218b2a20367c",
+    "expected_md5": "09165ae24d2ef6e14fa2218b2a20367c",
+    "seconds": 1320.0,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088924",
+    "file": "SRR5088924_2.fastq.gz",
+    "bytes": 2269218557,
+    "md5": "9a60ab27acf6e1f8fca401fd973b6348",
+    "expected_md5": "9a60ab27acf6e1f8fca401fd973b6348",
+    "seconds": 1513.8,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088891",
+    "file": "SRR5088891_1.fastq.gz",
+    "bytes": 2135536402,
+    "md5": "58ee4b91a7955cb1e37502c148e8bbcd",
+    "expected_md5": "58ee4b91a7955cb1e37502c148e8bbcd",
+    "seconds": 893.4,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088891",
+    "file": "SRR5088891_2.fastq.gz",
+    "bytes": 2236564045,
+    "md5": "3539b01bf3e5087527ecfb0297c9e4d0",
+    "expected_md5": "3539b01bf3e5087527ecfb0297c9e4d0",
+    "seconds": 576.7,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088913",
+    "file": "SRR5088913_1.fastq.gz",
+    "bytes": 1761401098,
+    "md5": "9054c06e18effa41d4d824bff4bfc170",
+    "expected_md5": "9054c06e18effa41d4d824bff4bfc170",
+    "seconds": 672.1,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088913",
+    "file": "SRR5088913_2.fastq.gz",
+    "bytes": 1967184251,
+    "md5": "c5cc1aeac9378d576296617576036b27",
+    "expected_md5": "c5cc1aeac9378d576296617576036b27",
+    "seconds": 789.4,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088909",
+    "file": "SRR5088909_1.fastq.gz",
+    "bytes": 1816017000,
+    "md5": "eaf965bf490b089b1612ae10805e78c9",
+    "expected_md5": "eaf965bf490b089b1612ae10805e78c9",
+    "seconds": 409.3,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088909",
+    "file": "SRR5088909_2.fastq.gz",
+    "bytes": 1970614804,
+    "md5": "9476d6bea3bcdaaa00a584207535c23f",
+    "expected_md5": "9476d6bea3bcdaaa00a584207535c23f",
+    "seconds": 359.1,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088867",
+    "file": "SRR5088867_1.fastq.gz",
+    "bytes": 1841378387,
+    "md5": "eabb0fa819ede46b381f26150a57d8b0",
+    "expected_md5": "eabb0fa819ede46b381f26150a57d8b0",
+    "seconds": 1191.1,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088867",
+    "file": "SRR5088867_2.fastq.gz",
+    "bytes": 1976724680,
+    "md5": "430c9f3198a813455bf5f4b420b25276",
+    "expected_md5": "430c9f3198a813455bf5f4b420b25276",
+    "seconds": 230.7,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088826",
+    "file": "SRR5088826_1.fastq.gz",
+    "bytes": 1859154069,
+    "md5": "6752a0fe9f39af3fe89f0c39614f3a26",
+    "expected_md5": "6752a0fe9f39af3fe89f0c39614f3a26",
+    "seconds": 1231.3,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088826",
+    "file": "SRR5088826_2.fastq.gz",
+    "bytes": 1997246007,
+    "md5": "aedda663bac7d553fe13b3d25cad1c09",
+    "expected_md5": "aedda663bac7d553fe13b3d25cad1c09",
+    "seconds": 1063.8,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088840",
+    "file": "SRR5088840_1.fastq.gz",
+    "bytes": 1906597307,
+    "md5": "05671f5748996cd93c51677838a0ba24",
+    "expected_md5": "05671f5748996cd93c51677838a0ba24",
+    "seconds": 1109.1,
+    "status": "ok"
+  },
+  {
+    "run": "SRR5088840",
+    "file": "SRR5088840_2.fastq.gz",
+    "bytes": 2025282780,
+    "md5": "2e60b162a1d01aec628deab964590013",
+    "expected_md5": "2e60b162a1d01aec628deab964590013",
+    "seconds": 716.9,
+    "status": "ok"
+  }
+]

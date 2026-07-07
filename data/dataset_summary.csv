@@ -1,0 +1,7 @@
+dataset,cancer,N,raw_fastq_public,WES,scRNA,spatial,response_labels,public_download,accession,est_size,preprocessing
+Gide 2019,Melanoma,91 RNA-seq (73 PRE),YES (ENA open),No*,No,No,RECIST + arm/timepoint in titles,YES,PRJEB23709,~824 GB,align+quantify
+Riaz 2017,Melanoma,109 RNA-seq (Pre+On),YES (SRA/ENA open),paired in study,No,No,"RECIST, GSM-mapped",YES,PRJNA356761 / GSE91061,~486 GB,align+quantify
+Zhao/Cloughesy 2019,Glioblastoma,34 RNA-seq + 57 WXS,YES (ENA open),YES (57 WXS),No,No,anti-PD1 response,YES,PRJNA482620,~493 GB,align+quantify
+Kim 2018,Gastric,78 RNA-seq + 110 WXS,YES (ENA open),YES (110 WXS),No,No,pembro response,YES,PRJEB25780,~1.05 TB,align+quantify
+IMvigor210,Urothelial,~348 (expr matrix),NO (raw = EGA controlled),summary only,No,No,atezo RECIST/OS,expr only (R pkg),EGA / IMvigor210CoreBiologies,~small (counts),none (processed)
+TISCH2,Pan-cancer,millions of cells,N/A (scRNA processed),No,YES,No,many IO cohorts,YES (processed),tisch.comp-genomics.org,varies,none (validation)

@@ -1,0 +1,66 @@
+# --- Raw / large data — never committed to a public repo ---
+# Committed: metadata only (manifests, receipts, catalogs, clinical labels).
+# Not committed: raw reads, alignments, quantifications, large binaries.
+data/raw/**
+reference/**
+results/large/**
+!data/README.md
+!data/**/README.md
+!data/**/*.tsv
+!data/**/*.csv
+!data/**/*.json
+!data/**/*.manifest
+
+*.bam
+*.bai
+*.cram
+*.sam
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.sra
+*.sf
+*.bw
+*.h5
+*.h5ad
+*.loom
+*.rds
+*.npz
+*.zarr
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- R ---
+.Rhistory
+.RData
+.Rproj.user/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# --- Secrets — never commit ---
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+
+# --- Sandbox git metadata (this checkout keeps git metadata in .gitmeta,
+#     not .git, because the build sandbox forbids any path named .git.
+#     On a normal machine rename .gitmeta -> .git for a standard repo.) ---
+.gitmeta/
