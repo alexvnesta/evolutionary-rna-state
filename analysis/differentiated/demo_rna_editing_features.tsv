@@ -1,0 +1,4 @@
+run_accession	cohort	alu_editing_index	alu_editing_index_percent	aei_ag_mismatches	aei_a_coverage	aei_signal_to_noise	alu_editing_index_cohortz	editing_neoantigen_burden	n_recoding_sites_edited	n_candidate_peptides
+S_hi	synth	0.015	1.5	15000	1000000	30.0	0.7869058860560276	1	1	38
+S_lo	synth	0.002	0.2	2000	1000000	4.0	-0.6744907594765952	0	0	0
+S_mid	synth	0.008	0.8	8000	1000000	12.0	0.0	1	2	38
