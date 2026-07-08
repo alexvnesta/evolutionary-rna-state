@@ -58,6 +58,30 @@ raw reads, with additional public IO cohorts inventoried for extension:
 See `docs/DATA_INVENTORY.md` and `data/dataset_summary.csv` for the full table,
 access levels, and accessions.
 
+## Results & submission
+
+**Headline:** A de-novo antigen-presentation axis built from raw-read RNA
+separates ICB responders *within* a cohort (LOO AUROC 0.87) but is
+infiltration-driven (ρ=0.77) and does **not** transfer to two independent
+held-out cohorts (Riaz 0.36, Hugo 0.58). Standard WES-derived neoantigen
+proxies show no structure beyond mutational burden (perm p=0.78) in a
+well-powered test. A rigorous cautionary negative that sharpens the hypothesis.
+
+| Deliverable | Path |
+|---|---|
+| Manuscript (Markdown) | [`docs/WRITEUP.md`](docs/WRITEUP.md) |
+| **Manuscript (HTML, linked citations + cartoons)** | [`docs/manuscript.html`](docs/manuscript.html) |
+| Mechanistic cartoons (NIH BioArt illustrations) | [`results/cartoon_thesis.png`](results/cartoon_thesis.png), `cartoon_wes_blind.png`, `cartoon_pipeline.png`, `cartoon_confound.png` |
+| BioArt icon set + attribution | [`results/bioart_icons/`](results/bioart_icons/) (NIAID Visual & Medical Arts) |
+| References (verified DOIs) | [`results/citations.json`](results/citations.json) |
+| 100–200 word summary | [`docs/SUMMARY_100-200w.md`](docs/SUMMARY_100-200w.md) |
+| Figure deck (8 figs) + supplement | [`results/figure_deck.pdf`](results/figure_deck.pdf), `results/figure_deck_supplement.pdf` |
+| Reproducible demo (< 30 s) | [`notebooks/demo_reproduce_headline.ipynb`](notebooks/demo_reproduce_headline.ipynb) |
+| How to reproduce everything | [`REPRODUCE.md`](REPRODUCE.md) |
+| Demo video script + slideshow | [`docs/VIDEO_SCRIPT.md`](docs/VIDEO_SCRIPT.md), `results/demo_slideshow.gif` |
+| Daily-refresh skill | `evolutionary-rna-state-refresh` (published; trigger with "run the refresh") |
+| BioArt figure skill | `niaid-bioart` (published; search + download NIH BioArt illustrations for figures) |
+
 ## Provenance & compliance
 
 This repository was initialized fresh during the hackathon; all code is
