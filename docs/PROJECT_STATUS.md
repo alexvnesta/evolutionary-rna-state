@@ -39,10 +39,13 @@ positive grouped-CV DDLPS signal (AUC 0.940, p=0.005) on its own track.
 ## Verified pipeline milestones
 - HISAT2 alignment spine validated (pilot PD1_35_PRE: 79.08M reads, 100% mapped/paired).
 - RNA editing: real output on 16 samples across both cohorts (AEI tables, signal/noise-guarded).
-- Intron-retention + splicing arms integrated. te_erv (Telescope) now verified
-  end-to-end on the pilot (arm64 build fixed; commits `50acf50`, `72322ab`) — the
-  last parse-verified-only gap is closed. Two nf-core pipelines (rnasplice,
-  rnafusion) remain configured-but-not-run-on-real-data.
+- Intron-retention + splicing arms integrated. te_erv (Telescope) end-to-end run
+  independently verified on disk (coordination session): pilot PD1_35_PRE Telescope
+  report `results/large/nf_work_te_erv/.../PD1_35_PRE-telescope_report.tsv` — task
+  exit 0, 34.7M fragments processed, 5,462 TE/ERV transcripts with non-zero counts
+  (named L1 elements present). The last parse-verified-only gap is closed (build
+  fixes in `50acf50`, `72322ab`). Two nf-core pipelines (rnasplice, rnafusion)
+  remain configured-but-not-run-on-real-data.
 
 ## Encoder question (open, being worked)
 Session `15defe54` is evaluating **Orthrus** (Mamba-based mature-RNA foundation
