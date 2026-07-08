@@ -39,8 +39,10 @@ positive grouped-CV DDLPS signal (AUC 0.940, p=0.005) on its own track.
 ## Verified pipeline milestones
 - HISAT2 alignment spine validated (pilot PD1_35_PRE: 79.08M reads, 100% mapped/paired).
 - RNA editing: real output on 16 samples across both cohorts (AEI tables, signal/noise-guarded).
-- Intron-retention + splicing arms integrated. te_erv (Telescope) pilot run in progress
-  (was the last parse-verified-only gap).
+- Intron-retention + splicing arms integrated. te_erv (Telescope) now verified
+  end-to-end on the pilot (arm64 build fixed; commits `50acf50`, `72322ab`) — the
+  last parse-verified-only gap is closed. Two nf-core pipelines (rnasplice,
+  rnafusion) remain configured-but-not-run-on-real-data.
 
 ## Encoder question (open, being worked)
 Session `15defe54` is evaluating **Orthrus** (Mamba-based mature-RNA foundation
@@ -49,6 +51,24 @@ model) as a candidate encoder — a new, mRNA-level candidate not in
 Read any encoder result against the kill-test above: the representation question
 is not open on optimistic priors.
 
+## Recommended next step (coordination judgment)
+The decisive open question is whether the falsified hypothesis is *dead* or merely
+*underpowered*. The kill-test harness (`analysis/kill_tests/move2_autorun.py`) is
+already wired to auto-fire the powered **liu2019** adjudication (~n180, 4th held-out
+cohort) the moment its expression matrix lands. Current state on disk:
+- liu2019 **clinical/response table present** (`data/cbioportal/liu2019_mel_iatlas_liu_2019.clinical.tsv`).
+- liu2019 **expression matrix NOT present** — the auto-runner is waiting for it
+  ("via DFCI processed matrix").
+
+So the single highest-value next action is **obtaining the liu2019 expression
+matrix** — it resolves the central question and is far cheaper than a blind
+full-cohort production run. Scaling the ~40-sample cohort is worthwhile only as a
+standalone phenotype-catalog deliverable, not as a way to rescue the response thesis.
+(User was consulted on direction and delegated the call; this is the coordination
+recommendation. Positive clonal-trajectory DDLPS signal remains a separate arm
+needing independent replication.)
+
 ## Items needing user action
-- **Evaluate Orthrus for Genome Analysis** (`15defe54`): Asking whether to approve HF CDN for encoder benchmark
-- **Clean Up Repository Root** (`99462c38`): Trashing transient logs and pycache
+- None open. Prior gates resolved: Orthrus HF access (granted; running), cleanup
+  scratch deletion (completed). te_erv end-to-end verification landed (`72322ab`,
+  `50acf50`) — the last parse-verified-only pipeline gap is closed.
