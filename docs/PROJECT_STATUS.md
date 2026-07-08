@@ -26,7 +26,10 @@ Nextflow scratch. HEAD == remote.
 
 ## Verified milestones
 - **HISAT2 alignment spine validated** (pilot PD1_35_PRE: 79.08M reads, 100%
-  mapped/paired). Full-cohort nf-core run reported complete.
+  mapped/paired). NOTE: full-cohort nf-core completion is *self-reported by the
+  literature session, not independently verified here* — the `nf_work_rnaseq/`
+  tree I inspected held only PD1_35_PRE (re-run attempts), not distinct cohort
+  samples. The 16-sample dataset below is a separate HISAT2 editing-arm track.
 - **RNA editing (Stage 3) — real output on 16 samples** across both cohorts:
   16 HISAT2 BAMs + 16 AEI tables in `results/editing_bams/`. Passes signal/noise
   guard (ERR2208909 AEI 0.226%, S/N 13.8 vs 0.016% floor).
