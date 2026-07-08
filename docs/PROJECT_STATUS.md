@@ -53,12 +53,24 @@ under `analysis/kill_tests/` (code + `results/`) and `docs/FINAL_VERDICT.md` (+ 
   the powered adjudication (4th held-out cohort, ~n180) — fires automatically when it lands.
 
 ## Items needing user action
-- **Clonal Evolution Trajectory** (`b41a2d10`): commit scope for its push (~5 hr parked).
-- **Latest Literature Search** (`e6a36497`): approve `delete_host_files` of 4
-  redundant leftover FASTQs (ERR2208909, SRR3184285 pairs; 9.3 GB). Safe — each
-  sample's BAM verified present; FASTQs re-downloadable from ENA.
+- None open. Both prior gates resolved: Clonal Evolution commit-scope (approved;
+  committed `4db0472`) and Literature Search FASTQ deletion (approved).
 
-## Orphaned uncommitted work (owning sessions completed without committing)
-Small, secret-free; left for owner/user (helper scripts `align_hisat2.sh`,
-`align_only.sh`, `prefetch_fastqs.sh`, `run_aei_batch.sh`; `handoff/HUGO_COMPLETION_28.md`;
-two 0-byte test fixtures). Catalogued, not committed by coordination session.
+## New: encoder-evaluation session vs. the kill-test result (coordination flag)
+A new session **"Evaluate Orthrus for Genome Analysis"** (`15defe54`) is assessing
+Orthrus (a Mamba-based *mature-RNA* foundation model, contrastive-trained on splice
+isoforms + Zoonomia orthologs) as a candidate encoder. Two prior docs bear on it:
+- `docs/ENCODER_REVIEW.md` — existing decision (frozen HyenaDNA/Caduceus first;
+  fine-tuning deferred). Orthrus is a genuinely NEW candidate not in that review,
+  and is mRNA-level rather than DNA-level, so it maps onto the RNA-phenotype
+  endpoint more directly than the DNA models reviewed.
+- **The kill-test result above** is the load-bearing caveat: at 3 cohorts the
+  learned RNA representation is already at chance (LOCO AUROC 0.49). Any encoder
+  evaluation (Orthrus included) should be read against that, and against the
+  pending powered liu2019 adjudication — not as if the representation question
+  were still open on optimistic priors.
+
+## Formerly-orphaned work — now committed
+Helper scripts (`align_hisat2.sh`, `align_only.sh`, `prefetch_fastqs.sh`,
+`run_aei_batch.sh`) + `handoff/HUGO_COMPLETION_28.md` were committed by the Clonal
+Evolution session in `4db0472`. No longer outstanding.
