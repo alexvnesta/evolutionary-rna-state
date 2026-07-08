@@ -1,0 +1,23 @@
+# Conda environment for the RNA-editing subworkflow (A-to-I detection + Alu Editing Index).
+# All packages resolve on osx-arm64 (Apple Silicon) with NO Docker:
+#   - jacusa2  : noarch Java jar (per-site A>G caller, `call-1` mode)   -> arm64 fine
+#   - samtools / htslib : native osx-arm64 (bioconda)                   -> arm64 native
+#   - pysam    : native osx-arm64 (used by the AEI pileup script)       -> arm64 native
+#   - bedtools : native osx-arm64 (Alu interval prep / dbSNP masking)   -> arm64 native
+#   - pandas   : AEI table aggregation                                  -> arm64 native
+# Nextflow (-profile conda) builds this env per-process from this file.
+name: rna_editing
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  # NOTE: do NOT pin openjdk here -- jacusa2 depends on openjdk >=8,<9 and will
+  # pull a compatible JRE itself. Pinning openjdk=17 makes the solve conflict.
+  - jacusa2=2.0.4       # primary per-site A>I(=A>G) caller (bioconda, noarch jar)
+  - samtools=1.21       # BAM indexing / view (native arm64)
+  - htslib=1.21         # bgzip / tabix for site tables (native arm64)
+  - pysam=0.22.1        # pileup engine for the Alu Editing Index (native arm64)
+  - bedtools=2.31.1     # Alu BED intersect + optional dbSNP masking (native arm64)
+  - pandas=2.2.*        # per-sample -> cohort AEI aggregation
+  - numpy=1.26.*

@@ -1,0 +1,3 @@
+sample,fastq_1,fastq_2,bam,strandedness
+pilot01,data/fastq/pilot01_R1.fastq.gz,data/fastq/pilot01_R2.fastq.gz,results/rnaseq/star_salmon/pilot01.markdup.sorted.bam,reverse
+pilot02,data/fastq/pilot02_R1.fastq.gz,data/fastq/pilot02_R2.fastq.gz,results/rnaseq/star_salmon/pilot02.markdup.sorted.bam,reverse

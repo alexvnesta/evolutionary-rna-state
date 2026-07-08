@@ -1,0 +1,5 @@
+sample,fastq_1,fastq_2,strandedness
+PD1_35_PRE,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208952_1.fastq.gz,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208952_2.fastq.gz,auto
+PD1_50_PRE,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208969_1.fastq.gz,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208969_2.fastq.gz,auto
+ipiPD1_35_PRE,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208912_1.fastq.gz,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208912_2.fastq.gz,auto
+ipiPD1_33_PRE,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208909_1.fastq.gz,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208909_2.fastq.gz,auto

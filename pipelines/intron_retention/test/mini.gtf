@@ -1,0 +1,2 @@
+chr1	HAVANA	exon	100	200	.	+	.	gene_id "ENSG_test"; transcript_id "ENST_test";
+chr1	HAVANA	exon	400	500	.	+	.	gene_id "ENSG_test"; transcript_id "ENST_test";

@@ -1,0 +1,12 @@
+name: intron_retention
+# All packages have native osx-arm64 / noarch builds -- solves and runs on
+# Apple Silicon under Nextflow `-profile conda`, no Docker, no Rosetta.
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - subread=2.1.1        # featureCounts -- native osx-arm64
+  - pandas>=2.0
+  - pyarrow>=14          # gzip-parquet output (hand-off contract format)
+  - samtools>=1.19       # BAM index sanity, native arm64

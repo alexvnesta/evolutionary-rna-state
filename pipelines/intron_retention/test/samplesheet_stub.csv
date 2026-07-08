@@ -1,0 +1,3 @@
+run_accession,cohort,bam,bai,single_end
+ERRTEST01,gide2019,test/ERRTEST01.bam,test/ERRTEST01.bam.bai,false
+ERRTEST02,gide2019,test/ERRTEST02.bam,test/ERRTEST02.bam.bai,false

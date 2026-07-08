@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Shim: forward to micromamba, but emulate the conda-specific calls that
+# nf-core pipelines and Nextflow's task runner make (micromamba lacks them).
+SHIMROOT="/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/pipelines/conda_shim"
+if [ "$1" = "config" ] && [ "$2" = "--show" ] && [ "$3" = "channels" ]; then
+  printf 'channels:\n  - conda-forge\n  - bioconda\n'; exit 0
+fi
+if [ "$1" = "info" ] && [ "$2" = "--json" ]; then
+  # Nextflow greps conda_prefix from here, then sources $conda_prefix/bin/activate.
+  printf '{\n  "conda_prefix": "%s"\n}\n' "$SHIMROOT"; exit 0
+fi
+exec /Users/alex/.claude-science/conda/bin/micromamba "$@"

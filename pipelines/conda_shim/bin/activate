@@ -1,0 +1,8 @@
+# Minimal conda-compatible `activate` for micromamba-created envs (no bin/activate).
+# Nextflow sources this as: source <conda_prefix>/bin/activate <ENV_PREFIX>
+# Its only job: put the target env's bin/ first on PATH (+ set CONDA_PREFIX).
+_env="${1:-}"
+if [ -n "$_env" ] && [ -d "$_env/bin" ]; then
+  export CONDA_PREFIX="$_env"
+  export PATH="$_env/bin:$PATH"
+fi

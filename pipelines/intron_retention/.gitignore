@@ -1,0 +1,7 @@
+.nxf_stub_work/
+results_stub/
+.nextflow/
+.nextflow.log*
+work/
+test/*.bam
+test/*.bai
