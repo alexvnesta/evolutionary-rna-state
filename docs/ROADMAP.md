@@ -30,10 +30,16 @@ labels, and rigor guardrails are built in from the start rather than retrofit.
 - Estimate composition + purity (immune/stromal deconvolution) as **explicit
   covariates** the latent state must beat or be shown orthogonal to.
 
-## Stage 3 — RNA-phenotype quantification
+## Stage 3 — RNA-phenotype quantification *(underway)*
 - Splicing, intron retention, RNA editing, TE activation, fusions, cryptic ORFs.
 - Each phenotype quantified as independently as possible to avoid manufacturing
   co-variation (proxy-circularity guard).
+- **RNA editing: real output on 16 samples** across both cohorts (Gide `ERR22089xx`,
+  Riaz/Hugo `SRR*`) — 16 HISAT2 BAMs + 16 A-to-I editing-index (AEI) tables in
+  `results/editing_bams/`. Values pass the signal/noise guard (e.g. ERR2208909
+  AEI 0.226%, S/N 13.8 vs 0.016% noise floor).
+- Intron-retention and splicing arms integrated onto the HISAT2 spine (code
+  complete). TE/ERV (Telescope) parse-verified but not yet run on real data.
 
 ## Stage 4 — Latent state (internal claim)
 - Learn a low-rank / unsupervised representation of the RNA phenotypes.
