@@ -1,0 +1,42 @@
+{
+  "n": 40,
+  "resp": 21,
+  "intrinsic": [
+    "act_pc1",
+    "prolif",
+    "SPLICE_NEOANTIGEN",
+    "FUSION_NEOANTIGEN"
+  ],
+  "per_feature": [
+    {
+      "feature": "act_pc1",
+      "n": 40,
+      "coef": 0.679,
+      "wald_p": 0.137,
+      "LR_p_over_IFN": 0.106
+    },
+    {
+      "feature": "prolif",
+      "n": 40,
+      "coef": 0.209,
+      "wald_p": 0.574,
+      "LR_p_over_IFN": 0.57
+    },
+    {
+      "feature": "SPLICE_NEOANTIGEN",
+      "n": 40,
+      "coef": 0.649,
+      "wald_p": 0.122,
+      "LR_p_over_IFN": 0.103
+    },
+    {
+      "feature": "FUSION_NEOANTIGEN",
+      "n": 40,
+      "coef": -0.079,
+      "wald_p": 0.839,
+      "LR_p_over_IFN": 0.835
+    }
+  ],
+  "joint_intrinsic_over_IFN_p": 0.36481531197936934,
+  "IFN_over_intrinsic_p": 0.0011833536476684454
+}

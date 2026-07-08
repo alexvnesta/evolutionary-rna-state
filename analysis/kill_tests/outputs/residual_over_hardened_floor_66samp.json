@@ -1,0 +1,11 @@
+{
+  "n": 66,
+  "cohorts": {
+    "gide2019": 30,
+    "hugo2016": 26,
+    "riaz2017": 10
+  },
+  "intrinsic_over_floor_p": 0.382555136788458,
+  "floor_over_intrinsic_p": 0.03110687059242294,
+  "n_cell_sig_cohortadj": 4
+}

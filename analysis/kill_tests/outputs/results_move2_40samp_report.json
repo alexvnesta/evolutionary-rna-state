@@ -1,0 +1,116 @@
+{
+  "fingerprint": {
+    "version_id": "47d5d97a-05f0-49b0-91b8-33884b926159",
+    "n_samples": 40,
+    "cohorts": [
+      "gide2019",
+      "riaz2017"
+    ]
+  },
+  "join_meta": {
+    "n_activity": 40,
+    "n_crosswalk": 124,
+    "n_joined": 40,
+    "set_cols": [
+      "SPLICING_FACTOR",
+      "RBP_BROAD",
+      "ADAR_EDITING"
+    ],
+    "cohorts": [
+      "gide2019",
+      "riaz2017"
+    ]
+  },
+  "id_mapping_diagnostics": {
+    "gide2019": {
+      "runs": 30,
+      "mapped_to_iatlas": 30,
+      "rule": "validated"
+    },
+    "riaz2017": {
+      "runs": 10,
+      "mapped_to_iatlas": 10,
+      "rule": "validated"
+    }
+  },
+  "T2_shared_state": {
+    "status": "ok",
+    "n": 10,
+    "n_sets": 3,
+    "sets": [
+      "SPLICING_FACTOR",
+      "RBP_BROAD",
+      "ADAR_EDITING"
+    ],
+    "pc1_observed": 0.8089,
+    "null_mean": 0.5091,
+    "null_sd": 0.071,
+    "p_value": 0.0,
+    "covariates": [
+      "logTMB",
+      "logMUT",
+      "ch_riaz2017"
+    ]
+  },
+  "T3_prediction": {
+    "TMB_alone": {
+      "auroc": null,
+      "n": 0,
+      "note": "pooled OOF single-class (need >=2 cohorts)"
+    },
+    "TMB_plus_activity": {
+      "auroc": null,
+      "n": 0,
+      "note": "pooled OOF single-class (need >=2 cohorts)"
+    },
+    "activity_alone": {
+      "auroc": 0.5714,
+      "n": 40,
+      "note": ""
+    }
+  },
+  "reframing_P1P3": {
+    "n": 40,
+    "n_regulators": 56,
+    "n_prolif": 20,
+    "n_ifn": 21,
+    "P1_activity_pc1_var": 0.3982,
+    "P1_null_mean": 0.2392,
+    "P1_p_value": 0.0,
+    "prolif_independence_r": -0.0441,
+    "prolif_independence_p": 0.7872,
+    "P2_immune_cold_partial_r": -0.3871,
+    "P2_immune_cold_p": 0.0136,
+    "n_with_response": 40,
+    "rho_ifn_response": 0.4836,
+    "p_ifn_response": 0.0016,
+    "rho_act_pc1_response": 0.1843,
+    "p_act_pc1_response": 0.2549,
+    "rho_prolif_response": 0.0802,
+    "p_prolif_response": 0.6226,
+    "P3_auroc_ifn": 0.7669,
+    "P3_auroc_ifn_plus_activity": 0.782,
+    "P3_incremental_delta": 0.015,
+    "P3_auroc_activity_alone": 0.5288
+  },
+  "headtohead_learned_rep": {
+    "n": 40,
+    "n_cohorts": 2,
+    "cv5": {
+      "immune_floor": 0.7593984962406015,
+      "learned_rep": 0.6015037593984962,
+      "floor+rep": 0.6090225563909775
+    },
+    "loco": {
+      "immune_floor": 0.7042606516290727,
+      "learned_rep": 0.5639097744360902,
+      "floor+rep": 0.5588972431077694
+    },
+    "loco_perm_p": {
+      "immune_floor": 0.005025125628140704,
+      "learned_rep": 0.1407035175879397,
+      "floor+rep": 0.15577889447236182
+    }
+  },
+  "n_cohorts_with_TMB": 1
+}

@@ -1,0 +1,19 @@
+{
+  "n": 66,
+  "n_cohorts": 3,
+  "cv5": {
+    "immune_floor": 0.6405529953917051,
+    "learned_rep": 0.4728110599078341,
+    "floor+rep": 0.4949308755760368
+  },
+  "loco": {
+    "immune_floor": 0.5907834101382489,
+    "learned_rep": 0.49124423963133645,
+    "floor+rep": 0.503225806451613
+  },
+  "loco_perm_p": {
+    "immune_floor": 0.044,
+    "learned_rep": 0.406,
+    "floor+rep": 0.362
+  }
+}

@@ -37,6 +37,21 @@ Nextflow scratch. HEAD == remote.
   (Telescope) parse-verified only — not yet run on real data** (main open gap).
 - Interpretable backbone + eval harness integrated; Hugo cohort quant done.
 
+## Hypothesis kill-tests (session `83645bba`, committed 2026-07-08)
+The core hypothesis was tested on its own terms and does not survive. Deliverables committed
+under `analysis/kill_tests/` (code + `results/`) and `docs/FINAL_VERDICT.md` (+ `docs/figures/`).
+- **Learned-representation head-to-head** (the previously-untested core): unsupervised RNA
+  embedding vs immune floor, leave-one-cohort-out + permutation null. At 3 cohorts (n=66,
+  gide+hugo+riaz) the learned representation is at CHANCE (LOCO AUROC 0.49, perm p=0.41) while
+  the immune floor is real-but-weak (0.59, p=0.044); combining degrades the floor. Random-CV
+  parity was within-cohort overfitting (9-config sweep confirms).
+- **Immune-composition dominance**: tumor-intrinsic RNA adds nothing over a multi-cell-type
+  immune floor (residual p=0.38, n=66); confirms the CIBERSORTx/xCell critique. Antigen-quantity
+  core already dead (416 samples); RNA×clonality null (n=189); heterogeneity is a DNA-side effect.
+- **Auto-runner** `analysis/kill_tests/move2_autorun.py` (v7) re-fires all tests on any expression-
+  matrix growth; liu2019 passthrough validated (maps 122/122 via sampleId OR patientId). liu is
+  the powered adjudication (4th held-out cohort, ~n180) — fires automatically when it lands.
+
 ## Items needing user action
 - **Clonal Evolution Trajectory** (`b41a2d10`): commit scope for its push (~5 hr parked).
 - **Latest Literature Search** (`e6a36497`): approve `delete_host_files` of 4

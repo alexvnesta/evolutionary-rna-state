@@ -1,0 +1,27 @@
+{
+  "test": "RNA -> clonal architecture (the hypothesis's literal latent variable)",
+  "n_current": 10,
+  "cohorts_current": [
+    "riaz2017"
+  ],
+  "structural_cap": "RNA\u2229clonality=10 until liu2019 expression lands; liu adds ~122 -> n~132",
+  "probe_n10": {
+    "act_pc1_vs_MATH": [
+      0.03,
+      0.934
+    ],
+    "act_pc1_vs_clonal_frac": [
+      -0.188,
+      0.603
+    ],
+    "generic_vs_MATH": [
+      -0.018,
+      0.96
+    ],
+    "generic_vs_clonal_frac": [
+      -0.042,
+      0.907
+    ]
+  },
+  "verdict": "no RNA axis tracks clonality at n=10 (all |rho|<0.19), but underpowered; directional only"
+}
