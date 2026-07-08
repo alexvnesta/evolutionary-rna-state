@@ -74,6 +74,40 @@ Full method + caveats: `data/registry/_joins_provenance.json`.
   (open at ENA SRP095809, 177 WXS) run through a CCF caller, which is out of the
   current calls-only variant scope.
 
+## Alignment output-format policy (durable — adopt for ALL alignment)
+
+**Alignment output is COMPLETE, LOSSLESS, reference-based CRAM. Never a filtered BAM.**
+
+Rationale: the project hypothesis names TE activation, fusion transcripts, and viral/repeat signal as
+observable RNA phenotypes. Those live in unmapped and multi-mapped reads. An aligner run with
+`--no-unal` / `-q 60` (as an AEI-only intermediate would use) discards exactly that signal — such a BAM
+is a purpose-built intermediate, NOT a raw-read archive, and must not be reused for the raw-read / TE /
+fusion branch.
+
+Policy, implemented in `align_hisat2.sh`:
+- Keep every read (no `--no-unal`, no MAPQ filter at align time).
+- Emit coordinate-sorted, `.crai`-indexed CRAM with `--reference <genome.fa>`, default lossless quality
+  (NO quality binning). Output dir `results/editing_crams/`.
+- A complete CRAM is a full FASTQ replacement: `samtools fastq <cram>` regenerates the reads. Size is
+  ~56% of FASTQ.gz (measured on the genuine complete CRAM ERR2208909: FASTQ.gz 5.54 GB → complete CRAM
+  3.10 GB, 125.3M reads incl. 42M secondary — ~44% smaller and already aligned). A CRAM built from the
+  filtered unique-read BAM is smaller (~1.5 GB) but is NOT complete — do not cite that as the ratio.
+- Downstream tools filter at READ time, not align time: AEI applies `samtools mpileup -q 60` inside
+  `compute_aei_fast.py --min-mapq 60`, which reads CRAM natively given the reference. Verified on a
+  genuinely complete CRAM: ERR2208909 re-aligned from FASTQ with no filters (125.3M reads; 2.43M
+  unmapped, 42.1M secondary, 59.1M MAPQ<60 — i.e. it contains exactly what a filtered BAM drops), then
+  read-time `mpileup -q 60` reproduces the AEI from the old filtered-BAM alignment bit-for-bit
+  (0.226002%, A>G=1040, A_cov=460172). So filtering at read time equals filtering at align time for AEI —
+  the format switch loses nothing for AEI while preserving the raw reads for everything else.
+- Do NOT auto-delete FASTQs in the align loop (the earlier version did, and removed 14/16 subset FASTQs).
+  ENA is the canonical raw archive; `editing_subset_manifest.csv` holds accessions + `fastq_ftp` URLs and
+  `prefetch_fastqs.sh` re-fetches with integrity checks, so re-materialization is a one-command,
+  on-demand operation — but the pipeline should not throw raw data away as a side effect.
+
+Aligner note: the `editing` conda env's STAR 2.7.11b arm64 build is broken (reads 0 input from every
+FASTQ, confirmed on synthetic input) — use HISAT2 2.2.2 (the aligner that produced the repo's existing
+BAMs), reusing `results/rnaseq_pilot_hisat2/genome/index/hisat2/`.
+
 ## Pointers
 
 - Cohort rationale + exclusions: `docs/DATA_INVENTORY.md`, `data/registry/README.md`.
