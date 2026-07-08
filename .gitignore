@@ -107,3 +107,4 @@ pipelines/nfcore/
 
 # --- Stray kernel image previews accidentally landing at repo root ---
 /_view_*.png
+pipelines/te_erv/vendor/build/

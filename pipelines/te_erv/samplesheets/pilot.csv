@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2,bam,strandedness
+PD1_35_PRE,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208952_1.fastq.gz,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/data/raw/fastq/ERR2208952_2.fastq.gz,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/rnaseq_pilot_hisat2/hisat2/PD1_35_PRE.markdup.sorted.bam,reverse

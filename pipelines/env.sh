@@ -65,3 +65,11 @@ export NXF_TXIMETA_ENV="$_REPO_ROOT/.nextflow_home/persistent_envs/tximeta"
 # pipelines/scripts/build_local_channel.sh. Prepended to conda.channels in
 # mac_arm64.config at highest priority.
 export NXF_LOCAL_CHANNEL="file://$_REPO_ROOT/.nextflow_home/local_channel"
+
+# pip config for conda-env pip installs (e.g. te_erv Telescope/TEtranscripts).
+# The sandbox's TLS-terminating proxy presents a cert the conda envs' pip
+# cannot verify -> SSLCertVerificationError (macOS OSStatus -26276), even for
+# the allowlisted PyPI. pip.conf trusts pypi.org + the wheel host to skip that
+# proxy-cert check (the hosts are already network-allowlisted, so reach is not
+# widened). Exported so Nextflow task shells inherit it.
+export PIP_CONFIG_FILE="$_REPO_ROOT/pipelines/conf/pip.conf"

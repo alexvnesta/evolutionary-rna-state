@@ -45,6 +45,18 @@ dependencies:
       # Family-level TEcount — PyPI wheel (dep: pysam only), avoids the
       # bioconductor-deseq arm64 blocker in the conda tetranscripts package.
       - "TEtranscripts==2.2.4"
-      # Locus-level EM reassignment. Build from source (mlbendall main, v1.0.3),
-      # linking the conda numpy/cython above.
-      - "git+https://github.com/mlbendall/telescope.git@main"
+      # Locus-level EM reassignment (mlbendall telescope v1.0.3, latest release).
+      # Installed from a LOCALLY-VENDORED, PRE-BUILT arm64 WHEEL. Three problems
+      # had to be solved to get here (all documented in RUNBOOK §5):
+      #   1. git+https fails — the sandbox forbids creating any .git dir, so a
+      #      pip git clone dies with "Operation not permitted".
+      #   2. a remote https:// URL fails — pip in the conda env can't verify the
+      #      sandbox proxy's TLS cert (SSLCertVerificationError OSStatus -26276);
+      #      PIP_CONFIG_FILE (pipelines/conf/pip.conf) trusts pypi.org so PyPI
+      #      deps resolve, but github.com is not covered.
+      #   3. the v1.0.3 source does not Cython-compile under modern Cython
+      #      (0.29.36): calignment.pyx self-cimports its own module, which the
+      #      current parser rejects. pipelines/te_erv/vendor/build_telescope_wheel.sh
+      #      strips that one line and builds the wheel below (arm64, cp310).
+      # Rebuild the wheel with that script if the Python minor version changes.
+      - "/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/pipelines/te_erv/vendor/telescope_ngs-1.0.3-cp310-cp310-macosx_11_0_arm64.whl"

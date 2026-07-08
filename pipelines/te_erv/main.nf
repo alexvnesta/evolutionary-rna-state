@@ -95,12 +95,17 @@ workflow {
             tuple(meta, file(row.bam, checkIfExists: true))
         }
 
+    // Argument order MUST match the TE_ERV workflow `take:` block in te_erv.nf:
+    //   ch_reads, ch_bam, genome_fasta, te_gtf_locus, gene_gtf, te_gtf_family
+    // (te_gtf_locus before gene_gtf — Telescope gets the retro locus GTF, TEcount
+    //  gets the GENCODE gene GTF; swapping them makes Telescope read gencode and
+    //  die with KeyError: 'locus').
     TE_ERV(
         ch_reads,
         ch_bam,
         file(params.genome_fasta,  checkIfExists: true),
-        file(params.gene_gtf,      checkIfExists: true),
         file(params.te_gtf_locus,  checkIfExists: true),
+        file(params.gene_gtf,      checkIfExists: true),
         file(params.te_gtf_family, checkIfExists: true)
     )
 }

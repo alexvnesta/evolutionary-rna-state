@@ -61,6 +61,11 @@ process BOWTIE2_ALIGN_MULTI {
     script:
     // paired vs single-end read arguments
     def readsArg = meta.single_end ? "-U ${reads}" : "-1 ${reads[0]} -2 ${reads[1]}"
+    // coalesce a null/absent bowtie2_extra_args to empty — Nextflow interpolates
+    // an unset param as the literal string "null", which bowtie2 would otherwise
+    // treat as a positional SAM-output filename (silently writing to a file
+    // named "null" and leaving the samtools pipe empty).
+    def extraArgs = params.bowtie2_extra_args ? params.bowtie2_extra_args : ""
     // bowtie2 index basename inside the passed index dir (built by BOWTIE2_BUILD)
     """
     IDX=\$(ls ${bt2_index_dir}/*.1.bt2* 2>/dev/null | head -1 | sed -E 's/\\.1\\.bt2l?\$//')
@@ -70,7 +75,7 @@ process BOWTIE2_ALIGN_MULTI {
         -k 100 --very-sensitive-local --score-min L,0,1.6 \\
         -p ${task.cpus} \\
         --no-unal \\
-        ${params.bowtie2_extra_args} \\
+        ${extraArgs} \\
         2> ${meta.id}.bowtie2.log \\
         | samtools view -bS - > ${meta.id}.multi.bam
 
@@ -145,13 +150,17 @@ process TELESCOPE_ASSIGN {
     path  "versions.yml",                                     emit: versions
 
     script:
+    // coalesce null -> "" (an unset param interpolates as the string "null",
+    // which telescope would treat as a positional argument).
+    def extraArgs = params.telescope_extra_args ? params.telescope_extra_args : ""
     """
     telescope assign \\
         --exp_tag ${meta.id} \\
         --theta_prior 200000 \\
         --max_iter 200 \\
         --outdir . \\
-        ${params.telescope_extra_args} \\
+        --logfile ${meta.id}-telescope.log \\
+        ${extraArgs} \\
         ${bam} \\
         ${te_gtf_locus}
 
@@ -193,6 +202,7 @@ process TETRANSCRIPTS_COUNT {
 
     script:
     def stranded = meta.strandedness ?: 'no'
+    def extraArgs = params.tetranscripts_extra_args ? params.tetranscripts_extra_args : ""
     """
     TEcount \\
         --BAM ${bam} \\
@@ -202,7 +212,7 @@ process TETRANSCRIPTS_COUNT {
         --stranded ${stranded} \\
         --sortByPos \\
         --project ${meta.id} \\
-        ${params.tetranscripts_extra_args}
+        ${extraArgs}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

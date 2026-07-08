@@ -79,7 +79,7 @@ for the per-tool arm64 availability map.
 | Base align + quant | **nf-core/rnaseq 3.26.0** (HISAT2 + Salmon on arm64) | mature; validated |
 | Alternative splicing | **nf-core/rnasplice 1.0.4** (rMATS, DEXSeq, edgeR, SUPPA2) | mature |
 | Fusion transcripts | **nf-core/rnafusion 4.1.3** (Arriba + STAR-Fusion; FusionCatcher deferred) | mature |
-| TE / ERV activation | **custom** `pipelines/te_erv/` (Telescope locus via bowtie2 + TEcount family) | authored + integration-tested |
+| TE / ERV activation | **custom** `pipelines/te_erv/` (Telescope locus via bowtie2 + TEcount family) | authored; family branch (TEcount) run on real data, Telescope locus branch in progress — see status section |
 | Intron retention | **custom** `pipelines/intron_retention/` (featureCounts IR-ratio) | authored + integration-tested |
 | RNA editing | **custom** `pipelines/rna_editing/` (JACUSA2 sites + Alu Editing Index) | authored + integration-tested |
 
@@ -127,6 +127,11 @@ Docker you would not need most of it — you could `nextflow run nf-core/rnaseq 
 11. **Qualimap aborts on arm64:** `skip_qualimap=true` (JVM `Abort trap: 6` during plot creation, after fully analysing the BAM — non-essential QC).
 12. **Bioconductor arm64 gaps:** `arm64_module_overrides.config` bumps module pins that lack osx-arm64 builds (tximeta 1.20→1.24, summarizedexperiment 1.32→1.36, perl 5.26→5.32, subread 2.0.6→2.0.8, stringtie 2.2.1→2.2.3, ucsc-* 377/469→482). `GenomeInfoDbData` is pre-seeded into a persistent tximeta env (its bioconda post-link CDN download is blocked).
 13. **MultiQC `referencing`/`rich` gaps:** the `referencing` conda pkg bundles a `.git` dir that trips git-protection, so a `.git`-stripped rebuild is served from a local file:// channel (`NXF_LOCAL_CHANNEL`); and MULTIQC is pinned to `python=3.12 rich=13 rich-click=1.7.4 multiqc=1.33` (rich 15 broke `rich.panel` submodule access).
+14. **te_erv pip installs (Telescope + TEtranscripts):** three layered blocks, all handled in `pipelines/te_erv/environment.yml` + `env.sh`:
+    - *PyPI TLS:* pip inside a conda env can't verify the sandbox proxy's cert (`SSLCertVerificationError`, macOS `OSStatus -26276`), even for the allowlisted PyPI. `pipelines/conf/pip.conf` (wired via `PIP_CONFIG_FILE` in `env.sh`) trusts `pypi.org`/`files.pythonhosted.org` to skip the proxy-cert check — the hosts are already network-allowlisted, so reach is not widened. This lets `TEtranscripts==2.2.4` resolve from PyPI.
+    - *GitHub blocked for Telescope:* `git+https` fails (no `.git` dir allowed) and a remote tarball URL fails the same TLS check. Telescope v1.0.3 is therefore vendored (`pipelines/te_erv/vendor/`) and installed from a **pre-built arm64 wheel**.
+    - *Cython won't compile v1.0.3 as-is:* `calignment.pyx` does `from calignment cimport AlignedPair` — a self-cimport modern Cython (0.29.36) rejects (the sibling `.pxd` is auto-applied). `pipelines/te_erv/vendor/build_telescope_wheel.sh` strips that line and builds the wheel with `--no-build-isolation` (so the conda numpy/cython are used). Rebuild it if the env's Python minor version changes.
+15. **Nextflow null-param interpolation:** an unset process param (e.g. `params.bowtie2_extra_args`) interpolates into a task script as the literal string `"null"`, which a tool then treats as a positional argument (bowtie2 wrote its SAM to a file named `null`, leaving the samtools pipe empty). All optional `*_extra_args` in `te_erv.nf` are coalesced (`def x = params.x ?: ""`) before interpolation.
 
 ## 6. Resource model (`pipelines/conf/mac_arm64.config`)
 
@@ -153,3 +158,28 @@ unaffected (real: 42.2M processed, 85.14% mapped). The spine therefore uses
 `--aligner hisat2 --pseudo_aligner salmon`; the TE/ERV Telescope branch uses
 bowtie2. STAR remains wired only as the amd64/Docker fallback. UV/pip cannot help
 — STAR is a compiled C++ binary, not a Python package.
+
+## 8. Disk: archival CRAM (post-processing)
+
+The persistent output of the spine is the coordinate-sorted markdup BAM
+(~3.3 GB/sample). To reclaim disk we archive these to CRAM **after** the
+subworkflows have consumed them — NOT as the working format. Rationale:
+
+- Every consumer (nf-core/rnaseq, rnasplice, rnafusion, and the three custom
+  subworkflows) reads BAM. Making CRAM the working format would require threading
+  the reference FASTA through featureCounts + TEcount and adds CRAM encode/decode
+  CPU on every pass. Since the BAM is transient either way, converting *after* the
+  fan-out gives the same disk savings with no downstream changes.
+- `pipelines/scripts/archive_bam_to_cram.sh <ref.fa> <bam|dir>`:
+  `samtools view -C -T <ref>` → index → `quickcheck` → verify → delete BAM
+  (unless `--keep`). Verify is a **deep** core-field checksum by default
+  (QNAME/FLAG/RNAME/POS/MAPQ/CIGAR/RNEXT/PNEXT/SEQ/QUAL + `|TLEN|`); `--quick`
+  drops to record-count + flagstat.
+- **Losslessness:** the CRAM round-trip is lossless for everything that carries
+  alignment meaning. The only per-record difference is the **TLEN sign** for mate
+  pairs at the *same position* (POS==MPOS) — htslib recomputes it on decode with a
+  spec-permitted tie-break; magnitude is preserved and no downstream tool depends
+  on it. Verified on the pilot BAM: 79,080,188 records, deep-verify identical
+  after TLEN-sign normalization, **~53% smaller** (3.34 GB → 1.56 GB).
+- Quality scores are retained in full (no binning), so the conversion is
+  information-preserving, not lossy-CRAM.
