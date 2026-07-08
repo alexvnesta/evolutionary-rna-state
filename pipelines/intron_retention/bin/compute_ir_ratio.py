@@ -180,12 +180,15 @@ def main():
     wide = wide.reset_index()
     wide.insert(1, "cohort", args.cohort)
     # numeric feature columns as float32 to keep the matrix small
-    feat_cols = [c for c in wide.columns if c not in ("run_accession", "cohort")]
-    # cast column-by-column: a single assignment `wide[feat_cols] = ...` fails with
-    # "Columns must be same length as key" if any intron_id is duplicated across the
-    # feature columns (defensive — the collapse above should already make them unique).
-    for c in feat_cols:
-        wide[c] = wide[c].astype("float32")
+    # Down-cast the feature block to float32 to keep the matrix small. Do it as ONE
+    # block operation on the id-column-free sub-frame, not a per-column loop: with
+    # ~290k intron columns a `for c in cols: wide[c] = wide[c].astype(...)` loop is
+    # O(ncols) DataFrame re-inserts and takes minutes (it hangs the process). The
+    # collapse above makes intron_id (hence the columns) unique, so a single
+    # `.astype` on the block is safe.
+    id_cols = ["run_accession", "cohort"]
+    feat = wide.drop(columns=id_cols).astype("float32")
+    wide = pd.concat([wide[id_cols], feat], axis=1)
     try:
         wide.to_parquet(args.out_wide, index=False, compression="gzip")
     except Exception as e:  # pragma: no cover - pyarrow missing

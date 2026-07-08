@@ -95,5 +95,15 @@ pipelines/**/work/
 pipelines/**/results/
 pipelines/**/.nextflow*
 
+# --- All Nextflow pipeline results (BAMs, matrices, quant, integration tests) ---
+# These are regenerable outputs, often >100 MB (GitHub's hard file limit).
+# Commit the pipeline CODE and the RUNBOOK, never the run outputs.
+results/
+*.parquet
+
+# --- Staged nf-core pipeline source trees (downloaded by stage_nfcore.sh) ---
+# Third-party pipeline code; regenerated from release tarballs, not ours to vendor.
+pipelines/nfcore/
+
 # --- Stray kernel image previews accidentally landing at repo root ---
 /_view_*.png

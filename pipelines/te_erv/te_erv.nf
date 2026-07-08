@@ -7,16 +7,23 @@
  *  (TEtranscripts / TEcount) for the evolutionary-RNA-state melanoma-ICB study.
  *
  *  Two independent alignment inputs, by design:
- *    - Telescope    needs its OWN STAR run with high multimapping retention
- *                   (--outFilterMultimapNmax 100 --winAnchorMultimapNmax 200,
- *                    unsorted BAM keeping all alignments of a read together).
- *                   The standard nf-core/rnaseq BAM discards multimappers and
- *                   is therefore NOT usable for locus-level TE EM.
+ *    - Telescope    needs its OWN multimap-permissive alignment. Telescope's own
+ *                   documentation and paper (Bendall et al. 2019, PLOS Comp Biol)
+ *                   specify bowtie2 with multimapping retained:
+ *                     bowtie2 -k 100 --very-sensitive-local --score-min L,0,1.6
+ *                   We use exactly that. (The original design used a dedicated
+ *                   multimap-aware STAR pass, but the only osx-arm64 conda build
+ *                   of STAR 2.7.11b ingests 0 reads — see pipelines/scripts/
+ *                   run_rnaseq.sh — so STAR is unusable on this machine. bowtie2
+ *                   is arm64-native, is Telescope's canonical aligner, and is
+ *                   what the Telescope paper validated multimapper EM against.)
+ *                   The standard nf-core/rnaseq spine BAM discards multimappers
+ *                   and is therefore NOT usable for locus-level TE EM.
  *    - TEtranscripts consumes the coordinate-sorted genome BAM already produced
  *                   by the nf-core/rnaseq hisat2 spine (multi mode handles
  *                   the multimappers statistically from the standard BAM).
  *
- *  Resource directives are set inline (this Mac: 40 GB / maxForks 1 for STAR,
+ *  Resource directives are set inline (this Mac: <=16 GB for bowtie2/Telescope,
  *  <=10 GB for the light steps) so the module is self-contained regardless of
  *  the withName patterns in conf/mac_arm64.config.
  * ============================================================================
@@ -25,59 +32,92 @@
 nextflow.enable.dsl = 2
 
 // ----------------------------------------------------------------------------
-// PROCESS: STAR_ALIGN_MULTI
-//   Multimap-aware STAR alignment for Telescope. Consumes raw FASTQs because
-//   the required multimapping retention differs from the rnaseq spine.
+// PROCESS: BOWTIE2_ALIGN_MULTI
+//   Multimap-permissive bowtie2 alignment for Telescope (Bendall et al. params).
+//   Consumes raw FASTQs because the required multimapping retention differs from
+//   the rnaseq spine. bowtie2 is arm64-native (the osx-arm64 STAR build is broken)
+//   and is Telescope's documented/validated aligner.
 // ----------------------------------------------------------------------------
-process STAR_ALIGN_MULTI {
+process BOWTIE2_ALIGN_MULTI {
     tag   { meta.id }
-    label 'process_star'
-    publishDir "${params.outdir}/star_multi", mode: 'copy',
+    label 'process_high'
+    publishDir "${params.outdir}/bowtie2_multi", mode: 'copy',
                saveAs: { fn -> fn.endsWith('.bam') ? fn : "logs/${fn}" }
 
     cpus     12
-    memory   40.GB
+    memory   16.GB
     maxForks 1
     time     24.h
 
     input:
     tuple val(meta), path(reads)
-    path  star_index
+    path  bt2_index_dir
 
     output:
-    tuple val(meta), path("${meta.id}.Aligned.out.bam"), emit: bam
-    path  "${meta.id}.Log.final.out",                    emit: log
-    path  "versions.yml",                                emit: versions
+    tuple val(meta), path("${meta.id}.multi.bam"), emit: bam
+    path  "${meta.id}.bowtie2.log",                emit: log
+    path  "versions.yml",                          emit: versions
 
     script:
-    def readsArg = meta.single_end ? "${reads}" : "${reads[0]} ${reads[1]}"
-    def gzipped  = reads instanceof List ? reads[0].name.endsWith('.gz') : reads.name.endsWith('.gz')
-    def readCmd  = gzipped ? '--readFilesCommand zcat' : ''
+    // paired vs single-end read arguments
+    def readsArg = meta.single_end ? "-U ${reads}" : "-1 ${reads[0]} -2 ${reads[1]}"
+    // bowtie2 index basename inside the passed index dir (built by BOWTIE2_BUILD)
     """
-    STAR \\
-        --runThreadN ${task.cpus} \\
-        --genomeDir ${star_index} \\
-        --readFilesIn ${readsArg} \\
-        ${readCmd} \\
-        --outFilterMultimapNmax 100 \\
-        --winAnchorMultimapNmax 200 \\
-        --outSAMtype BAM Unsorted \\
-        --outSAMattributes NH HI AS nM \\
-        --outSAMprimaryFlag AllBestScore \\
-        --outFileNamePrefix ${meta.id}. \\
-        --limitBAMsortRAM 0 \\
-        ${params.star_extra_args}
+    IDX=\$(ls ${bt2_index_dir}/*.1.bt2* 2>/dev/null | head -1 | sed -E 's/\\.1\\.bt2l?\$//')
+    bowtie2 \\
+        -x \$IDX \\
+        ${readsArg} \\
+        -k 100 --very-sensitive-local --score-min L,0,1.6 \\
+        -p ${task.cpus} \\
+        --no-unal \\
+        ${params.bowtie2_extra_args} \\
+        2> ${meta.id}.bowtie2.log \\
+        | samtools view -bS - > ${meta.id}.multi.bam
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        star: \$(STAR --version)
+        bowtie2: \$(bowtie2 --version 2>&1 | head -1 | sed 's/^.*version //')
+        samtools: \$(samtools --version 2>&1 | head -1 | sed 's/^samtools //')
     END_VERSIONS
     """
 
     stub:
     """
-    touch ${meta.id}.Aligned.out.bam ${meta.id}.Log.final.out
-    echo '"${task.process}": {star: stub}' > versions.yml
+    touch ${meta.id}.multi.bam ${meta.id}.bowtie2.log
+    echo '"${task.process}": {bowtie2: stub}' > versions.yml
+    """
+}
+
+// ----------------------------------------------------------------------------
+// PROCESS: BOWTIE2_BUILD
+//   Build a bowtie2 index from the genome FASTA (arm64-native). Cached +
+//   published so a cohort run builds it once. ~4 GB RAM for GRCh38.
+// ----------------------------------------------------------------------------
+process BOWTIE2_BUILD {
+    tag   { fasta.baseName }
+    label 'process_high'
+    storeDir "${params.outdir}/bowtie2_index"
+
+    cpus   12
+    memory 16.GB
+    time   12.h
+
+    input:
+    path fasta
+
+    output:
+    path "bowtie2_index", emit: index
+
+    script:
+    """
+    mkdir -p bowtie2_index
+    bowtie2-build --threads ${task.cpus} ${fasta} bowtie2_index/${fasta.baseName}
+    """
+
+    stub:
+    """
+    mkdir -p bowtie2_index
+    touch bowtie2_index/${fasta.baseName}.1.bt2
     """
 }
 
@@ -239,7 +279,7 @@ workflow TE_ERV {
     take:
     ch_reads          // channel: [ val(meta), [ fastq(s) ] ]  (for Telescope)
     ch_bam            // channel: [ val(meta), path(coord_sorted_bam) ] (rnaseq spine, for TEtranscripts)
-    star_index        // path
+    genome_fasta      // path : GRCh38 genome FASTA (bowtie2 index built from it)
     te_gtf_locus      // path : Telescope retro.hg38.v1 transcripts.gtf
     gene_gtf          // path : GENCODE genic GTF
     te_gtf_family     // path : TEtranscripts family TE GTF
@@ -247,11 +287,13 @@ workflow TE_ERV {
     main:
     ch_versions = Channel.empty()
 
-    // ---- Locus-level branch: dedicated multimap-aware STAR -> Telescope ----
-    STAR_ALIGN_MULTI ( ch_reads, star_index )
-    ch_versions = ch_versions.mix( STAR_ALIGN_MULTI.out.versions.first() )
+    // ---- Locus-level branch: multimap-permissive bowtie2 -> Telescope ----
+    // (Telescope's documented aligner; the osx-arm64 STAR build ingests 0 reads.)
+    BOWTIE2_BUILD ( genome_fasta )
+    BOWTIE2_ALIGN_MULTI ( ch_reads, BOWTIE2_BUILD.out.index )
+    ch_versions = ch_versions.mix( BOWTIE2_ALIGN_MULTI.out.versions.first() )
 
-    TELESCOPE_ASSIGN ( STAR_ALIGN_MULTI.out.bam, te_gtf_locus )
+    TELESCOPE_ASSIGN ( BOWTIE2_ALIGN_MULTI.out.bam, te_gtf_locus )
     ch_versions = ch_versions.mix( TELESCOPE_ASSIGN.out.versions.first() )
 
     MERGE_TELESCOPE ( TELESCOPE_ASSIGN.out.report.map { meta, tsv -> tsv }.collect() )

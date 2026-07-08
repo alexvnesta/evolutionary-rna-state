@@ -31,7 +31,7 @@ params.outdir       = 'results/rna_editing'
 
 // editing thresholds
 params.editing_call_sites        = true    // run JACUSA2 per-site caller
-params.editing_min_mapq          = 255     // STAR unique-mapper MAPQ
+params.editing_min_mapq          = 60      // HISAT2 unique-mapper MAPQ (STAR uses 255; the arm64 spine is HISAT2)
 params.editing_min_baseq         = 25
 params.editing_min_cov           = 10
 params.editing_min_freq          = 0.10

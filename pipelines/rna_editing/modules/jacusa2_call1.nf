@@ -22,7 +22,9 @@ process JACUSA2_CALL1 {
     path "versions.yml",                                   emit: versions
 
     script:
-    // STAR uniquely-mapped reads carry MAPQ 255; -m keeps only those.
+    // Keep only uniquely-mapped reads via MAPQ floor. HISAT2 (the arm64 spine)
+    // marks unique mappers with MAPQ 60; STAR uses 255. Default params.editing_min_mapq=60
+    // matches HISAT2 — set it to 255 if you feed STAR BAMs (amd64/Docker).
     // -a D,Y : filter distance-to-read-end & homopolymer artifacts (JACUSA2 recs).
     def snp_arg = params.editing_snp_bed ? "--snp-bed ${params.editing_snp_bed}" : ""
     """

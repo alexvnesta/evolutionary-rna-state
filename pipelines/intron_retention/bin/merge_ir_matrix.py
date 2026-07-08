@@ -32,8 +32,14 @@ def main():
                                columns="intron_id", values="IR_ratio",
                                aggfunc="first")
     wide = wide.reset_index()
-    feat_cols = [c for c in wide.columns if c not in ("run_accession", "cohort")]
-    wide[feat_cols] = wide[feat_cols].astype("float32")
+    # Down-cast the intron block to float32 in ONE block op (not element/column-wise).
+    # With ~290k intron columns, `wide[feat_cols] = wide[feat_cols].astype(...)` is
+    # O(ncols) column re-inserts and stalls for minutes; drop+astype+concat is O(1)
+    # in column count. feat_cols are unique (pivot dedupes intron_id).
+    id_cols = ["run_accession", "cohort"]
+    feat_cols = [c for c in wide.columns if c not in id_cols]
+    feat = wide.drop(columns=id_cols).astype("float32")
+    wide = pd.concat([wide[id_cols], feat], axis=1)
     try:
         wide.to_parquet(args.out_matrix, index=False, compression="gzip")
     except Exception as e:  # pragma: no cover

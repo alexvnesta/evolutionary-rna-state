@@ -28,11 +28,11 @@ include { TE_ERV } from './te_erv.nf'
 // ---- parameter defaults ----
 params.input               = null
 params.outdir              = 'results/te_erv'
-params.star_index          = null
+params.genome_fasta        = null
 params.gene_gtf            = null
 params.te_gtf_locus        = null
 params.te_gtf_family       = null
-params.star_extra_args         = ''
+params.bowtie2_extra_args      = ''
 params.telescope_extra_args    = ''
 params.tetranscripts_extra_args = ''
 params.help                = false
@@ -43,16 +43,16 @@ def helpMessage() {
     ===============================
     Required:
       --input            samplesheet CSV (cols: sample,fastq_1,fastq_2,bam,strandedness)
-      --star_index       prebuilt STAR index directory
+      --genome_fasta     GRCh38 genome FASTA (bowtie2 index built + cached from it)
       --gene_gtf         GENCODE genic GTF
       --te_gtf_locus     Telescope locus-level TE/ERV GTF (retro.hg38.v1 transcripts.gtf)
       --te_gtf_family    TEtranscripts family-level TE GTF
     Optional:
       --outdir           output directory        [${params.outdir}]
-      --star_extra_args / --telescope_extra_args / --tetranscripts_extra_args
+      --bowtie2_extra_args / --telescope_extra_args / --tetranscripts_extra_args
     Run:
-      nextflow run pipelines/te_erv/main.nf -profile conda \\
-        -c pipelines/conf/mac_arm64.config --input <csv> --star_index <dir> ...
+      nextflow run pipelines/te_erv/main.nf \\
+        -c pipelines/conf/mac_arm64.config --input <csv> --genome_fasta <fa> ...
     """.stripIndent()
 }
 
@@ -61,7 +61,7 @@ workflow {
 
     // ---- validate required params ----
     def missing = []
-    ['input','star_index','gene_gtf','te_gtf_locus','te_gtf_family'].each { p ->
+    ['input','genome_fasta','gene_gtf','te_gtf_locus','te_gtf_family'].each { p ->
         if (!params[p]) missing << "--${p}"
     }
     if (missing) {
@@ -98,7 +98,7 @@ workflow {
     TE_ERV(
         ch_reads,
         ch_bam,
-        file(params.star_index,    checkIfExists: true),
+        file(params.genome_fasta,  checkIfExists: true),
         file(params.gene_gtf,      checkIfExists: true),
         file(params.te_gtf_locus,  checkIfExists: true),
         file(params.te_gtf_family, checkIfExists: true)
