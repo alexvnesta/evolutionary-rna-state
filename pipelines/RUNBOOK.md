@@ -91,12 +91,16 @@ the **family** branch (TEcount) uses the spine BAM, but the **locus** branch
 pass (`-k 100 --very-sensitive-local`) from raw FASTQs — Telescope's documented
 aligner (Bendall et al. 2019, PLOS Comput Biol; DOI 10.1371/journal.pcbi.1006453).
 
-### Integration status (validated against the Gide pilot BAM, PD1_35_PRE, 79.08M records)
+### Integration status (Gide pilot, PD1_35_PRE, 79.08M-record HISAT2 BAM)
 
-- **rnaseq spine (HISAT2+Salmon):** pipeline completed; genome BAM 79,080,188 records, Salmon 85,756 nonzero genes, StringTie/featureCounts/bigWig/RSeQC/MultiQC all produced.
-- **intron_retention:** completed (exit 0); 289,429 introns, 203,683 evaluated, median IR 0.0076, 26,977 introns IR>0.1; cohort matrix produced.
-- **te_erv:** reworked off broken STAR onto bowtie2; DSL2 parses clean.
-- **rna_editing:** MAPQ floor corrected to 60 (HISAT2 unique-mapper MAPQ; STAR uses 255); optional `--editing_region_bed` added to confine JACUSA2 to a panel/chromosome.
+Two of the three custom subworkflows have been run end-to-end against the real
+pilot BAM; te_erv is code-complete and parse-verified but not yet executed on
+real data.
+
+- **rnaseq spine (HISAT2+Salmon):** RUN, completed; genome BAM 79,080,188 records, Salmon 85,756 nonzero genes, StringTie/featureCounts/bigWig/RSeQC/MultiQC all produced.
+- **intron_retention:** RUN end-to-end (exit 0); 289,429 introns, 203,683 evaluated, median IR 0.0076, 26,977 introns IR>0.1; cohort matrix produced.
+- **rna_editing:** RUN end-to-end (exit 0, chr21-restricted); 116 A-to-I sites (61 A>G, 55 T>C), Alu Editing Index 0.148% (24 A>G / 16,254 A-cov), cohort_aei.tsv produced. MAPQ floor corrected to 60 (HISAT2 unique-mapper MAPQ; STAR uses 255); optional `--editing_region_bed` confines JACUSA2 + the Alu set to a panel/chromosome.
+- **te_erv:** NOT yet run on real data. The Telescope branch was reworked off the broken arm64 STAR onto bowtie2 and the DSL2 parses clean, but BOWTIE2_BUILD / BOWTIE2_ALIGN_MULTI / TELESCOPE_ASSIGN have not been executed against the real FASTQs/BAM. Remaining integration test: bowtie2 index build (~4 GB RAM) + Telescope EM.
 
 ## 4. Data & cohorts
 
