@@ -1,0 +1,13 @@
+patient,n_malig,n_ref,malig_cnv_ratio,n_clones,aneuploid,n_clones_strict_1p5x,multiclone_strict_1p5x
+AML1012,856,6389,1.029,2,False,0,False
+AML210A,464,6210,1.225,2,False,0,False
+AML328,693,6197,1.546,2,True,1,False
+AML329,253,6285,0.951,1,False,0,False
+AML419A,1068,6386,1.391,2,False,1,False
+AML420B,100,6177,1.248,1,False,0,False
+AML475,308,6373,1.077,1,False,0,False
+AML556,2062,6220,1.083,2,False,0,False
+AML707B,1370,6370,1.02,1,False,0,False
+AML870,314,6403,1.013,1,False,0,False
+AML916,775,6347,1.768,2,True,2,True
+AML921A,3378,6068,1.075,2,False,0,False

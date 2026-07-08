@@ -1,0 +1,6 @@
+program,r_vs_IFN_MHC,p
+HSC_progenitor,-0.307,0.2007
+myeloid_diff,0.281,0.2434
+cell_cycle,-0.205,0.3989
+differentiation_axis(myeloid-HSC),0.302,0.2088
+class_IFN_MHC_MWU,0.453,0.0449
