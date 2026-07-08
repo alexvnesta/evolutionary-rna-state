@@ -90,3 +90,16 @@ Provenance and method detail: `_joins_provenance.json`.
   deterministic (arm, patient-number) map and **validated by clinical
   fingerprint: 75/75 patients concordant on treatment arm, timepoint structure,
   and response; all 91 runs round-trip to valid iAtlas sample IDs.**
+- **`hugo_clonality.csv`** — per-patient clonal architecture for Hugo 2016 (38
+  patients, 21 R / 17 N), computed as a **purity-corrected CCF**:
+  `CCF = clip(VAF·2/purity, 0, 1)` with VAF parsed from the S1D MAF caller
+  fields (validated r=0.996 against VarScan2's stated %) and purity from the
+  published S1B table. Same schema as `riaz_clonality.csv`. Mutation counts
+  track the published `TotalNonSyn` (r=0.947). Caveats: 10 patients have
+  purity<0.30 (`low_purity_flag`), where the correction saturates and over-calls
+  clonal; multiplicity is fixed at 1 with no allele-specific CNA correction.
+  **Not cross-cohort comparable to `riaz_clonality.csv` on absolute clonality** —
+  Riaz uses a purity-free VAF/clonal-peak proxy (median subclonal fraction 0.70),
+  Hugo uses purity-corrected CCF (0.25); the difference is method, not biology.
+  Use each within-cohort only. Joins to the Hugo RNA cohort
+  (GSE78220/PRJNA356839) on the `Pt##` namespace once that cohort is catalogued.
