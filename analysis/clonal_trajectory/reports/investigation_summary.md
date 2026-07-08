@@ -52,7 +52,7 @@ Building the DDLPS remedy on real bulk (rather than the controlled cSCC mixture)
 
 Pooling 99 clone-level pseudobulk profiles across all three cohorts (cSCC 25, DDLPS 55, AML 19) brought the supervised test above the power floor for the first time. The target is a harmonized immune-state label (immune-hot vs immune-cold), oriented per-cohort by IFN/MHC because the raw class labels are not consistently oriented across tumor types; features are z-scored within cohort so tissue-baseline offsets cannot be a shortcut.
 - Powered result: grouped-by-patient 5-fold CV reaches balanced accuracy 0.91, AUC 0.94 (N=99), against a within-cohort permutation null of 0.53 (p=0.005), landing on the strong curve of the calibrated power grid. The earlier n=19 DDLPS negative was under-powering, not absence of signal.
-- Transfer limit: leave-one-cohort-out is weak (cSCC 0.43, DDLPS 0.63, AML 0.53). The immune-hot pole is tissue-specific, so supervised recovery works within a tumor type given enough N but does not transfer zero-shot pan-cancer. The immune-hot fraction is nonetheless strikingly consistent (~36%) across all three unrelated tumors. Detail in pooled_classifier_report.md.
+- Transfer limit: leave-one-cohort-out is weak (cSCC 0.43, DDLPS 0.62, AML 0.53). The immune-hot pole is tissue-specific, so supervised recovery works within a tumor type given enough N but does not transfer zero-shot pan-cancer. The immune-hot fraction is nonetheless strikingly consistent (~36%) across all three unrelated tumors. Detail in pooled_classifier_report.md.
 
 ## The honest synthesis
 
