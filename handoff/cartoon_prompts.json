@@ -1,0 +1,24 @@
+{
+  "prompts": [
+    {
+      "key": "thesis",
+      "title": "The evolutionary RNA-state hypothesis",
+      "prompt": "A clean left-to-right scientific mechanism diagram for a cancer-genomics hypothesis. Stage 1: a tumor cell with early DNA driver mutations (highlight a DNA double helix with a few colored mutation marks). Arrow to Stage 2 labeled 'genomic instability + epigenetic remodeling': the same cell now dividing into a heterogeneous clone of cells. Arrow to Stage 3 labeled 'RNA-processing dysregulation': show an mRNA transcript with several coordinated abnormalities branching off \u2014 alternative splicing, intron retention, RNA editing, transposable-element (TE) activation, and a fusion transcript. Arrow to Stage 4 labeled 'latent RNA-state S': a dashed box grouping those RNA phenotypes into one hidden state. Arrow to Stage 5: a tumor cell displaying neoantigen peptides on MHC class I, with a T cell recognizing it \u2014 labeled 'tumor antigenicity -> ICB response'. Muted teal/navy/grey palette, thin arrows, small clear labels, publication style."
+    },
+    {
+      "key": "wes_blind",
+      "title": "Why exome-based proxies cannot see the RNA state",
+      "prompt": "A two-panel contrast diagram explaining why whole-exome-sequencing (WES) neoantigen proxies miss a transcriptomic signal. Left panel titled 'WES / annotation pipeline': DNA -> variant calling -> reference gene annotation -> a filter/funnel that discards non-reference reads, with a trash/discard bin catching splicing, intron-retention, RNA-editing and TE-derived reads (show these being thrown away). Output: only SNV/indel neoantigen counts. Right panel titled 'Raw-read RNA quantification': the same tumor RNA going straight into transcriptome quantification, KEEPING the splicing, intron-retention, editing and TE signal. A large dashed circle around the discarded reads in the left panel labeled 'where the RNA fingerprint lives'. Muted teal/grey palette, clear small labels."
+    },
+    {
+      "key": "pipeline",
+      "title": "Bandwidth-aware stream-align-delete pipeline",
+      "prompt": "A circular/looping pipeline flow diagram for a laptop-scale RNA-seq quantification loop, one sample at a time. Step 1: a cloud/database icon labeled 'ENA FASTQ' streaming reads (show a download arrow). Step 2: 'stream-subsample first 3M read-pairs' (a funnel taking a small slice of a large read stream). Step 3: 'gzip integrity check' (a checkmark/shield gate that rejects a corrupt file). Step 4: 'salmon quantification' against a transcriptome index (box labeled GENCODE v44). Step 5: 'delete FASTQ' (a trash icon) with an arrow looping back to Step 1 for the next sample. A small side output: 'per-sample gene TPM matrix'. Emphasize bounded disk usage. Muted blue/grey palette, thin arrows, compact labels."
+    },
+    {
+      "key": "confound",
+      "title": "The infiltration confound",
+      "prompt": "A mechanistic diagram showing why a de-novo 'antigen-presentation' gene axis actually reports immune infiltration. Center: a tumor tissue region containing BOTH tumor cells and many infiltrating immune cells (T cells, macrophages) mixed together. Show that bulk RNA is a mixture from all these cells. Point to antigen-presentation genes (B2M, HLA-A, HLA-B, TAP1, TAP2, PSMB9) with a note that these are highly expressed by infiltrating leukocytes, not only tumor cells. Two arrows from the tissue: one labeled 'measured antigen axis (high)' and one labeled 'actual tumor-intrinsic antigenicity (unknown)'. A correlation callout: 'antigen axis vs infiltration: rho = 0.77'. A second callout: 'remove infiltration -> response signal collapses'. Muted red/grey palette for the confound, clear small labels, publication style."
+    }
+  ]
+}
