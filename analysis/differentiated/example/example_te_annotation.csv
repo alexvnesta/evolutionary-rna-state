@@ -1,0 +1,5 @@
+locus_id,repeat_class,chrom,start,end,strand
+ERVK_locus_1,LTR/ERVK,chr1,1000,1107,+
+L1_locus_1,LINE/L1,chr1,5000,5078,+
+Alu_locus_1,SINE/Alu,chr2,200,254,+
+ERVK_locus_quiet,LTR/ERVK,chr3,10,70,+
