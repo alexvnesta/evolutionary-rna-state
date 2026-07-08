@@ -1,0 +1,50 @@
+{
+ "n_clones": 145,
+ "n_shared_genes": 14337,
+ "k_features": 2000,
+ "by_cohort": {
+  "cSCC": {
+   "n": 25,
+   "hot_frac": 0.36
+  },
+  "DDLPS": {
+   "n": 55,
+   "hot_frac": 0.364
+  },
+  "AML": {
+   "n": 19,
+   "hot_frac": 0.368
+  },
+  "LUAD": {
+   "n": 46,
+   "hot_frac": 0.5
+  }
+ },
+ "loco": {
+  "cSCC": {
+   "n_test": 25,
+   "bacc": 0.566,
+   "auc": 0.583
+  },
+  "DDLPS": {
+   "n_test": 55,
+   "bacc": 0.607,
+   "auc": 0.663
+  },
+  "AML": {
+   "n_test": 19,
+   "bacc": 0.744,
+   "auc": 0.833
+  },
+  "LUAD": {
+   "n_test": 46,
+   "bacc": 0.609,
+   "auc": 0.622
+  }
+ },
+ "grouped_cv_bacc": 0.792,
+ "grouped_cv_auc": 0.871,
+ "perm_null_mean": 0.512,
+ "perm_null_sd": 0.047,
+ "perm_p": 0.005
+}
