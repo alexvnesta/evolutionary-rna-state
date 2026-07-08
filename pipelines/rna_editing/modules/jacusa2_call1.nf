@@ -27,6 +27,10 @@ process JACUSA2_CALL1 {
     // matches HISAT2 — set it to 255 if you feed STAR BAMs (amd64/Docker).
     // -a D,Y : filter distance-to-read-end & homopolymer artifacts (JACUSA2 recs).
     def snp_arg = params.editing_snp_bed ? "--snp-bed ${params.editing_snp_bed}" : ""
+    // Optional region restriction: JACUSA2 -b <BED> scans only the listed
+    // intervals. Use it to confine editing calls to a panel (e.g. Alu regions)
+    // or, for a fast pilot, a single chromosome. Genome-wide is the default.
+    def region_arg = params.editing_region_bed ? "-b ${params.editing_region_bed}" : ""
     """
     JAVA_MEM=\$(( ${task.memory.toGiga()} - 1 ))
     jacusa2 call-1 \\
@@ -35,6 +39,7 @@ process JACUSA2_CALL1 {
         -m ${params.editing_min_mapq} \\
         -q ${params.editing_min_baseq} \\
         -a D,Y \\
+        ${region_arg} \\
         -R ${fasta} \\
         ${bam}
 

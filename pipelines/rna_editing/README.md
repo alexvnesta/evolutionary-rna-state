@@ -96,7 +96,7 @@ Help / config parse check: `nextflow run pipelines/rna_editing/main.nf --help`.
 | Param | Default | Meaning |
 |-------|---------|---------|
 | `--editing_call_sites` | `true` | run JACUSA2 per-site caller |
-| `--editing_min_mapq` | `255` | STAR unique-mapper MAPQ (keep only unique) |
+| `--editing_min_mapq` | `60` | HISAT2 unique-mapper MAPQ (arm64); STAR uses 255 |
 | `--editing_min_baseq` | `25` | min base quality |
 | `--editing_min_cov` | `10` | min coverage to call a site |
 | `--editing_min_freq` | `0.10` | min editing frequency |

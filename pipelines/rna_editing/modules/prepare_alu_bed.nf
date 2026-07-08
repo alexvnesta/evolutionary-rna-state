@@ -15,8 +15,20 @@ process PREPARE_ALU_BED {
 
     script:
     def std = params.editing_alu_standard_only ? "--keep-standard" : ""
+    // Optional region restriction (same param as JACUSA2): confine the Alu set to
+    // the chromosome(s) in editing_region_bed. Genome-wide AEI over ~1.18M Alus is
+    // ~2.6 h/sample; a single-chromosome restriction turns the pilot into minutes.
+    // Applied by chromosome membership (AEI pools genome-wide, so whole-contig
+    // subsetting is the meaningful unit) — no bedtools dependency.
+    def region = params.editing_region_bed ? file(params.editing_region_bed) : null
     """
-    make_alu_bed.py --rmsk ${rmsk} --out alu.hg38.bed6 ${std}
+    make_alu_bed.py --rmsk ${rmsk} --out alu.full.bed6 ${std}
+    if [ -n "${region ?: ''}" ]; then
+        cut -f1 ${region ?: '/dev/null'} | sort -u > region_contigs.txt
+        awk 'NR==FNR{c[\$1]=1; next} (\$1 in c)' region_contigs.txt alu.full.bed6 > alu.hg38.bed6
+    else
+        mv alu.full.bed6 alu.hg38.bed6
+    fi
     """
 
     stub:

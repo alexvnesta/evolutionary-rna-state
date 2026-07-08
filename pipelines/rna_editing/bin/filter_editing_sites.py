@@ -46,7 +46,7 @@ def main():
         snp_contigs = set(snp.contigs)
 
     hdr_cols = None
-    bidx = sidx = None
+    bidx = sidx = ridx = None
     n_kept = 0
     with open(args.jacusa) as fh, open(args.out, "w") as o:
         o.write("chrom\tpos\tstrand\tref\talt\tedit_freq\tedited_reads\tcoverage\n")
@@ -59,6 +59,8 @@ def main():
                             bidx = i
                         if c == "strand":
                             sidx = i
+                        if c == "ref":
+                            ridx = i
                 continue
             if not ln.strip():
                 continue
@@ -67,6 +69,7 @@ def main():
             end = int(f[2])          # BED end == 1-based position
             strand = f[sidx] if sidx is not None and sidx < len(f) else f[5]
             counts_field = f[bidx] if bidx is not None and bidx < len(f) else f[6]
+            refbase = (f[ridx].upper() if ridx is not None and ridx < len(f) else "")
             try:
                 a, c, g, t = parse_counts(counts_field)
             except (ValueError, IndexError):
@@ -78,9 +81,19 @@ def main():
             if snp is not None and chrom in snp_contigs:
                 if any(True for _ in snp.fetch(chrom, end - 1, end)):
                     continue
+            # Decide A-to-I orientation.
+            #   stranded '+' : ref A, edit -> G ;  '-' : ref T, edit -> C
+            #   unstranded '.' : JACUSA2 reports the genomic reference base, so use
+            #     it directly — ref A => A>G, ref T => T>C. This is the only way to
+            #     score A-to-I when the library strandedness is unknown/unset;
+            #     without it every '.' site is dropped and 0 edits are ever kept.
             if strand == "+":
                 ref, alt, edited, denom = "A", "G", g, a + g
             elif strand == "-":
+                ref, alt, edited, denom = "T", "C", c, c + t
+            elif refbase == "A":
+                ref, alt, edited, denom = "A", "G", g, a + g
+            elif refbase == "T":
                 ref, alt, edited, denom = "T", "C", c, c + t
             else:
                 continue
@@ -88,7 +101,8 @@ def main():
                 continue
             freq = edited / denom
             if edited >= args.min_edit_reads and freq >= args.min_edit_freq:
-                o.write(f"{chrom}\t{end}\t{strand}\t{ref}\t{alt}\t{freq:.4f}\t{edited}\t{cov}\n")
+                out_strand = strand if strand in ("+", "-") else ("+" if ref == "A" else "-")
+                o.write(f"{chrom}\t{end}\t{out_strand}\t{ref}\t{alt}\t{freq:.4f}\t{edited}\t{cov}\n")
                 n_kept += 1
     sys.stderr.write(f"[filter_editing_sites] {n_kept} A-to-I sites kept\n")
 
