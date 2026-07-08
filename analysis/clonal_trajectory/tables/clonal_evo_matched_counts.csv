@@ -1,0 +1,6 @@
+cohort,accession,matched_patients,layers,class,provenance_note
+cSCC,GSE144240+GSE144237,9,scRNA+WES(+ST),solid,verified from sheets: 9/10 pts have both scRNA & WES
+DDLPS,GSE221492+GSE221493,16,scRNA+bulkRNA,solid,verified: 16 pts matched sc+bulk; paper adds matched WGS (not in these GEO series)
+AML,GSE156934,38,single-cell DNA (scDNA),heme,"38 = parsed patient-ID count; single-cell-DNA study, per-patient DNA+RNA co-assay NOT verified from sheet (lib=None)"
+CLL,GSE161610(sc)+GSE161711(bulk),5,scRNA+bulkRNA,heme,"verified: 5 pts matched scRNA(161610)+bulk(161711). NB: paper's '29' = pts matched across 3 BULK sample types, not sc+bulk"
+mel/NSCLC brain,GSE192402+GSE216069,n.d.,scRNA+WGS,solid,"per-patient count NOT determinable: sample titles are assay descriptors, no patient ID in titles/characteristics"

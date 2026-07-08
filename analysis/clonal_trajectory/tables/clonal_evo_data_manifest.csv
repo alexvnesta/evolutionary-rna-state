@@ -1,0 +1,18 @@
+tier,accession,description,pmid,layers,cancer,notes
+A. Training (matched scRNA+DNA),GSE192402/GSE216069,"Multi-modal scRNA + WGS, melanoma/NSCLC brain mets",36624340,scRNA+WGS,melanoma/NSCLC,"14 samples, 3 cancer types"
+A. Training (matched scRNA+DNA),GSE144240/GSE144237,"scRNA + spatial + WES, cutaneous SCC",32579974,scRNA+WES+spatial,cSCC,10 pt matched WES
+A. Training (matched scRNA+DNA),GSE161610/GSE161711,"scRNA + bulk RNA, genetic ITH + immune, CLL",35358998,scRNA+bulkRNA,CLL,"29 pt matched, 3 layers"
+A. Training (matched scRNA+DNA),GSE263733,"Subtype-specific clonal evolution, scRNA n=218",-,scRNA(+clone),multiple,large clonal-evo series
+A. Training (matched scRNA+DNA),GSE69405/GSE73121,scRNA lung adeno / metastatic RCC,-,scRNA,LUAD/RCC,208 / 121 samples
+A'. Clone-tree exemplars,GSE156934,Clonal evolution of AML by high-throughput scDNA+RNA,-,scDNA+RNA,AML,gold clone trees
+A'. Clone-tree exemplars,GSE290264/GSE290557,"Multiomic CTCL, single-cell clonal evolution",-,scMultiome,CTCL,clone+state resolved
+A'. Clone-tree exemplars,GSE221492/GSE221493,"Cellular origin + clonal evolution, liposarcoma",-,scRNA+DNA,DDLPS,solid-tumor phylogeny
+B. scRNA + ICB response,GSE120575,"Sade-Feldman: T-cell states & ICB response, melanoma",-,scRNA,melanoma,"48 samples, resp labels"
+B. scRNA + ICB response,GSE123813,"Yost: clonal replacement post PD-1, BCC/SCC",-,scRNA+TCR,BCC/SCC,pre/post ICB
+B. scRNA + ICB response,GSE115978,"Jerby-Arnon: malignant states & T-cell exclusion, mel",-,scRNA,melanoma,7186 cells
+B. scRNA + ICB response,GSE121636,Bi: ccRCC ICB scRNA,-,scRNA,ccRCC,ICB-treated
+C. Bulk RNA + ICB outcome,GSE91061,"Riaz: nivolumab melanoma, bulk RNA + WES",-,bulkRNA+WES,melanoma,"109, pre/on"
+C. Bulk RNA + ICB outcome,GSE78220,"Hugo: anti-PD-1 melanoma, bulk RNA",-,bulkRNA,melanoma,28
+C. Bulk RNA + ICB outcome,GSE115821,Auslander/IMPRES: ICB melanoma bulk,-,bulkRNA,melanoma,37
+C. Bulk RNA + ICB outcome,Gide 2019 (ENA/EGA),anti-PD-1 ± anti-CTLA-4 melanoma bulk RNA,-,bulkRNA,melanoma,"~90, not in GEO"
+C. Bulk RNA + ICB outcome,Van Allen 2015,"anti-CTLA-4 melanoma WES(+RNA), dbGaP",-,WES(+RNA),melanoma,"110, controlled"
