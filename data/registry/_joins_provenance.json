@@ -47,7 +47,7 @@
     "source": "data/supplements/hugo2016/clean/hugo2016_S1D.csv (MAF; tumor ref/alt read counts parsed from MUTECT field) + hugo2016_S1B.csv (published Purity, Ploidy, Response)",
     "method": "Purity-corrected CCF. VAF from MUTECT (ref,alt) counts (validated r=0.996 vs VarScan2 stated %). CCF=clip(VAF*2/purity,0,1) assuming diploid locus, mutation multiplicity=1. Clonal if CCF>=0.8. QC: tumor depth>=20.",
     "n_patients": 38,
-    "n_rna_and_labeled": "pending Hugo RNA catalog (GSE78220 = SRA study SRP070710 / BioProject PRJNA312948, RNA-Seq Homo sapiens, 28 runs; verified via NCBI GEO->SRA elink; not yet in run_catalog)",
+    "n_rna_and_labeled": "26 patients with WES clonality + RNA-seq + labeled response (Hugo RNA cataloged: SRP070710, 28 runs, in run_catalog.csv as cohort=hugo2016; joins on Pt## after stripping biopsy suffix, e.g. Pt27A/Pt27B->Pt27)",
     "labeled_response": "21 R / 17 N (all 38 have clonality+response)",
     "join_key": "patient_id (Pt## Hugo native namespace)",
     "validation": "n_mutations vs published TotalNonSyn r=0.947",
@@ -71,5 +71,12 @@
       "response_NR",
       "low_purity_flag"
     ]
+  },
+  "run_catalog_hugo": {
+    "added": "28 Hugo RNA-Seq runs (SRP070710 / PRJNA312948, GSE78220), appended to data/catalog/run_catalog.csv as cohort=hugo2016",
+    "clinical_source": "hugo2016 S1A (irRECIST, Biopsy Time, Treatment, Overall Survival, Vital Status); patient_id=sample_title (Pt##)",
+    "composition": "27 PRE + 1 ON biopsy; all pembrolizumab; 15 R / 13 N; OS for 27/28",
+    "join_to_clonality": "28/28 runs (27 unique patients) join to hugo_clonality.csv on base Pt## id",
+    "note": "Pt27A/Pt27B are two biopsies of Pt27; base-id strip handles the WES-clonality join"
   }
 }

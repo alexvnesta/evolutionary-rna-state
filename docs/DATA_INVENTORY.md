@@ -64,9 +64,11 @@ of the co-variation claim before the raw-read pipeline exists. Pulled to
 ## Committed metadata files
 
 - `data/dataset_summary.csv` — the table above, machine-readable.
-- `data/catalog/run_catalog.csv` — 200 sequencing runs with accessions,
-  patient/arm/timepoint, library metadata, FASTQ URLs + MD5s, and joined
-  clinical fields (RECIST, responder/non-responder, therapy, OS, vital).
+- `data/catalog/run_catalog.csv` — 228 RNA-Seq runs (riaz2017 109, gide2019 91,
+  hugo2016 28) with accessions, patient/arm/timepoint, library metadata, FASTQ
+  URLs + MD5s, and joined clinical fields (RECIST, responder/non-responder,
+  therapy, OS, vital). Hugo RNA cohort = SRP070710 / PRJNA312948 (GSE78220),
+  cataloged from ENA with clinical fields from Hugo S1A.
 - `data/manifests/selection_manifest.csv` — runs selected for analysis, tagged
   by cohort role.
 - `data/manifests/pilot_manifest.json` — pilot subset for pipeline bring-up.
