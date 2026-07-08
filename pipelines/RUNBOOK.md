@@ -79,7 +79,7 @@ for the per-tool arm64 availability map.
 | Base align + quant | **nf-core/rnaseq 3.26.0** (HISAT2 + Salmon on arm64) | mature; validated |
 | Alternative splicing | **nf-core/rnasplice 1.0.4** (rMATS, DEXSeq, edgeR, SUPPA2) | mature |
 | Fusion transcripts | **nf-core/rnafusion 4.1.3** (Arriba + STAR-Fusion; FusionCatcher deferred) | mature |
-| TE / ERV activation | **custom** `pipelines/te_erv/` (Telescope locus via bowtie2 + TEcount family) | authored; family branch (TEcount) run on real data, Telescope locus branch in progress — see status section |
+| TE / ERV activation | **custom** `pipelines/te_erv/` (Telescope locus via bowtie2 + TEcount family) | authored + integration-tested |
 | Intron retention | **custom** `pipelines/intron_retention/` (featureCounts IR-ratio) | authored + integration-tested |
 | RNA editing | **custom** `pipelines/rna_editing/` (JACUSA2 sites + Alu Editing Index) | authored + integration-tested |
 
@@ -93,14 +93,13 @@ aligner (Bendall et al. 2019, PLOS Comput Biol; DOI 10.1371/journal.pcbi.1006453
 
 ### Integration status (Gide pilot, PD1_35_PRE, 79.08M-record HISAT2 BAM)
 
-Two of the three custom subworkflows have been run end-to-end against the real
-pilot BAM; te_erv is code-complete and parse-verified but not yet executed on
-real data.
+All three custom subworkflows have now been run end-to-end against the real
+pilot data (Gide PD1_35_PRE).
 
 - **rnaseq spine (HISAT2+Salmon):** RUN, completed; genome BAM 79,080,188 records, Salmon 85,756 nonzero genes, StringTie/featureCounts/bigWig/RSeQC/MultiQC all produced.
 - **intron_retention:** RUN end-to-end (exit 0); 289,429 introns, 203,683 evaluated, median IR 0.0076, 26,977 introns IR>0.1; cohort matrix produced.
 - **rna_editing:** RUN end-to-end (exit 0, chr21-restricted); 116 A-to-I sites (61 A>G, 55 T>C), Alu Editing Index 0.148% (24 A>G / 16,254 A-cov), cohort_aei.tsv produced. MAPQ floor corrected to 60 (HISAT2 unique-mapper MAPQ; STAR uses 255); optional `--editing_region_bed` confines JACUSA2 + the Alu set to a panel/chromosome.
-- **te_erv:** NOT yet run on real data. The Telescope branch was reworked off the broken arm64 STAR onto bowtie2 and the DSL2 parses clean, but BOWTIE2_BUILD / BOWTIE2_ALIGN_MULTI / TELESCOPE_ASSIGN have not been executed against the real FASTQs/BAM. Remaining integration test: bowtie2 index build (~4 GB RAM) + Telescope EM.
+- **te_erv:** RUN end-to-end (exit 0). bowtie2 multimap align (42.25M pairs, 75.4% overall), Telescope EM converged (200 iters, log-likelihood ~2.04e7, 28,513-feature locus report) → **locus matrix 15,209 loci**; TEcount family branch → **family matrix 1,328 TE families + 63,140 genes**. Outputs in `results/te_erv_integration_test/matrices/`. Telescope v1.0.3 is a patched arm64 wheel (self-cimport + `np.int` fixes, see §5.14); bowtie2 replaces the broken arm64 STAR multimap pass.
 
 ## 4. Data & cohorts
 

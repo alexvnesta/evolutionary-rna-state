@@ -154,15 +154,17 @@ process TELESCOPE_ASSIGN {
     // which telescope would treat as a positional argument).
     def extraArgs = params.telescope_extra_args ? params.telescope_extra_args : ""
     """
+    # telescope logs progress to stderr; redirect it into the declared .log
+    # output (its --logfile option needs a pre-existing path and is unreliable).
+    # A plain 2> redirect preserves telescope's exit code (a tee pipe would not).
     telescope assign \\
         --exp_tag ${meta.id} \\
         --theta_prior 200000 \\
         --max_iter 200 \\
         --outdir . \\
-        --logfile ${meta.id}-telescope.log \\
         ${extraArgs} \\
         ${bam} \\
-        ${te_gtf_locus}
+        ${te_gtf_locus} 2> ${meta.id}-telescope.log
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
