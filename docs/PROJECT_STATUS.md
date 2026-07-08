@@ -34,7 +34,10 @@ does NOT survive at 3 cohorts (n=66). Learned RNA representation at chance
 (LOCO AUROC 0.49, perm p=0.41); immune floor real-but-weak (0.59, p=0.044).
 Auto-runner (`analysis/kill_tests/move2_autorun.py`) re-fires all kill-tests when the
 powered liu2019 cohort (~n180, 4th held-out) lands. Clonal-trajectory arm reports a
-positive grouped-CV DDLPS signal (AUC 0.940, p=0.005) — needs replication.
+positive POOLED cross-tissue signal (grouped-by-patient CV, N=99 across cSCC+DDLPS+AML
+clone-pseudobulk: balanced acc 0.91, AUC 0.94, p=0.005) — but this is within-tissue,
+not zero-shot pan-cancer: DDLPS-held-out LOCO AUC only 0.71, and DDLPS-only supervised
+AUC 0.55 (perm p=0.274, ns, n=19). Needs replication; do NOT read as a DDLPS-specific result.
 
 ## liu2019 adjudication — expression matrix now STAGED (coordination session)
 The decisive powered test was blocked on the liu2019 expression matrix. It has been
@@ -61,3 +64,35 @@ salmon/HISAT2 path (cleanest for apples-to-apples LOCO). Do NOT drop the CSV in 
 
 ## Items needing user action
 - None open.
+
+---
+## 2026-07-08 (late) — Two-branch open predictor: BUILD COMPLETE (frame 15defe54)
+
+**Verdict (honest, LOCO-guarded):** open two-branch predictor does NOT beat the
+immune-composition floor cross-cohort. Reproduces the campaign kill-test at the
+two-branch level.
+
+- **LOCO (3 melanoma cohorts, n=136):** immune floor 0.538 (perm p=0.005, the only
+  significant component); expression latent at chance (scVI 0.489 p=0.285; linear
+  0.509 p=0.364); floor+latent NOT significant (scVI 0.546 p=0.095).
+- **scVI upgrade built** (auditor ask): raw counts re-fetched from recount3 (v26),
+  NB-VAE 30-d trained on 2061-sample corpus (CPU, 51.5s). Same verdict as linear
+  anchor → the null is robust to a proper neural latent, not an artifact of PCA.
+- **IMvigor210 head-to-head (n=298):** immune floor 0.660 [0.635-0.671]; Teff/TGFb
+  alone 0.652 (reproduces Mariathasan 2018 — pipeline validity check); scVI latent
+  melanoma→bladder transfer 0.605 [0.547-0.642]. NOTE: we have NO GEM-1 IMvigor210
+  AUROC to benchmark against — the only GEM-1 source is qualitative.
+- **Branch 2 (non-reference) capped at n=16** (only staged BAMs; full-cohort align
+  broken on arm64). TE PC1 0.53, AEI 0.52 — underpowered, not tested-null.
+- **Encoders CPU-feasible via embed-once** (~0.26s/transcript, 256-d). GPU only
+  needed for fine-tuning (CUDA; Metal won't accelerate Mamba-1 scan). MLX path
+  scoped: mamba-ssm-macos (MPS, ~1d) or mlx-lm port (~2-4d).
+
+**Key artifacts (results/predictor/):** frozen_analysis_set.parquet,
+quant_gene_tpm_expanded.parquet (137 samples), scvi_model.tar.gz,
+scvi_cohort_latent.parquet, scvi_imvigor_latent.parquet, loco_results_scvi.json,
+imvigor_h2h.json, predictor_summary.png, BUILD_REPORT.md, orthrus_mlx_feasibility.md.
+
+**Highest-value next step for other agents:** unblock full-cohort BAM alignment
+(the arm64/STAR bottleneck) so Branch 2 can be tested at power — that is the only
+part of the evolutionary-RNA-state hypothesis this build could not actually test.
