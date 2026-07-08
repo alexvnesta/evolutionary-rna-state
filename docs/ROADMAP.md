@@ -16,9 +16,14 @@ labels, and rigor guardrails are built in from the start rather than retrofit.
 
 ## Stage 2 — Interpretable feature backbone *(in progress)*
 - Quantify transcript/gene abundance (decoy-aware pseudoalignment).
-- Two quant arms in flight: an arm64 Nextflow STAR/salmon pipeline (sibling
-  session) and a lightweight de-novo salmon pilot (`docs/PILOT_NOTES.md`). The
-  leakage-guarded latent-state + response backbone (`model.py`) is already
+- Two quant arms in flight: an arm64 Nextflow pipeline (sibling session) and a
+  lightweight de-novo salmon pilot (`docs/PILOT_NOTES.md`). The alignment step
+  was **switched from STAR to HISAT2** because the only osx-arm64 STAR conda
+  build (2.7.11b) produces empty BAMs on this toolchain. HISAT2 pilot verified:
+  sample PD1_35_PRE aligns to a valid BAM with 79,080,188 reads, 100% mapped,
+  100% properly paired (full-depth) — confirming the pivot resolves the
+  empty-BAM failure.
+- The leakage-guarded latent-state + response backbone (`model.py`) is already
   built and validated on mock data (latent recovery corr ≈ 0.96; response
   AUROC S = 0.833 vs TMB = 0.559).
 - Score established immune/expression signatures.
