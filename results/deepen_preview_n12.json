@@ -1,0 +1,9 @@
+{
+  "note": "12-sample leakage-free preview (fold-contained scaling+residualization). Superseded by expanded-cohort run when downloads finish.",
+  "antigen_3gene_LOO": 1.0,
+  "antigen_6gene_LOO": 0.917,
+  "infiltration_LOO": 0.694,
+  "antigen_3gene_resid_infiltration_LOO": 0.611,
+  "antigen_6gene_resid_infiltration_LOO": 0.694,
+  "interpretation": "Raw antigen-presentation axis separates response, but at n=12 the signal is largely INFILTRATION-DRIVEN: after fold-contained residualization on an immune-infiltration score, the tumor-intrinsic residual is only LOO 0.61-0.69. Whether a tumor-intrinsic component survives requires the expanded cohort (n~40)."
+}

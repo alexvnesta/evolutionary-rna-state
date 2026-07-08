@@ -20,9 +20,21 @@ tail -n +2 "$MAN" | while IFS=, read -r line; do
   u1=$(echo "$ftp" | cut -d';' -f1); u2=$(echo "$ftp" | cut -d';' -f2)
   f1="$FQ/${samp}_1.fastq.gz"; f2="$FQ/${samp}_2.fastq.gz"
   echo "[$samp] downloading $(date)" >>"$LOG"
-  [[ -f "$f1" ]] || curl -sS -L --retry 3 "https://${u1}" -o "$f1" 2>>"$LOG"
-  [[ -f "$f2" ]] || curl -sS -L --retry 3 "https://${u2}" -o "$f2" 2>>"$LOG"
-  if [[ ! -s "$f1" || ! -s "$f2" ]]; then echo "[$samp] DOWNLOAD FAILED" >>"$LOG"; continue; fi
+  # download with integrity check + up to 3 re-fetches per mate (curl --retry does not catch silent truncation)
+  for mate in 1 2; do
+    u="$u1"; f="$f1"; [[ $mate == 2 ]] && { u="$u2"; f="$f2"; }
+    ok=0
+    for attempt in 1 2 3 4; do
+      if [[ -s "$f" ]] && gzip -t "$f" 2>/dev/null; then ok=1; break; fi
+      rm -f "$f"
+      curl -sS -L --retry 5 --retry-delay 5 -C - "https://${u}" -o "$f" 2>>"$LOG"
+    done
+    if [[ $ok == 0 ]] && { [[ ! -s "$f" ]] || ! gzip -t "$f" 2>/dev/null; }; then
+      echo "[$samp] MATE $mate DOWNLOAD/INTEGRITY FAILED after retries" >>"$LOG"; rm -f "$f"
+    fi
+  done
+  if [[ ! -s "$f1" || ! -s "$f2" ]] || ! gzip -t "$f1" 2>/dev/null || ! gzip -t "$f2" 2>/dev/null; then
+    echo "[$samp] DOWNLOAD FAILED (integrity)" >>"$LOG"; rm -f "$f1" "$f2"; continue; fi
   echo "[$samp] STAR $(date)" >>"$LOG"
   STAR --runThreadN 14 --genomeDir "$IDX" \
        --readFilesIn "$f1" "$f2" --readFilesCommand gunzip -c \

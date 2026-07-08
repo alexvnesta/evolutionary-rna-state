@@ -1,0 +1,78 @@
+{
+  "source": "NIH BioArt Source (bioart.niaid.nih.gov)",
+  "credit": "NIAID Visual & Medical Arts",
+  "license": "Free for education, research, commercial use; public-domain items citation-optional, some CC require attribution",
+  "icons": {
+    "dna": {
+      "id": 116,
+      "fileid": "629276",
+      "bytes": 68482,
+      "source": "https://bioart.niaid.nih.gov/bioart/116",
+      "name": "DNA0001.png"
+    },
+    "dna_helix": {
+      "id": 126,
+      "fileid": "629425",
+      "bytes": 60728,
+      "source": "https://bioart.niaid.nih.gov/bioart/126",
+      "name": "DNA0004.png"
+    },
+    "immune_cell": {
+      "id": 173,
+      "fileid": "630213",
+      "bytes": 59734,
+      "source": "https://bioart.niaid.nih.gov/bioart/173",
+      "name": "GenericImmuneCell0001.png"
+    },
+    "immune_cells": {
+      "id": 252,
+      "fileid": "631196",
+      "bytes": 533546,
+      "source": "https://bioart.niaid.nih.gov/bioart/252",
+      "name": "ImmuneCells0001.png"
+    },
+    "macrophage": {
+      "id": 307,
+      "fileid": "631694",
+      "bytes": 163802,
+      "source": "https://bioart.niaid.nih.gov/bioart/307",
+      "name": "Macrophage0001.png"
+    },
+    "monocyte": {
+      "id": 355,
+      "fileid": "632436",
+      "bytes": 639849,
+      "source": "https://bioart.niaid.nih.gov/bioart/355",
+      "name": "Monocyte0001.png"
+    },
+    "rna": {
+      "id": 452,
+      "fileid": "634858",
+      "bytes": 51768,
+      "source": "https://bioart.niaid.nih.gov/bioart/452",
+      "name": "RNA0001-beige.png"
+    },
+    "tcell": {
+      "id": 508,
+      "fileid": "636258",
+      "bytes": 199166,
+      "source": "https://bioart.niaid.nih.gov/bioart/508",
+      "name": "TCell0001.png"
+    },
+    "mhc_tcr_complex": {
+      "id": 342,
+      "fileid": "632076",
+      "bytes": 79212,
+      "source": "https://bioart.niaid.nih.gov/bioart/342",
+      "name": "MHCClassICD8TCRComplex0001.png"
+    },
+    "dendritic_cell": {
+      "id": 112,
+      "fileid": "628925",
+      "bytes": 180206,
+      "source": "https://bioart.niaid.nih.gov/bioart/112",
+      "name": "DendriticCell0002.png"
+    }
+  },
+  "tumor_cell_note": "Tumor/cancer cells are drawn as matplotlib schematics (irregular membrane, lobulated nucleus, prominent nucleoli) \u2014 BioArt has no cancer-cell asset reachable here; the earlier VeroCell repurposing was corrected."
+}

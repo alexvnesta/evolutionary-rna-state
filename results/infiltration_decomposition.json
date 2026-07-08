@@ -1,0 +1,24 @@
+{
+  "axis_level": {
+    "spearman_antigen_infiltration": 0.768,
+    "variance_explained_R2": 0.572,
+    "n": 40
+  },
+  "per_gene_infiltration_corr": {
+    "B2M": 0.711,
+    "HLA_A": 0.652,
+    "TAP1": 0.784,
+    "TAP2": 0.543,
+    "HLA_B": 0.787,
+    "PSMB9": 0.619
+  },
+  "tmb_floor_auroc": 0.613,
+  "n_floor": 190,
+  "interpretation": "The de-novo antigen-presentation axis shares 57% of its variance with immune infiltration (Spearman rho=0.77); every antigen gene (B2M/HLA-A/HLA-B/TAP1/TAP2/PSMB9) is 0.54-0.79 correlated with the infiltration axis. This explains why residualizing infiltration within-fold substantially collapses the within-Gide response signal for this 6-gene panel (LOO 0.871 -> 0.638); the 3-gene headline panel behaves the same way (0.888 -> 0.621). The axis largely reports how much immune infiltrate is present, not a tumor-intrinsic antigenicity state.",
+  "antigen_panel": "6-gene (B2M/HLA-A/HLA-B/TAP1/TAP2/PSMB9)",
+  "within_gide_loo": {
+    "antigen_6gene": 0.871,
+    "antigen_6gene_infiltration_residualized": 0.638,
+    "note": "Same 6-gene panel this decomposition uses. (The 3-gene B2M/HLA-A/TAP1 headline panel goes 0.888->0.621 under the same operation.)"
+  }
+}

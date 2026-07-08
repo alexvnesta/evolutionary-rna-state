@@ -1,0 +1,58 @@
+{
+  "design": "Train de-novo antigen axis + logistic on Gide (n=30), freeze train-fit standardization + weights, apply to held-out cohort.",
+  "within_gide_loo": {
+    "antigen_3gene": 0.888,
+    "antigen_6gene": 0.871,
+    "infiltration": 0.795
+  },
+  "gide_to_riaz_heldout": {
+    "antigen_3gene": 0.44,
+    "antigen_6gene": 0.36,
+    "infiltration": 0.68,
+    "n": 10
+  },
+  "gide_to_hugo_heldout": {
+    "antigen_3gene": 0.59,
+    "antigen_6gene": 0.595,
+    "infiltration": 0.456,
+    "n": 28,
+    "antigen_6gene_ci95": [
+      0.37,
+      0.8
+    ],
+    "_note": "Full Hugo cohort (28/28 runs). Was n=12 pilot (ant6=0.583, CI[0.22,0.92]); completing the cohort tightened CI to [0.37,0.80] with point estimate ~unchanged."
+  },
+  "within_hugo_labelfree": {
+    "antigen_3gene": 0.59,
+    "antigen_6gene": 0.585,
+    "R_median": 0.41,
+    "N_median": -0.01,
+    "n": 28
+  },
+  "conclusion": "The Gide-trained de-novo antigen axis fails to transfer to BOTH independent held-out cohorts: AUROC 0.36-0.44 on Riaz (n=10) and ~0.59-0.60 on Hugo (n=28, 95% CI [0.37,0.80] still includes chance), vs within-Gide 0.87. Completing the Hugo cohort from the n=12 pilot to the full 28 runs LEFT THE PILOT REGIME: the held-out AUROC point estimate is essentially unchanged (0.583->0.595) while the 95% CI tightened from [0.22,0.92] to [0.37,0.80]. This converts the Hugo arm from 'underpowered, undecidable' to a POWERED non-replication - the axis genuinely does not transfer to Hugo, it is not merely underpowered. This strengthens the core conclusion: a gene-level de-novo antigen-presentation axis is cohort-specific and not a transferable tumor-intrinsic RNA state.",
+  "_refresh_provenance": {
+    "refreshed_by": "session 55f2530f (Quantify 16 Un-quantified Hugo RNA Runs)",
+    "hugo_n_before": 12,
+    "hugo_n_after": 28,
+    "method": "Identical to original generator (frame f16431e3, cells 245-248): train-fit z-standardized mean-panel axis on Gide n=30, logistic map, applied to held-out Hugo; bootstrap CI 2000 resamples seed=1. n=12 control reproduced exactly before refreshing.",
+    "gide_train_artifact": "47d5d97a (quant_gene_tpm.parquet, gide2019 rows)",
+    "new_hugo_runs": [
+      "SRR3184289",
+      "SRR3184291",
+      "SRR3184292",
+      "SRR3184293",
+      "SRR3184295",
+      "SRR3184296",
+      "SRR3184297",
+      "SRR3184298",
+      "SRR3184299",
+      "SRR3184300",
+      "SRR3184301",
+      "SRR3184302",
+      "SRR3184303",
+      "SRR3184304",
+      "SRR3184305",
+      "SRR3184306"
+    ]
+  }
+}

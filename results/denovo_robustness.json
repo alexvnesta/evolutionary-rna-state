@@ -1,0 +1,32 @@
+{
+  "arm": "raw-read de-novo antigen axis (within Gide, n=30)",
+  "leakage_check": {
+    "method": "label-permutation null under fold-contained LOO",
+    "observed_auroc": 0.888,
+    "perm_null_mean": 0.294,
+    "perm_null_p95": 0.625,
+    "perm_p": 0.005,
+    "n_perm": 200,
+    "verdict": "PASS \u2014 permuted AUROC collapses to ~0.29, observed p=0.005; fold-contained pipeline has no leakage"
+  },
+  "cv_scheme_sensitivity": {
+    "loo_auroc": 0.888,
+    "kfold5_mean": 0.895,
+    "kfold5_std": 0.009,
+    "verdict": "ROBUST \u2014 LOO and repeated 5-fold agree within 0.01"
+  },
+  "panel_definition_sensitivity": {
+    "single_gene_auroc": {
+      "B2M": 0.884,
+      "HLA_A": 0.844,
+      "TAP1": 0.879,
+      "TAP2": 0.786,
+      "HLA_B": 0.871,
+      "PSMB9": 0.866
+    },
+    "three_gene": 0.888,
+    "six_gene": 0.871,
+    "verdict": "ROBUST \u2014 every individual antigen gene 0.79-0.88; result not driven by one gene or panel choice"
+  },
+  "interpretation": "The within-Gide de-novo antigen signal is genuine and robust (no CV leakage, stable across CV scheme and panel definition). This makes the cross-cohort failure the substantive finding: a robust WITHIN-cohort effect that does not transfer to either held-out cohort, and that is largely explained by immune infiltration (rho=0.77). The rigor is what turns an over-optimistic n=12 AUROC=1.0 into a defensible, publishable negative."
+}

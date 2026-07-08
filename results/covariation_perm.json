@@ -1,0 +1,13 @@
+{
+  "metric": "PC1_variance_fraction_of_burden_residualized_LIVE_block",
+  "features": [
+    "SPLICE_NEOANTIGEN",
+    "FUSION_NEOANTIGEN"
+  ],
+  "n_samples": 192,
+  "obs_pc1_frac": 0.5100231938386209,
+  "null_mean": 0.5289992540650099,
+  "null_p95": 0.5706887969853692,
+  "perm_p": 0.7806438712257548,
+  "n_perm": 5000
+}

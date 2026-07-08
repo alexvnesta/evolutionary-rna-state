@@ -1,0 +1,251 @@
+{
+  "inputs": {
+    "results/deepen_features.csv": {
+      "size": 5610,
+      "mtime": 1783465594
+    },
+    "results/expand_salmon/ERR2208889/quant.sf": {
+      "size": 11611333,
+      "mtime": 1783463294
+    },
+    "results/expand_salmon/ERR2208893/quant.sf": {
+      "size": 11609547,
+      "mtime": 1783462679
+    },
+    "results/expand_salmon/ERR2208894/quant.sf": {
+      "size": 11609886,
+      "mtime": 1783462991
+    },
+    "results/expand_salmon/ERR2208902/quant.sf": {
+      "size": 11613169,
+      "mtime": 1783461362
+    },
+    "results/expand_salmon/ERR2208906/quant.sf": {
+      "size": 11610099,
+      "mtime": 1783462001
+    },
+    "results/expand_salmon/ERR2208915/quant.sf": {
+      "size": 11609917,
+      "mtime": 1783461705
+    },
+    "results/expand_salmon/ERR2208916/quant.sf": {
+      "size": 11615224,
+      "mtime": 1783462308
+    },
+    "results/expand_salmon/ERR2208923/quant.sf": {
+      "size": 11613152,
+      "mtime": 1783461037
+    },
+    "results/expand_salmon/ERR2208929/quant.sf": {
+      "size": 11611484,
+      "mtime": 1783459449
+    },
+    "results/expand_salmon/ERR2208930/quant.sf": {
+      "size": 11610046,
+      "mtime": 1783459798
+    },
+    "results/expand_salmon/ERR2208936/quant.sf": {
+      "size": 11615662,
+      "mtime": 1783460050
+    },
+    "results/expand_salmon/ERR2208940/quant.sf": {
+      "size": 11611493,
+      "mtime": 1783460410
+    },
+    "results/expand_salmon/ERR2208943/quant.sf": {
+      "size": 11610339,
+      "mtime": 1783460722
+    },
+    "results/expand_salmon/ERR2208946/quant.sf": {
+      "size": 11613208,
+      "mtime": 1783458532
+    },
+    "results/expand_salmon/ERR2208953/quant.sf": {
+      "size": 11613808,
+      "mtime": 1783459120
+    },
+    "results/expand_salmon/ERR2208961/quant.sf": {
+      "size": 11616015,
+      "mtime": 1783457979
+    },
+    "results/expand_salmon/ERR2208962/quant.sf": {
+      "size": 11613372,
+      "mtime": 1783458828
+    },
+    "results/expand_salmon/ERR2208970/quant.sf": {
+      "size": 11612749,
+      "mtime": 1783458191
+    },
+    "results/expand_salmon/SRR5088826/quant.sf": {
+      "size": 11610743,
+      "mtime": 1783465171
+    },
+    "results/expand_salmon/SRR5088840/quant.sf": {
+      "size": 11592302,
+      "mtime": 1783465398
+    },
+    "results/expand_salmon/SRR5088843/quant.sf": {
+      "size": 11603581,
+      "mtime": 1783463702
+    },
+    "results/expand_salmon/SRR5088861/quant.sf": {
+      "size": 11603160,
+      "mtime": 1783463963
+    },
+    "results/expand_salmon/SRR5088867/quant.sf": {
+      "size": 11603848,
+      "mtime": 1783464984
+    },
+    "results/expand_salmon/SRR5088891/quant.sf": {
+      "size": 11606548,
+      "mtime": 1783464453
+    },
+    "results/expand_salmon/SRR5088909/quant.sf": {
+      "size": 11607551,
+      "mtime": 1783464777
+    },
+    "results/expand_salmon/SRR5088913/quant.sf": {
+      "size": 11602955,
+      "mtime": 1783464642
+    },
+    "results/expand_salmon/SRR5088924/quant.sf": {
+      "size": 11608763,
+      "mtime": 1783464205
+    },
+    "results/expand_salmon/SRR5088929/quant.sf": {
+      "size": 11598493,
+      "mtime": 1783463461
+    },
+    "results/features/quant_gene_tpm.parquet": {
+      "size": 45705585,
+      "mtime": 1783465596
+    },
+    "results/features/tmb_standardized.parquet": {
+      "size": 16388,
+      "mtime": 1783457773
+    },
+    "results/hugo_complete_salmon/SRR3184289/quant.sf": {
+      "size": 11606130,
+      "mtime": 1783479897
+    },
+    "results/hugo_complete_salmon/SRR3184291/quant.sf": {
+      "size": 11602014,
+      "mtime": 1783480096
+    },
+    "results/hugo_complete_salmon/SRR3184292/quant.sf": {
+      "size": 11600239,
+      "mtime": 1783480305
+    },
+    "results/hugo_complete_salmon/SRR3184293/quant.sf": {
+      "size": 11592378,
+      "mtime": 1783480464
+    },
+    "results/hugo_complete_salmon/SRR3184295/quant.sf": {
+      "size": 11602799,
+      "mtime": 1783480623
+    },
+    "results/hugo_complete_salmon/SRR3184299/quant.sf": {
+      "size": 11602482,
+      "mtime": 1783480809
+    },
+    "results/hugo_complete_salmon/SRR3184300/quant.sf": {
+      "size": 11597673,
+      "mtime": 1783481022
+    },
+    "results/hugo_gene_tpm.parquet": {
+      "size": 40914153,
+      "mtime": 1783470731
+    },
+    "results/hugo_salmon/SRR3184279/quant.sf": {
+      "size": 11610779,
+      "mtime": 1783469152
+    },
+    "results/hugo_salmon/SRR3184280/quant.sf": {
+      "size": 11599602,
+      "mtime": 1783467515
+    },
+    "results/hugo_salmon/SRR3184281/quant.sf": {
+      "size": 11599691,
+      "mtime": 1783467809
+    },
+    "results/hugo_salmon/SRR3184282/quant.sf": {
+      "size": 11606669,
+      "mtime": 1783468035
+    },
+    "results/hugo_salmon/SRR3184283/quant.sf": {
+      "size": 11599354,
+      "mtime": 1783468316
+    },
+    "results/hugo_salmon/SRR3184284/quant.sf": {
+      "size": 11599178,
+      "mtime": 1783469447
+    },
+    "results/hugo_salmon/SRR3184285/quant.sf": {
+      "size": 11601568,
+      "mtime": 1783468603
+    },
+    "results/hugo_salmon/SRR3184286/quant.sf": {
+      "size": 11609809,
+      "mtime": 1783468841
+    },
+    "results/hugo_salmon/SRR3184287/quant.sf": {
+      "size": 11606578,
+      "mtime": 1783469771
+    },
+    "results/hugo_salmon/SRR3184288/quant.sf": {
+      "size": 11602643,
+      "mtime": 1783470077
+    },
+    "results/hugo_salmon/SRR3184290/quant.sf": {
+      "size": 11607069,
+      "mtime": 1783470360
+    },
+    "results/hugo_salmon/SRR3184294/quant.sf": {
+      "size": 11601541,
+      "mtime": 1783470658
+    },
+    "results/pilot_salmon/ERR2208897/quant.sf": {
+      "size": 11611279,
+      "mtime": 1783454653
+    },
+    "results/pilot_salmon/ERR2208898/quant.sf": {
+      "size": 11612189,
+      "mtime": 1783454899
+    },
+    "results/pilot_salmon/ERR2208909/quant.sf": {
+      "size": 11609510,
+      "mtime": 1783455071
+    },
+    "results/pilot_salmon/ERR2208912/quant.sf": {
+      "size": 11612938,
+      "mtime": 1783454797
+    },
+    "results/pilot_salmon/ERR2208918/quant.sf": {
+      "size": 11611975,
+      "mtime": 1783455357
+    },
+    "results/pilot_salmon/ERR2208926/quant.sf": {
+      "size": 11610258,
+      "mtime": 1783454372
+    },
+    "results/pilot_salmon/ERR2208933/quant.sf": {
+      "size": 11609123,
+      "mtime": 1783454509
+    },
+    "results/pilot_salmon/ERR2208968/quant.sf": {
+      "size": 11612642,
+      "mtime": 1783455186
+    },
+    "results/pilot_salmon/ERR2208969/quant.sf": {
+      "size": 11616345,
+      "mtime": 1783455876
+    },
+    "results/pilot_salmon/ERR2208977/quant.sf": {
+      "size": 11618020,
+      "mtime": 1783455476
+    }
+  },
+  "digest": "803b9d04077db92b",
+  "note": "cartoons upgraded to numbered-card style + schematic tumor cells; README hero image; HTML v4",
+  "recorded_at": "2026-07-08T03:28:04.961841+00:00"
+}

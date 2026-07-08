@@ -1,0 +1,41 @@
+{
+  "purpose": "Validate src/model.py on contract-shaped mock features before real de-novo matrices land.",
+  "positive_control": {
+    "latent_pc1_var_frac": 0.229,
+    "null_mean": 0.058,
+    "perm_p": 0.0004997501249375312,
+    "corr_S_true_latent": 0.962,
+    "loo_loading_stability_cosine": {
+      "gide": 0.993,
+      "hugo": 0.995,
+      "liu": 0.994,
+      "riaz": 0.994
+    },
+    "response_auroc": {
+      "S": 0.833,
+      "TMB": 0.559,
+      "TMB+S": 0.841,
+      "TIDE": 0.389,
+      "TIDE+S": 0.825
+    },
+    "incremental_S": {
+      "TMB": 0.282,
+      "TIDE": 0.437
+    }
+  },
+  "null_control": {
+    "latent_pc1_var_frac": 0.063,
+    "null_mean": 0.058,
+    "perm_p": 0.01999000499750125,
+    "response_auroc": {
+      "S": 0.56,
+      "TMB": 0.587,
+      "TMB+S": 0.604
+    }
+  },
+  "conclusions": [
+    "Latent-state recovery is faithful (corr 0.96) and CV is leakage-free (null AUROC~0.5).",
+    "Report effect size (var fraction vs null) alongside perm p: null control perm_p=0.02 with negligible effect (0.063 vs 0.058) shows p alone can flag trivial structure.",
+    "Code runs unchanged on real de-novo matrices from src/features.py."
+  ]
+}

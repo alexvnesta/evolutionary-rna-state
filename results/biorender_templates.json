@@ -1,0 +1,74 @@
+{
+ "thesis": [
+  [
+   "Neoantigen Presentation",
+   "https://app.biorender.com/biorender-templates/details/t-61f01c84c96a6a00a87fe0b0?source=mcp"
+  ],
+  [
+   "Anti-tumor & Pro-tumor Activity of B cells in the Cancer Tumor Microenvironment",
+   "https://app.biorender.com/biorender-templates/details/t-66aa9a2f5821817c5ac65d28?source=mcp"
+  ],
+  [
+   "Blockade of CTLA-4 or PD-1 Signaling in Tumor Immunotherapy",
+   "https://app.biorender.com/biorender-templates/details/t-5f7e0554ab31a300b4ebff0e?source=mcp"
+  ],
+  [
+   "Immune Checkpoint Inhibitor Against Tumor Cell",
+   "https://app.biorender.com/biorender-templates/details/t-5f06116dbfc57d00b2883631?source=mcp"
+  ]
+ ],
+ "wes_blind": [
+  [
+   "Spliceosome Complex",
+   "https://app.biorender.com/biorender-templates/details/t-64233c4488014de91b7cc9df?source=mcp"
+  ],
+  [
+   "RNA Processing in Eukaryotes 2",
+   "https://app.biorender.com/biorender-templates/details/t-63e8f802fe12d471fa3102bd?source=mcp"
+  ],
+  [
+   "Icon Pack - mRNA",
+   "https://app.biorender.com/biorender-templates/details/t-63693a8f27b2c5ba2c4e8168?source=mcp"
+  ],
+  [
+   "Alternative Splicing During  Epithelial-Mesenchymal Transition (EMT)",
+   "https://app.biorender.com/biorender-templates/details/t-67afd35856e86fd168fc6054?source=mcp"
+  ]
+ ],
+ "pipeline": [
+  [
+   "RNA Sequencing",
+   "https://app.biorender.com/biorender-templates/details/t-61f704a376778800a042a758?source=mcp"
+  ],
+  [
+   "Next Generation Sequencing Workflow",
+   "https://app.biorender.com/biorender-templates/details/t-62ccc36459dc10d0850c42df?source=mcp"
+  ],
+  [
+   "Nanopore MinION RNA-Seq Protocol",
+   "https://app.biorender.com/biorender-templates/details/t-63e8f9ed7895f61ccf908aa0?source=mcp"
+  ],
+  [
+   "Long-read DNA Sequencing Data Analysis",
+   "https://app.biorender.com/biorender-templates/details/t-67b60353f3dbe23e15d894da?source=mcp"
+  ]
+ ],
+ "confound": [
+  [
+   "The Lung Tumor Immune Microenvironment",
+   "https://app.biorender.com/biorender-templates/details/t-60d9e133aec45200a4772947?source=mcp"
+  ],
+  [
+   "Tumor Microenvironment 2",
+   "https://app.biorender.com/biorender-templates/details/t-5f63a4bebecfd300b1f68c0c?source=mcp"
+  ],
+  [
+   "Immunosuppressive Cells in the Tumor Microenvironment",
+   "https://app.biorender.com/biorender-templates/details/t-5fc93060906f1e1dab49b7e2?source=mcp"
+  ],
+  [
+   "Tumor Microenvironment 3",
+   "https://app.biorender.com/biorender-templates/details/t-69fdfa52fc2d479891764e1e?source=mcp"
+  ]
+ ]
+}

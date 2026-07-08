@@ -1,0 +1,37 @@
+{
+  "n_total_samples": 491,
+  "n_pretreatment": 416,
+  "n_phenotype_set": 264,
+  "phenotype_cohorts": [
+    "gide2019",
+    "hugo2016",
+    "liu2019",
+    "riaz2017"
+  ],
+  "phenotype_rna_cols": [
+    "SPLICE_NEOANTIGEN",
+    "ERV_NEOANTIGEN",
+    "FUSION_NEOANTIGEN"
+  ],
+  "phenotype_mut_cols": [
+    "INDEL_NEOANTIGEN",
+    "SNV_NEOANTIGEN"
+  ],
+  "burden_cols": [
+    "TMB_NONSYNONYMOUS",
+    "MUTATION_COUNT"
+  ],
+  "per_cohort_pretreatment_n": {
+    "dfci2019": 144,
+    "gide2019": 73,
+    "hugo2016": 26,
+    "liu2019": 122,
+    "riaz2017": 51
+  },
+  "per_cohort_phenotype_n": {
+    "gide2019": 72,
+    "hugo2016": 26,
+    "liu2019": 122,
+    "riaz2017": 44
+  }
+}

@@ -2,6 +2,10 @@
 
 **Reconstructing a latent evolutionary RNA-state of tumors from bulk RNA-seq to organize immune checkpoint blockade (ICB) response.**
 
+![The evolutionary RNA-state hypothesis: early driver mutations → genomic instability + epigenetic remodeling → RNA-processing dysregulation → latent RNA-state S → tumor antigenicity and ICB response](results/cartoon_thesis.png)
+
+*Early driver mutations set a tumor's trajectory; downstream RNA-processing phenotypes are manifestations of one latent state **S** that shapes antigenicity and immunotherapy response. Illustrations: [NIH BioArt](https://bioart.niaid.nih.gov) (NIAID Visual & Medical Arts).*
+
 ## Thesis
 
 Early driver mutations set a tumor's evolutionary trajectory. As the tumor

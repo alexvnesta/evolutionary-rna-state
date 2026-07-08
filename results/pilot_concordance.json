@@ -1,0 +1,107 @@
+{
+  "pilot": "Gide2019 PRE, de-novo Salmon quant (transcriptome index, 3M read-pairs/sample subsample)",
+  "n_samples": 12,
+  "balance": {
+    "R": 6,
+    "N": 6
+  },
+  "arms": {
+    "combo_ipiPD1": 6,
+    "mono_PD1": 6
+  },
+  "mapping_rate_range": "84.6-90.8%",
+  "n_genes_quantified": 62266,
+  "response_association": [
+    {
+      "feature": "antigen_presentation",
+      "auroc": 1.0,
+      "mw_p": 0.0022,
+      "median_R": 0.813,
+      "median_N": -0.585
+    },
+    {
+      "feature": "immune_program",
+      "auroc": 0.861,
+      "mw_p": 0.0411,
+      "median_R": 0.469,
+      "median_N": -0.321
+    },
+    {
+      "feature": "viral_mimicry_IFN",
+      "auroc": 0.778,
+      "mw_p": 0.132,
+      "median_R": 0.23,
+      "median_N": -0.378
+    },
+    {
+      "feature": "tx_diffuseness",
+      "auroc": 0.75,
+      "mw_p": 0.1797,
+      "median_R": 1552.061,
+      "median_N": 1157.724
+    },
+    {
+      "feature": "cytolytic",
+      "auroc": 0.722,
+      "mw_p": 0.2403,
+      "median_R": 0.538,
+      "median_N": -0.858
+    },
+    {
+      "feature": "n_expressed_genes",
+      "auroc": 0.639,
+      "mw_p": 0.4848,
+      "median_R": 15294.5,
+      "median_N": 14927.5
+    }
+  ],
+  "validation": [
+    {
+      "feature": "antigen_presentation",
+      "loo_auroc": 1.0,
+      "axis_auroc": 1.0,
+      "perm_p": 0.001
+    },
+    {
+      "feature": "immune_program",
+      "loo_auroc": 0.75,
+      "axis_auroc": 0.861,
+      "perm_p": 0.0392
+    },
+    {
+      "feature": "viral_mimicry_IFN",
+      "loo_auroc": 0.5,
+      "axis_auroc": 0.778,
+      "perm_p": 0.1308
+    },
+    {
+      "feature": "cytolytic",
+      "loo_auroc": 0.611,
+      "axis_auroc": 0.722,
+      "perm_p": 0.1986
+    },
+    {
+      "feature": "tx_diffuseness",
+      "loo_auroc": 0.556,
+      "axis_auroc": 0.75,
+      "perm_p": 0.1838
+    }
+  ],
+  "headline": {
+    "feature": "antigen_presentation (B2M/HLA-A/TAP1, log-TPM z-mean)",
+    "loo_auroc": 1.0,
+    "perm_p": 0.001,
+    "mw_p": 0.0022,
+    "interpretation": "A de-novo transcriptomic antigen-presentation axis, computed entirely from raw reads, perfectly and cross-validated-separates ICB responders from non-responders in this balanced pilot.",
+    "loo_method": "fold-contained: panel z-standardization refit on TRAIN samples only within each leave-one-out fold (no test-sample leakage into scaling); logistic map also fit per fold",
+    "loo_auroc_naive_zscore": 1.0,
+    "note_standardization": "An earlier version z-scored the panel over all 12 samples before the LOO split (mild standardization leakage). Recomputed with fold-contained standardization: 3-gene axis LOO=1.00 (unchanged), 6-gene panel LOO=0.917. Headline is robust to the fix."
+  },
+  "caveats": [
+    "n=12 pilot; a perfect separator warrants replication in the full cohort.",
+    "Transcriptome-only index + 3M-read subsample: sufficient for gene-level programs, NOT for the WES-blind phenotypes (IR, editing/AEI, TE-locus) that require the sibling pipeline's genome alignment.",
+    "Immune-axis signal may partly reflect immune-cell infiltration / purity; tumor-intrinsic vs microenvironment decomposition needs deconvolution (deferred to full analysis).",
+    "This pilot proves the read-level machinery + that de-novo RNA features organize response; it is the positive counterpart to the null WES-proxy internal test.",
+    "LOO is now fold-contained (train-only standardization); the earlier all-sample z-scoring did not inflate the 3-gene headline but is corrected here for rigor."
+  ]
+}

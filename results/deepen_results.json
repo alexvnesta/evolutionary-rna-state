@@ -1,0 +1,61 @@
+{
+  "cohorts": {
+    "gide2019": {
+      "n": 30,
+      "R": 16,
+      "N": 14
+    },
+    "riaz2017": {
+      "n": 10,
+      "R": 5,
+      "N": 5
+    },
+    "total": 40
+  },
+  "methods": "Fold-contained LOO (train-only panel standardization + train-fit infiltration residualization); held-out cross-cohort validation trains axis+logistic map on one cohort and predicts the other. All leakage-free.",
+  "within_gide_LOO": {
+    "antigen_3gene": 0.888,
+    "antigen_6gene": 0.871,
+    "infiltration": 0.795,
+    "viral_mimicry_IFN": 0.746
+  },
+  "tumor_intrinsic_gide_LOO": {
+    "antigen_3gene_resid_infiltration": 0.621,
+    "antigen_6gene_resid_infiltration": 0.638
+  },
+  "held_out": {
+    "train_gide_predict_riaz": {
+      "antigen_3gene": 0.44,
+      "antigen_6gene": 0.36,
+      "infiltration": 0.68,
+      "antigen_6gene_resid_infiltration": 0.16
+    },
+    "train_riaz_predict_gide": {
+      "antigen_6gene": 0.089
+    },
+    "within_riaz_labelfree": {
+      "antigen_3gene": 0.4,
+      "antigen_6gene": 0.4,
+      "infiltration": 0.68
+    },
+    "within_cohort_medians": {
+      "gide": {
+        "median_R": 0.701,
+        "median_N": -0.594,
+        "auroc": 0.906
+      },
+      "riaz": {
+        "median_R": 0.32,
+        "median_N": 0.109,
+        "auroc": 0.4,
+        "note": "At n=5v5 AUROC=0.40 is statistically indistinguishable from chance (0.5); medians overlap. This is NON-REPLICATION / no separation, NOT a sign reversal."
+      }
+    }
+  },
+  "conclusion": [
+    "Within Gide (n=30) the de-novo antigen-presentation axis separates ICB response at LOO AUROC ~0.87-0.89, beating an infiltration score (0.80) \u2014 the n=12 pilot's AUROC=1.0 was small-sample optimism, and the honest within-cohort estimate is ~0.88.",
+    "The response signal is LARGELY INFILTRATION-DRIVEN: after fold-contained residualization on an immune-infiltration score, the tumor-intrinsic residual is only LOO ~0.62-0.64.",
+    "CRITICAL NEGATIVE: the axis does NOT replicate across cohorts. Trained on Gide it scores AUROC 0.36-0.44 on held-out Riaz. Within Gide it separates cleanly (R median +0.70 vs N -0.59, AUROC 0.91); within Riaz there is NO separation (R median +0.32 vs N +0.11, AUROC 0.40 \u2014 indistinguishable from chance at n=5v5). This is non-replication, not a sign reversal, and is not a batch/scaling artifact. Only the infiltration score shows weak cross-cohort consistency (~0.68).",
+    "Interpretation for the thesis: a single-phenotype, gene-level de-novo axis is cohort-specific and mostly reflects microenvironment, NOT a transferable tumor-intrinsic RNA state. Testing the actual thesis requires the multi-phenotype WES-blind features (IR, editing, TE/ERV) from the pipeline session; gene-level antigen-presentation expression alone is insufficient and does not generalize."
+  ]
+}

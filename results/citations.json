@@ -1,0 +1,138 @@
+{
+  "generated_from": "docs/WRITEUP.md",
+  "n_refs": 12,
+  "references": [
+    {
+      "n": 1,
+      "id": "tmb2019",
+      "doi": "10.1038/s41588-018-0312-8",
+      "url": "https://doi.org/10.1038/s41588-018-0312-8",
+      "authors": "Samstein et al.",
+      "title": "Tumor mutational load predicts survival after immunotherapy across multiple cancer types",
+      "venue": "Nature Genetics",
+      "year": 2019,
+      "ref": "Samstein et al.. Tumor mutational load predicts survival after immunotherapy across multiple cancer types. Nature Genetics (2019). doi:10.1038/s41588-018-0312-8"
+    },
+    {
+      "n": 2,
+      "id": "gep2017",
+      "doi": "10.1172/JCI91190",
+      "url": "https://doi.org/10.1172/JCI91190",
+      "authors": "Ayers et al.",
+      "title": "IFN-\u03b3\u2013related mRNA profile predicts clinical response to PD-1 blockade",
+      "venue": "Journal of Clinical Investigation",
+      "year": 2017,
+      "ref": "Ayers et al.. IFN-\u03b3\u2013related mRNA profile predicts clinical response to PD-1 blockade. Journal of Clinical Investigation (2017). doi:10.1172/JCI91190"
+    },
+    {
+      "n": 3,
+      "id": "tide2018",
+      "doi": "10.1038/s41591-018-0136-1",
+      "url": "https://doi.org/10.1038/s41591-018-0136-1",
+      "authors": "Jiang et al.",
+      "title": "Signatures of T cell dysfunction and exclusion predict cancer immunotherapy response",
+      "venue": "Nature Medicine",
+      "year": 2018,
+      "ref": "Jiang et al.. Signatures of T cell dysfunction and exclusion predict cancer immunotherapy response. Nature Medicine (2018). doi:10.1038/s41591-018-0136-1"
+    },
+    {
+      "n": 4,
+      "id": "iatlas2018",
+      "doi": "10.1016/j.immuni.2018.03.023",
+      "url": "https://doi.org/10.1016/j.immuni.2018.03.023",
+      "authors": "Thorsson et al.",
+      "title": "The Immune Landscape of Cancer",
+      "venue": "Immunity",
+      "year": 2018,
+      "ref": "Thorsson et al.. The Immune Landscape of Cancer. Immunity (2018). doi:10.1016/j.immuni.2018.03.023"
+    },
+    {
+      "n": 5,
+      "id": "gide2019",
+      "doi": "10.1016/j.ccell.2019.01.003",
+      "url": "https://doi.org/10.1016/j.ccell.2019.01.003",
+      "authors": "Gide et al.",
+      "title": "Distinct Immune Cell Populations Define Response to Anti-PD-1 Monotherapy and Anti-PD-1/Anti-CTLA-4 Combined Therapy",
+      "venue": "Cancer Cell",
+      "year": 2019,
+      "ref": "Gide et al.. Distinct Immune Cell Populations Define Response to Anti-PD-1 Monotherapy and Anti-PD-1/Anti-CTLA-4 Combined Therapy. Cancer Cell (2019). doi:10.1016/j.ccell.2019.01.003"
+    },
+    {
+      "n": 6,
+      "id": "riaz2017",
+      "doi": "10.1016/j.cell.2017.09.028",
+      "url": "https://doi.org/10.1016/j.cell.2017.09.028",
+      "authors": "Riaz et al.",
+      "title": "Tumor and Microenvironment Evolution during Immunotherapy with Nivolumab",
+      "venue": "Cell",
+      "year": 2017,
+      "ref": "Riaz et al.. Tumor and Microenvironment Evolution during Immunotherapy with Nivolumab. Cell (2017). doi:10.1016/j.cell.2017.09.028"
+    },
+    {
+      "n": 7,
+      "id": "hugo2016",
+      "doi": "10.1016/j.cell.2016.02.065",
+      "url": "https://doi.org/10.1016/j.cell.2016.02.065",
+      "authors": "Hugo et al.",
+      "title": "Genomic and Transcriptomic Features of Response to Anti-PD-1 Therapy in Metastatic Melanoma",
+      "venue": "Cell",
+      "year": 2016,
+      "ref": "Hugo et al.. Genomic and Transcriptomic Features of Response to Anti-PD-1 Therapy in Metastatic Melanoma. Cell (2016). doi:10.1016/j.cell.2016.02.065"
+    },
+    {
+      "n": 8,
+      "id": "liu2019",
+      "doi": "10.1038/s41591-019-0654-5",
+      "url": "https://doi.org/10.1038/s41591-019-0654-5",
+      "authors": "Liu et al.",
+      "title": "Integrative molecular and clinical modeling of clinical outcomes to PD1 blockade in patients with metastatic melanoma",
+      "venue": "Nature Medicine",
+      "year": 2019,
+      "ref": "Liu et al.. Integrative molecular and clinical modeling of clinical outcomes to PD1 blockade in patients with metastatic melanoma. Nature Medicine (2019). doi:10.1038/s41591-019-0654-5"
+    },
+    {
+      "n": 9,
+      "id": "vanallen2015",
+      "doi": "10.1126/science.aad0095",
+      "url": "https://doi.org/10.1126/science.aad0095",
+      "authors": "Van Allen et al.",
+      "title": "Genomic correlates of response to CTLA-4 blockade in metastatic melanoma",
+      "venue": "Science",
+      "year": 2015,
+      "ref": "Van Allen et al.. Genomic correlates of response to CTLA-4 blockade in metastatic melanoma. Science (2015). doi:10.1126/science.aad0095"
+    },
+    {
+      "n": 10,
+      "id": "salmon2017",
+      "doi": "10.1038/nmeth.4197",
+      "url": "https://doi.org/10.1038/nmeth.4197",
+      "authors": "Patro et al.",
+      "title": "Salmon provides fast and bias-aware quantification of transcript expression",
+      "venue": "Nature Methods",
+      "year": 2017,
+      "ref": "Patro et al.. Salmon provides fast and bias-aware quantification of transcript expression. Nature Methods (2017). doi:10.1038/nmeth.4197"
+    },
+    {
+      "n": 11,
+      "id": "gencode2021",
+      "doi": "10.1093/nar/gkaa1087",
+      "url": "https://doi.org/10.1093/nar/gkaa1087",
+      "authors": "Frankish et al.",
+      "title": "GENCODE 2021",
+      "venue": "Nucleic Acids Research",
+      "year": 2020,
+      "ref": "Frankish et al.. GENCODE 2021. Nucleic Acids Research (2020). doi:10.1093/nar/gkaa1087"
+    },
+    {
+      "n": 12,
+      "id": "snaf2024",
+      "doi": "10.1126/scitranslmed.ade2886",
+      "url": "https://doi.org/10.1126/scitranslmed.ade2886",
+      "authors": "Li et al.",
+      "title": "Splicing neoantigen discovery with SNAF reveals shared targets for cancer immunotherapy",
+      "venue": "Science Translational Medicine",
+      "year": 2024,
+      "ref": "Li et al.. Splicing neoantigen discovery with SNAF reveals shared targets for cancer immunotherapy. Science Translational Medicine (2024). doi:10.1126/scitranslmed.ade2886"
+    }
+  ]
+}
