@@ -101,5 +101,7 @@ Provenance and method detail: `_joins_provenance.json`.
   **Not cross-cohort comparable to `riaz_clonality.csv` on absolute clonality** —
   Riaz uses a purity-free VAF/clonal-peak proxy (median subclonal fraction 0.70),
   Hugo uses purity-corrected CCF (0.25); the difference is method, not biology.
-  Use each within-cohort only. Joins to the Hugo RNA cohort
-  (GSE78220/PRJNA356839) on the `Pt##` namespace once that cohort is catalogued.
+  Use each within-cohort only. Joins to the Hugo RNA cohort (GSE78220 = SRA
+  study SRP070710 / BioProject PRJNA312948, RNA-Seq, Homo sapiens, 28 runs;
+  verified via NCBI GEO→SRA elink) on the `Pt##` namespace once that cohort is
+  catalogued.
