@@ -77,8 +77,8 @@ for the per-tool arm64 availability map.
 | Phenotype | Pipeline | Status |
 |-----------|----------|--------|
 | Base align + quant | **nf-core/rnaseq 3.26.0** (HISAT2 + Salmon on arm64) | mature; validated |
-| Alternative splicing | **nf-core/rnasplice 1.0.4** (rMATS, DEXSeq, edgeR, SUPPA2) | mature |
-| Fusion transcripts | **nf-core/rnafusion 4.1.3** (Arriba + STAR-Fusion; FusionCatcher deferred) | mature |
+| Alternative splicing | **nf-core/rnasplice 1.0.4** (DEXSeq + edgeR on arm64; rMATS/SUPPA amd64-only) | mature; validated (genome_bam) |
+| Fusion transcripts | **nf-core/rnafusion 4.1.3** (Arriba + STAR-Fusion) | mature; **arm64-blocked** (needs STAR) |
 | TE / ERV activation | **custom** `pipelines/te_erv/` (Telescope locus via bowtie2 + TEcount family) | authored + integration-tested |
 | Intron retention | **custom** `pipelines/intron_retention/` (featureCounts IR-ratio) | authored + integration-tested |
 | RNA editing | **custom** `pipelines/rna_editing/` (JACUSA2 sites + Alu Editing Index) | authored + integration-tested |
@@ -100,6 +100,29 @@ pilot data (Gide PD1_35_PRE).
 - **intron_retention:** RUN end-to-end (exit 0); 289,429 introns, 203,683 evaluated, median IR 0.0076, 26,977 introns IR>0.1; cohort matrix produced.
 - **rna_editing:** RUN end-to-end (exit 0, chr21-restricted); 116 A-to-I sites (61 A>G, 55 T>C), Alu Editing Index 0.148% (24 A>G / 16,254 A-cov), cohort_aei.tsv produced. MAPQ floor corrected to 60 (HISAT2 unique-mapper MAPQ; STAR uses 255); optional `--editing_region_bed` confines JACUSA2 + the Alu set to a panel/chromosome.
 - **te_erv:** RUN end-to-end (exit 0). bowtie2 multimap align (42.25M pairs, 75.4% overall), Telescope EM converged (200 iters, log-likelihood ~2.04e7, 28,513-feature locus report) → **locus matrix 15,209 loci**; TEcount family branch → **family matrix 1,328 TE families + 63,140 genes**. Outputs in `results/te_erv_integration_test/matrices/`. Telescope v1.0.3 is a patched arm64 wheel (self-cimport + `np.int` fixes, see §5.14); bowtie2 replaces the broken arm64 STAR multimap pass.
+
+The two mature nf-core splice/fusion pipelines were also pilot-run:
+
+- **rnasplice (DEXSeq + edgeR):** RUN end-to-end (exit 0) on a 3-responder vs
+  3-nonresponder Gide contrast via **`--source genome_bam`** — the HISAT2 spine
+  BAMs feed rnasplice directly, bypassing the arm64-broken STAR. DEXSeq: 701,811
+  exon bins tested, 74 significant (padj<0.05), 9,535 genes q-valued. edgeR: 16,730
+  genes tested for differential exon usage (top hit TTN/ENSG00000155657, FDR 7e-82).
+  Outputs in `results/rnasplice_pilot/star_salmon/{dexseq_exon,edger}/`. Run it with
+  `SOURCE=genome_bam bash pipelines/scripts/run_rnasplice.sh <ss> <contrasts> <out>`;
+  `pipelines/conf/rnasplice_arm64_overrides.config` remaps ~10 conda pins with no
+  osx-arm64 build (samtools, htseq, subread, edgeR, gffread, dexseq→1.56, rsem
+  minus STAR, sed/grep). **rMATS and SUPPA are opt-in / amd64-only** — rMATS's
+  `rmats + r-pairadise` env has an unsatisfiable R-toolchain conflict on arm64
+  (r-base 4.2 vs 4.5, gsl, libgfortran); enable with `RMATS=1` only on amd64/Docker.
+  SUPPA needs a `salmon_results` source (fastq path), not genome_bam.
+- **rnafusion:** NOT runnable natively on arm64. Both fusion callers wired in
+  (Arriba, STAR-Fusion) route through `STAR_ALIGN`, and STAR-Fusion additionally
+  consumes STAR's `Chimeric.out.junction` — there is no non-STAR fusion path in
+  4.1.3. arm64 STAR ingests 0 reads (§7), and osx-64 STAR under Rosetta does the
+  same, so both callers would see an empty chimeric BAM. Fusion detection needs an
+  amd64 host (native Linux or a Linux VM/container with a working STAR); the runner
+  and references are ready for that target. See §7.
 
 ## 4. Data & cohorts
 
@@ -182,3 +205,23 @@ subworkflows have consumed them — NOT as the working format. Rationale:
   after TLEN-sign normalization, **~53% smaller** (3.34 GB → 1.56 GB).
 - Quality scores are retained in full (no binning), so the conversion is
   information-preserving, not lossy-CRAM.
+
+### 8a. Disk hygiene during runs
+
+Disk is at a premium on this machine. Two practices keep it bounded:
+
+- **Prune Nextflow work dirs after a pipeline completes.** Each pipeline stages
+  intermediates under `results/large/nf_work_<name>/`; once a run finishes (exit 0)
+  and its results are published under `results/<name>/`, that work dir is disposable
+  temp — `rm -rf results/large/nf_work_<name>`. These can be very large (a single
+  botched te_erv run left a 274 GB orphaned `null` file from the pre-fix
+  null-param bug — see §5). Keep the work dir only while you still intend to
+  `-resume` (it holds the cached task outputs). Superseded reference builds are
+  reclaimable too: the abandoned STAR pilot left a 44 GB duplicate STAR index under
+  `results/rnaseq_pilot/genome/` (the live index is `reference/GRCh38/star_index`).
+- **Archive spine BAMs to CRAM in the cohort loop.** `run_cohort_batched.sh` takes
+  `ARCHIVE_CRAM=1` to convert each batch's spine BAMs to CRAM (via
+  `archive_bam_to_cram.sh`) right after the FASTQ delete. Leave it UNSET while the
+  custom subworkflows still need to read the BAMs (run them first), then re-invoke
+  with `ARCHIVE_CRAM=1`, or archive by hand. `REF_FASTA` and `CRAM_THREADS`
+  (default 6) are overridable via env.

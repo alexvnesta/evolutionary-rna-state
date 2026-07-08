@@ -39,8 +39,17 @@ if [ "$SOURCE" = "fastq" ]; then
           --rmats --dexseq_exon --edger_exon --suppa )
 else
   # genome_bam path: no alignment; splice tools that consume genome BAM directly.
-  # rMATS is native arm64; DEXSeq/edgeR are R (arm64-fine). No SUPPA (needs salmon).
-  ARGS+=( --rmats --dexseq_exon --edger_exon )
+  # DEXSeq + edgeR are R-based and run cleanly on arm64 conda.
+  # SUPPA needs salmon_results (fastq source) — not available here.
+  # MISO sashimi plots are disabled: misopy=0.5.4 is python-2.7-only with no
+  # osx-arm64 build, and the plots are optional visualisation, not results.
+  # rMATS is OPT-IN (RMATS=1): its env (rmats=4.3.0 + r-pairadise) has an
+  # unsatisfiable R-toolchain conflict on osx-arm64 (r-base 4.2 vs 4.5, gsl,
+  # libgfortran). Off by default; enable only on amd64/Docker. See RUNBOOK §5.
+  # rnasplice defaults rmats/suppa/dexseq/edger all to true in nextflow.config,
+  # so unwanted tools must be EXPLICITLY disabled with `<tool> false`.
+  ARGS+=( --dexseq_exon --edger_exon --suppa false --sashimi_plot false )
+  if [ "${RMATS:-0}" = "1" ]; then ARGS+=( --rmats ); else ARGS+=( --rmats false ); fi
 fi
 ARGS+=( -resume )
 echo "nextflow run "$REPO/pipelines/nfcore/rnasplice-1.0.4/main.nf" ${ARGS[*]} $*"
