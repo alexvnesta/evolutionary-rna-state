@@ -1,0 +1,8 @@
+readout,r,p,n,note
+scRNA_clone_level_target,-0.629739842017115,,55,clone-level ground truth
+naive_bulk,0.2822253509000659,0.040612320049312096,53,whole-bulk program scoring (Simpson flip)
+immune_frac_vs_bulk_IFN,0.4605613406904992,,53,confound: infiltration drives bulk IFN
+malclass2_frac_vs_bulk_MDM2,-0.10484953546138713,,53,deconv c2 fraction vs bulk MDM2
+deconv_recovered_malignant,0.12448667533477085,0.4207515215382741,44,reference-based residual malignant expr
+partial_corr_control_fractions,0.31545886167118414,0.02139684084571917,53,regress out non-malig fractions
+high_purity_subset,0.33107651808850797,0.09162761272433222,27,top-50% malignant-fraction samples
