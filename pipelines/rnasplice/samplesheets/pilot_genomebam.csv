@@ -1,0 +1,7 @@
+sample,condition,genome_bam
+ERR2208909,responder,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/editing_bams/ERR2208909.hisat2.sorted.bam
+ERR2208912,responder,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/editing_bams/ERR2208912.hisat2.sorted.bam
+ERR2208952,responder,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/editing_bams/ERR2208952.hisat2.sorted.bam
+ERR2208889,nonresponder,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/editing_bams/ERR2208889.hisat2.sorted.bam
+ERR2208893,nonresponder,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/editing_bams/ERR2208893.hisat2.sorted.bam
+ERR2208933,nonresponder,/Users/alex/OrchestratedBiosciences/evolutionary-rna-state/results/editing_bams/ERR2208933.hisat2.sorted.bam

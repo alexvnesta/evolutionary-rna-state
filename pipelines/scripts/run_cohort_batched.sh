@@ -13,6 +13,8 @@ REPO="$(cd "$(dirname "$0")/../.." && pwd)"
 source "$REPO/pipelines/env.sh" >/dev/null
 MAN="${1:?manifest}"; OUT="${2:?outdir}"; BATCH="${3:-8}"
 FASTQ_DIR="$REPO/data/raw/fastq"; mkdir -p "$FASTQ_DIR" "$OUT"
+# reference FASTA for optional archival CRAM (step 5, ARCHIVE_CRAM=1)
+REF_FASTA="${REF_FASTA:-$REPO/reference/GRCh38/GRCh38.primary_assembly.genome.fa}"
 
 # Split manifest into batches of run accessions
 python3 - "$MAN" "$BATCH" <<'PY'
@@ -46,6 +48,17 @@ for r in rows:
     for f in glob.glob(f"{fq}/{r['run_accession']}_*.fastq.gz"):
         os.remove(f); print("[del]",os.path.basename(f))
 PY
+  # 5. OPTIONAL archival CRAM: if ARCHIVE_CRAM=1, losslessly convert this batch's
+  #    spine BAMs to CRAM and delete the BAMs (reclaims ~50%). Leave UNSET when the
+  #    custom subworkflows (te_erv/intron_retention/rna_editing) still need to read
+  #    the BAMs — run them first, then re-invoke with ARCHIVE_CRAM=1, or archive by
+  #    hand via pipelines/scripts/archive_bam_to_cram.sh. See RUNBOOK §8.
+  if [ "${ARCHIVE_CRAM:-0}" = "1" ]; then
+    echo "  [cram] archiving batch BAMs -> CRAM (ARCHIVE_CRAM=1)"
+    bash "$REPO/pipelines/scripts/archive_bam_to_cram.sh" \
+      "$REF_FASTA" "$OUT/hisat2" -j "${CRAM_THREADS:-6}" || echo "  [cram] WARN: archival reported failures (BAMs kept)"
+  fi
   echo "  free after $bname: $(df -h "$REPO" | awk 'NR==2{print $4}')"
 done
 echo "[done] cohort processed; FASTQs cleared, BAMs+counts under $OUT"
+[ "${ARCHIVE_CRAM:-0}" = "1" ] && echo "[done] spine BAMs archived to CRAM (ARCHIVE_CRAM=1)"
