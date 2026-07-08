@@ -49,6 +49,19 @@ AUC 0.55 (perm p=0.274, ns, n=19). Needs replication; not a DDLPS-specific resul
   pivoting to isoform ratios / localization / protein interactions. (Session conclusion —
   its report not yet committed; recorded here as reported + the REI on-disk check.)
 
+## ADAR-signal 0.647 claim RETRACTED at full cohort (session `e6a36497`, verified)
+A previously-positive-looking result — regulon-inferred ADAR regulator-activity
+LOCO-AUROC 0.647 (n=52 subset) — has been retracted by its own session and the
+supersession verified in the artifact `REGULON_ACTIVITY_FINDING_n52.md` (v2,
+version_id `08d6ac81`): the nf-core full-cohort run now quantifies all 106 labeled
+pre-treatment samples (same 3 cohorts), and re-running the IDENTICAL per-cohort
+unsupervised method at n=106 gives ADAR LOCO-AUROC 0.535, within-cohort permutation
+p=0.31 (chance). The two cohorts that grew (gide 30->69, hugo 12->27) both regress to
+~0.53; only unchanged riaz (n=10) stays high — i.e. the 0.647 was a small-n artifact.
+Collapse documented in `ADAR_SIGNAL_COLLAPSE_n106.md`; four docs banner-marked. This
+is an INDEPENDENT confirmation of the central negative, and confirms full-cohort
+quantification (n=106 pre-treatment) has landed.
+
 ## liu2019 adjudication — expression matrix STAGED (coordination session)
 Fetched from cBioPortal, staged as artifacts (NOT yet wired into the auto-runner):
 - `liu2019_cbioportal_rna_seq_mrna.csv` (artifact `2df0f265`) — 122 samples x 39,168 genes,
