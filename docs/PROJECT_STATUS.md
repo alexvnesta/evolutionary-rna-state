@@ -58,8 +58,10 @@ central negative below — the response-prediction thesis is falsified regardles
 which model embeds the RNA:
 - `docs/ENCODER_REVIEW.md` — DNA-level shortlist, favored FROZEN HyenaDNA/Caduceus;
   deferred fine-tuning until frozen signal + GPU.
-- Orthrus (`15defe54`, completed) — Mamba-based mature-RNA model; scVI evaluation done,
-  Mamba-2 port assessed, packaged as a skill.
+- Orthrus (`15defe54`, completed) — Mamba-based mature-RNA foundation model
+  (contrastive-trained on splice isoforms + Zoonomia orthologs); evaluated as an encoder
+  candidate, Mamba-2 port assessed, packaged as a skill. (An earlier status row said "scVI
+  evaluation"; not substantiated in the session transcript — dropped rather than propagate.)
 - EVA (`30083448`) — "Evolutionary Versatile Architect", 1.4B-param MoE generative RNA
   model (OpenRNA, 114M seqs). **Discrimination gate returned NO-GO**: EVA's evolutionary
   likelihood does NOT flag the project's TE/ERV or intron-retention events as abnormal
