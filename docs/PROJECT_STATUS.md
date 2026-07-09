@@ -100,10 +100,12 @@ central negative below — the response-prediction thesis is falsified regardles
 which model embeds the RNA:
 - `docs/ENCODER_REVIEW.md` — DNA-level shortlist, favored FROZEN HyenaDNA/Caduceus;
   deferred fine-tuning until frozen signal + GPU.
-- Orthrus (`15defe54`, completed) — Mamba-based mature-RNA foundation model
-  (contrastive-trained on splice isoforms + Zoonomia orthologs); evaluated as an encoder
-  candidate, Mamba-2 port assessed, packaged as a skill. (An earlier status row said "scVI
-  evaluation"; not substantiated in the session transcript — dropped rather than propagate.)
+- Orthrus (`15defe54`) — Mamba-based mature-RNA foundation model (contrastive-trained on splice
+  isoforms + Zoonomia orthologs); assessed for feasibility (Mamba-2 port, packaged as a skill) but
+  **never run at patient scale** — its only outputs are a 5-sequence CPU-throughput benchmark on
+  housekeeping genes and a feasibility memo (forensics `756ba1cd`). Any "Orthrus LOCO ~0.49" figure is
+  a misattributed expression-PCA baseline, not an Orthrus result. The session is now building the real
+  non-reference feature pipeline (blocked at cohort scale on sandbox infra).
 - EVA (`30083448`) — "Evolutionary Versatile Architect", 1.4B-param MoE generative RNA
   model (OpenRNA, 114M seqs). **Discrimination gate returned NO-GO**: EVA's evolutionary
   likelihood does NOT flag the project's TE/ERV or intron-retention events as abnormal
@@ -114,18 +116,19 @@ which model embeds the RNA:
   repo; HF card tags openrail — discrepancy worth author confirmation). Session wrapping
   with findings + a PEFT gate.
 
-**Frozen-embedding head-to-head — COMPLETED, null (session `30083448`, verified from
-`eva_headtohead_report.md`).** Two pretrained encoders were run through the frozen-embedding
-LOCO harness on n=40 (2 cohorts): **EVA embeddings at chance (LOCO AUROC 0.414, perm p=0.80)**,
-indistinguishable from the PCA baseline (0.404) and from **Orthrus** (the one prior encoder
-tested, also null). The immune floor remains the only predictor with cross-cohort signal
-(LOCO 0.767, perm p=0.001), and combining EVA with the floor DEGRADES it (0.767→0.401) — the
-same pattern the kill-tests found. Embeddings are valid (discrimination sanity control, real
-vs scrambled, AUROC 0.98); they simply carry no response signal. IMPORTANT SCOPE: only
-Orthrus and EVA were actually run; **HyenaDNA and Caduceus remain DEFERRED comparators, never
-run** — this is a two-encoder null, not an all-encoder verdict. Power caveat: n=40, 2-cohort LOCO.
-Coordination note: no encoder result should be presented as reopening the response
-question — that is settled negative at the available cohort sizes.
+**Frozen-embedding head-to-head — SUPERSEDED by forensic re-audit (see Scientific bottom line).**
+This was recorded as a "two-encoder null" (EVA LOCO 0.414, Orthrus also null, vs PCA baseline 0.404),
+but the four-audit forensics (`756ba1cd`) showed the comparison could not test either model:
+- **EVA's per-patient feature is a fixed linear map of the 997 reference-gene expression submatrix
+  (R²=1.000).** So "EVA vs PCA" was one linear function of expression vs another — rigged to tie. Its
+  0.414 is a design artifact, not an encoder verdict.
+- **Orthrus was NEVER run at patient scale** — the "Orthrus null" here is a misattributed
+  expression-PCA baseline number, not an Orthrus result.
+So **zero encoders were tested on patient-specific/aberrant sequence.** HyenaDNA and Caduceus also
+remain deferred/never-run. What DOES stand from this harness: the **immune floor is a real
+cross-cohort predictor (LOCO 0.767, perm p=0.001)**, and adding the (expression-derived) EVA feature
+degrades it (0.767→0.401). Corrected count: the response question was tested against expression-derived
+features only; the hypothesis's non-reference features were never given to any encoder.
 
 ## ADAR-signal 0.647 claim RETRACTED at full cohort (session `e6a36497`, verified)
 A previously-positive-looking result — regulon-inferred ADAR regulator-activity
