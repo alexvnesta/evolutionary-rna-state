@@ -71,6 +71,14 @@ predictor. Forensic detail below (all verified against code/data, not summary do
   won't boot). It has a NEW open gate asking how to proceed (restart app / babysit small batches /
   fix Modal). So the first genuine cohort-scale test of the non-reference features is validated-but-not-yet-run.
 
+  FORWARD PATH (advisory, session `c8f0a686`): the splicing-neoantigen (SNAF/IRIS) and TE-antigen
+  (TEtranscripts/SQuIRE/Telescope) methods need splice-aware genome BAMs with retained multimappers —
+  i.e. a STAR genome-alignment branch, which Salmon's transcriptome pseudo-alignment cannot provide.
+  CAVEAT: STAR is the aligner that failed on this arm64 host (the reason for the HISAT2 pivot); a STAR
+  branch will need either the osx-64/Rosetta path re-tested or a non-arm64 (e.g. Modal/cloud) runner.
+  HISAT2 (already working) is splice-aware and can retain multimappers with `-k`, so it is the nearer-term
+  substrate for the editing/TE/IR/splicing-junction layers the Orthrus build already validated per-sample.
+
 So the honest state: **what is falsified is "bulk-expression-derived features predict ICB response
 cross-cohort" (learned rep at chance, LOCO AUROC 0.49 p=0.41; immune floor real-but-weak 0.59
 p=0.044). The hypothesis's own non-reference RNA-phenotype features remain UNTESTED at cohort scale.**
