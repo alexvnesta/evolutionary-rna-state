@@ -8,7 +8,7 @@
 - output: results/rnaseq_cohort/ (hisat2/*.markdup.sorted.bam, salmon/, stringtie/, multiqc/)
 
 ## Progress at snapshot
-- Batch 1/5 (batch_000): 8/8 BAMs published, salmon quant done, in final RSeQC/MultiQC
+- Batch 1/5 COMPLETE (Pipeline completed successfully): 8 BAMs+indexes, 8 salmon quants, salmon.merged.gene_counts.tsv, MultiQC. Batch boundary PROVEN: runner transitioned to batch_001, batch 2 fetching.
 - 4 batches remain (batch_001..004); batch 2+ skip index build (cached in shared work dir)
 - Genome indexes (hisat2 8x .ht2, salmon, transcripts.fa) built in results/rnaseq_cohort/genome/
 
