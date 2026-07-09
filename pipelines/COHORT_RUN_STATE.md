@@ -30,3 +30,17 @@
 - strandedness=reverse (explicit) in _ss_from_manifest.py — auto needs fq=0.12.0 (no arm64 build)
 - fetch_fastq.sh is resilient (curl -C - + retries) — rides through ENA SSL EOF/403
 - rnafusion is arm64-blocked (needs amd64 STAR) — separate track
+
+## Disk-management UPDATE (learned during batch 2)
+- The shared work dir hit 336 GB during batch 2's alignment (8 samples' scratch
+  co-resident). Disk dropped to 29 GB — CRITICAL. Nextflow auto-clears each
+  sample's HISAT2 scratch once its BAM finalizes, but 8-wide concurrency peaks high.
+- RECLAIMED 34 GB safely by deleting my own completed pilot working dirs
+  (results/rnasplice_pilot + results/te_erv_integration_test) — their key results
+  are already saved as artifacts, so nothing lost. Did NOT touch other sessions'
+  data (editing_bams, editing_crams).
+- RECOMMENDATION for a re-run or if disk gets critical again: use batch size 4-6
+  instead of 8 (fewer samples aligning concurrently = lower peak scratch). The
+  runner takes batch size as arg 3: run_cohort_batched.sh <manifest> <out> 4
+- If a batch's BAMs are published and disk is tight, that batch's raw FASTQs
+  (data/raw/fastq/*.fastq.gz) are safe to delete immediately.
