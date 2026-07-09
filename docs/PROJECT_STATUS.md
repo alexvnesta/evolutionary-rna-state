@@ -40,6 +40,17 @@ expression, or a DNA/WES antigen-quantity proxy — never on the non-reference t
 status of the central claim: **largely UNTESTED, not falsified.** What DOES stand (well-powered): RNA
 antigen *quantity* (DNA/WES proxy) carries no ICB signal, and immune composition is a real cross-cohort
 predictor. Forensic detail below (all verified against code/data, not summary docs):
+
+**NEW — mediation analysis (overview session `756ba1cd`, `mediation_results.json` v`c403c3a6`, read here; its
+values, not this session's).** A formal mediation decomposition (tumor-intrinsic RNA axis → immune mediator →
+response, bootstrap indirect/direct effects) — the test the forensics flagged as missing — finds ONE axis with a
+significant mediated effect: **viral-mimicry/IFN, indirect effect 0.664, 95% CI [0.18, 1.39] (excludes 0), direct
+effect null (CI spans 0) — its response association runs THROUGH immune infiltration** (a-path RNA→immune 0.65,
+perm p=0). Antigen-presentation (a-path 0.74, perm p=0) and cytolytic (a-path 1.03) have strong RNA→immune coupling
+but indirect-effect CIs that include 0 — **underpowered, not null**, pending liu2019 (n~132). This is a positive,
+mechanistically-specific result CONSISTENT with the hypothesis's own causal structure (RNA state acting through
+immunity); the earlier "adjust for immune composition → signal disappears" tests were over-adjustment (removing the
+indirect effect), not falsification.
 - The kill-test "learned representation" arm (`analysis/kill_tests/headtohead_repr.py`) is
   literally `PCA(top-2000 variable genes)` — a linear summary of bulk expression, NOT a
   foundation-model reconstruction of evolutionary RNA state.
