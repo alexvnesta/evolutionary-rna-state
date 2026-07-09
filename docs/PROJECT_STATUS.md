@@ -31,18 +31,23 @@ Git metadata in `.gitmeta/`; drive with `GIT_DIR=.gitmeta GIT_WORK_TREE=. git ..
 `.gitignore` excludes vendored `pipelines/nfcore/`, `results/`, BAMs, parquet, Nextflow scratch.
 HEAD == remote; all sessions self-commit their own trees.
 
-## Scientific bottom line — IMPORTANT SCOPE CORRECTION (overview session `756ba1cd`, verified in code)
+## Scientific bottom line — IMPORTANT SCOPE CORRECTION (overview session `756ba1cd`; PCA + EVA claims verified in code, Orthrus attributed)
 **What the falsification tests actually tested is narrower than "evolutionary RNA state."** A
 methodology audit (verified here against the code) found:
 - The kill-test "learned representation" arm (`analysis/kill_tests/headtohead_repr.py`) is
   literally `PCA(top-2000 variable genes)` — a linear summary of bulk expression, NOT a
   foundation-model reconstruction of evolutionary RNA state.
-- The Orthrus/EVA "encoder" embeddings were built ONLY on reference transcripts (EVA: 997
-  canonical genes; Orthrus: a handful of housekeeping genes) as an expression-weighted mean of
-  FIXED per-transcript embeddings. Because the sequence embeddings are identical across patients,
-  that per-patient feature is provably a linear function of the expression vector — mathematically
-  unable to beat the expression-PCA it was benchmarked against, and it never saw a single
-  patient-specific aberrant transcript. A null there is a DESIGN ARTIFACT, not a verdict on the models.
+- The EVA "encoder" embedding was built ONLY on reference transcripts (997 canonical genes) as an
+  expression-weighted mean of FIXED per-transcript embeddings — **verified here** in the EVA session's
+  own `eva_headtohead_report.md` (`eva_rep` = expression-weighted mean of fixed 1024-dim per-transcript
+  embeddings over a 997-gene panel). Because the sequence embeddings are identical across patients, that
+  per-patient feature is provably a linear function of the expression vector — mathematically unable to
+  beat the expression-PCA it was benchmarked against, and it never saw a patient-specific aberrant
+  transcript. A null there is a DESIGN ARTIFACT, not a verdict on the model.
+- The overview session (`756ba1cd`) reports the **Orthrus** embedding was constructed the same way (over
+  a small housekeeping-gene set: B2M/GAPDH/ACTB/CD8A/TP53). NOT independently re-verified here — attributed
+  to the overview session's analysis; if the same expression-weighted-mean-over-reference construction holds,
+  the same design-artifact caveat applies to the Orthrus null.
 - The hypothesis's actual features — non-reference RNA phenotypes (TE/ERV-locus, splicing,
   intron-retention, fusions) — were NEVER built at cohort scale (n=106: TE/IR/splicing/fusion 0/106;
   editing 16/106). The Orthrus n=106 non-reference build now running is the first attempt to build them.
