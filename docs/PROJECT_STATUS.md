@@ -43,8 +43,7 @@ predictor. Forensic detail below (all verified against code/data, not summary do
 - The kill-test "learned representation" arm (`analysis/kill_tests/headtohead_repr.py`) is
   literally `PCA(top-2000 variable genes)` — a linear summary of bulk expression, NOT a
   foundation-model reconstruction of evolutionary RNA state.
-- The EVA "encoder" head-to-head collapses to expression PCA — **proven empirically** by the overview
-  session's forensics (`ENCODER_EVALUATION_FORENSICS.md`, `eva_linearity_proof.png`, read here). The
+- The EVA "encoder" head-to-head collapses to expression PCA — computed by the overview session (`756ba1cd`) and reported in its artifact `ENCODER_EVALUATION_FORENSICS.md` (regression table) + `eva_linearity_proof.png` — both read here; the R² values below are that session's computation, not this coordination session's. The
   per-patient EVA feature is a fixed linear map of the 997 reference-gene expression submatrix:
   predicting all 1024 EVA dims from the row-normalized genes gives **R²=1.000000**; EVA feature PC1
   tracks expression PC1 at r=0.957. So the EVA-vs-PCA head-to-head was "one linear function of bulk
