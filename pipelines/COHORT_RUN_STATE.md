@@ -44,3 +44,16 @@
   runner takes batch size as arg 3: run_cohort_batched.sh <manifest> <out> 4
 - If a batch's BAMs are published and disk is tight, that batch's raw FASTQs
   (data/raw/fastq/*.fastq.gz) are safe to delete immediately.
+
+## Disk pattern CONFIRMED (batches 1-2 observed)
+- Per-batch disk cycle: work dir peaks ~400-430 GB during the 8-sample
+  alignment→markdup phase (disk dropped to ~17 GB at worst), then Nextflow
+  CLEARS the alignment scratch as BAMs finalize and disk RECOVERS to 250-337 GB
+  before the next batch. The peak is transient, not cumulative — the work dir
+  does NOT permanently grow across batches.
+- Mitigation applied during peaks: delete each batch's raw FASTQs as soon as a
+  sample's BAM appears in the work dir (align done). This bought ~40 GB/batch.
+- Batches 1 and 2 both completed cleanly (16/40 BAMs published). RSeQC is the
+  slow tail of each batch (~30-45 min for 8 samples). No batch has failed on disk.
+- Progress tracking: `grep -c 'Pipeline completed successfully' results/rnaseq_cohort.log`
+  = batches done; `ls results/rnaseq_cohort/hisat2/*.markdup.sorted.bam | wc -l` = BAMs.
