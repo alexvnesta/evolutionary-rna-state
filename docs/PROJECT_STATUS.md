@@ -102,10 +102,8 @@ AUC 0.55 (perm p=0.274, ns, n=19). Needs replication; not a DDLPS-specific resul
   pivoting to isoform ratios / localization / protein interactions. (Session conclusion —
   its report not yet committed; recorded here as reported + the REI on-disk check.)
 
-## Encoder-candidate thread (read against the falsified thesis)
-Three encoder candidates have now been evaluated; all should be read against the
-central negative below — the response-prediction thesis is falsified regardless of
-which model embeds the RNA:
+## Encoder-candidate thread (read against the scope correction above)
+Three encoder candidates were considered; all should be read against the scope correction above — NONE tested the hypothesis. No encoder was run on patient-specific/aberrant sequence (EVA collapsed to expression PCA, R²=1.000; Orthrus never ran at patient scale; HyenaDNA/Caduceus deferred/never-run). What is settled is only that bulk-expression-derived features do not predict response cross-cohort; the non-reference features remain UNTESTED:
 - `docs/ENCODER_REVIEW.md` — DNA-level shortlist, favored FROZEN HyenaDNA/Caduceus;
   deferred fine-tuning until frozen signal + GPU.
 - Orthrus (`15defe54`) — Mamba-based mature-RNA foundation model (contrastive-trained on splice
@@ -196,7 +194,7 @@ Load-bearing vs reclaimable inventory (from this session's coordination view, 20
   - Orthrus n=106 compute-scope (bowtie2 cost) → user answered; build resumed.
   - Orthrus compute-strategy → Modal added (`byoc:modal`).
   - EVA post-NO-GO → frozen-embedding head-to-head ran, read null (see encoder thread).
-  - Disk pressure → cleanup freed ~222 GB, no load-bearing loss (see DISK note).
+  - Disk pressure → cleanup + pipeline per-sample cleanup freed ~265 GB, no load-bearing loss (see DISK note).
 
 ## Cohort-scale non-reference feature build STARTED (session 15defe54, two-block predictor)
 Reconciled the modeling frame to the authoritative n=106 (expr_gene_tpm_3cohort_n106.parquet:
