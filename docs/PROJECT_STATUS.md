@@ -115,12 +115,14 @@ raw reads; do NOT drop in as-is (unit mismatch would pollute the multi-cohort ma
   not-run-on-real-data.
 
 ## DISK — RESOLVED (cleanup session `f0e43e33`, completed)
-Host was at 96% (~74 GB free); after cleanup it is **84% (~296 GB free)** — comfortable. The
-cleanup session removed superseded single-sample pilot dirs (`results/rnaseq_pilot/`,
-`results/rnaseq_pilot_hisat2/`, ~32 GB) plus additional stale scratch, verified not referenced
-by active agents. Confirmed here: `results/editing_bams/` (46 GB) intact, and the live
-`nf_work_rnaseq/` untouched — the running Nextflow pipeline was not disrupted. Guidance below
-retained for reference should pressure recur.
+Host was at 96% (~74 GB free); it is now **82% (~339 GB free)** — comfortable (verified on disk).
+The cleanup session targeted superseded single-sample pilot dirs (`results/rnaseq_pilot/`,
+`results/rnaseq_pilot_hisat2/`, ~32 GB), verified not referenced by active agents; both are now
+confirmed GONE on disk. The ~265 GB total recovered exceeds those dirs alone — the remainder came
+from other stale scratch and the running pipeline's own per-sample cleanup (not attributed to a
+single action). Confirmed intact: `results/editing_bams/` (46 GB) load-bearing dataset, and the
+live `nf_work_rnaseq/` — the running Nextflow pipeline was not disrupted. Guidance below retained
+should pressure recur.
 Load-bearing vs reclaimable inventory (from this session's coordination view, 2026-07-09):
 - **DO NOT DELETE (load-bearing):**
   - `results/editing_bams/` (46 GB) — the real n=16 RNA-editing dataset (both cohorts); analysis inputs.
