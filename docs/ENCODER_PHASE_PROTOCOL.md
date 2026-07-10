@@ -167,6 +167,33 @@ The original `R²(embedding ~ expression_PCs) > 0.95` gate is **broken**: comput
   Evo 2 scores on reference/random matched loci (null; positive ⇒ leakage/batch); scrambled event→score
   pairing (signal killed); regress cohort+depth out of each Evo 2 score and report residual predictiveness.
 
+## 6b. Model selection — evidence the sequence model, don't assume it `[added 2026-07-10]`
+
+**The choice of sequence model must be an EVIDENCED decision on our own control task, not an assumption.**
+A landscape scan (2026-07-10, arXiv/OpenAlex) found no genomic FM that clearly supersedes Evo 2 as the
+long-context engine — the alternatives (Caduceus, HyenaDNA, Nucleotide Transformer, recent SSM-genomics work)
+are mostly smaller / shorter-context, which is why HyenaDNA is the right *local dev* stand-in but not
+self-evidently the right *scorer*. But "Evo 2 is best" is currently an assumption, and two things make it
+worth testing rather than assuming: (a) genome models are **out-of-distribution on spliced/edited RNA**, so an
+mRNA-specialised model (Orthrus family) or a dedicated splicing model may score *specific event classes*
+better; (b) we are about to spend GPU time, so the pick should be defensible.
+
+**Selection procedure — run BEFORE committing to a cohort scoring model:**
+- **Metric = the §6 technical control, repurposed:** ability to separate **ClinVar pathogenic vs benign**
+  by delta-likelihood (AUROC), evaluated **per event class** (SNV/editing-like substitutions; and, where a
+  labelled set exists, splice-altering variants via e.g. SpliceVarDB / MFASS as the splicing analogue).
+- **Candidates to benchmark, minimally:** Evo 2-7B (primary), Caduceus, HyenaDNA (also the local stand-in),
+  and at least one mRNA/isoform-specialised model (Orthrus-class) for the RNA-visible classes. Add a
+  Nucleotide-Transformer-v2 baseline if cheap.
+- **Decision rule:** pick, PER EVENT CLASS, the model with the highest control-task AUROC at acceptable cost;
+  a model may win for edits while another wins for junctions — the pipeline already supports per-class
+  features, so a per-class model assignment is allowed and must be logged.
+- **Guardrails:** the control task is a PROXY (variant-effect ≠ ICB response); it selects a model, it does not
+  validate the hypothesis. Fix the winning model(s) and windows BEFORE any cohort scoring, and **charge the
+  model-selection choice to the degrees-of-freedom budget** (§5) — it is one more forking path if left open.
+- **Cost:** control-task scoring is small (curated variant sets, short windows), so this sweep runs on the
+  hosted NIM endpoint or a brief Modal session; it does not require the full cohort GPU pass.
+
 ## 7. Compute — Apple Silicon is NOT a path for Evo 2 `[panel: genomic-FM, decisive]`
 
 **The blocker is the architecture port, not the number format.** Two things are needed to run Evo 2 on
@@ -216,6 +243,10 @@ tumours** — with the outcome reported as effect size, not significance (§0a).
    in-fold orthogonalisation, sham-embedding control, weight-stability bootstrap).
 3. Assemble covariates: TMB, purity (ESTIMATE/ABSOLUTE), HLA het/LOH, harmonised response label, regimen.
 4. Run the biological positive controls (§6) and the ClinVar technical control — **gate: all must pass.**
-5. **Only then** build the Modal GPU image and run the frozen **Evo 2-7B** scoring pass on the
-   sequence-visible events; add as block 3 to the (descriptive) LOCO harness with the nested-covariate ladder.
-6. Report ΔAUROC + CIs + weight-stability; **no significance claims** until ≥4–5 cohorts (§0a).
+5. **Model-selection sweep (§6b):** benchmark Evo 2-7B vs Caduceus vs HyenaDNA vs an mRNA-specialised model
+   on the ClinVar (and splice-variant) control, per event class; fix the winning model(s) + windows and log
+   the choice against the DoF budget. Do this BEFORE the cohort scoring pass, not after.
+6. **Only then** build the Modal GPU image and run the frozen winning model (default **Evo 2-7B**) scoring
+   pass on the sequence-visible events; add as block 3 to the (descriptive) LOCO harness with the
+   nested-covariate ladder.
+7. Report ΔAUROC + CIs + weight-stability; **no significance claims** until ≥4–5 cohorts (§0a).
