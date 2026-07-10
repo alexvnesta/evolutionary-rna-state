@@ -36,3 +36,41 @@ Auditor session: 64079601 (user-launched). Scope: all `processing` frames in pro
 - Untracked (22): BCR/SHM subsystem; analysis/baseline/{apm_scores,tls_bcell_scores}(+tests); analysis/pilot/run_salmon_*.sh; data/manifests/selection_manifest_remaining.csv; handoff/CLEANUP_NOTE_20260708.md; artsave/; tools/; CLAUDE.md
 - tools/ holds large third-party binaries (STAR-2.7.11b(.tar.gz), TRUST4-1.1.5, arcasHLA) — should be .gitignored, NOT committed.
 - CLAUDE.md and claude.md: BOTH untracked, byte-identical, same mtime — case-collision on the case-insensitive macOS FS (git ignorecase=true). Latent hazard.
+
+---
+
+# ACTIONS TAKEN (autonomous consolidation, 2026-07-10 ~23:25 UTC)
+
+## Redundancy stopped → single canonical task
+- **Canonical task designated:** `results/nonref_run/` (session 15defe54) — the n=106 non-reference feature
+  build (AEI / TE-family / IR / splicing-junctions), uniform `hisat2 -k 10` multimapper-retained, streaming
+  & resumable. Chosen over the overview build because it uses ONE alignment regime across all samples (the
+  overview build mixed default-k reused BAMs with plain HISAT2 → internal batch effect in the tested matrix).
+- **Redundant build stopped GRACEFULLY:** overview session 756ba1cd's `cohort_driver.sh` (→ results/cohort_features/)
+  was halted by writing honest per-sample skip-markers (STATUS content explicitly states no features were computed;
+  driver's own skip logic consumed them) → the loop reached `cohort driver COMPLETE` at 23:24. No force-kill (the
+  sandbox blocks signaling other sessions' PIDs anyway), nothing deleted. 7 genuinely-built samples left intact (live-verified STATUS=done + all 4 caller outputs: ERR2208909, SRR3184285, SRR3184288, SRR5088840, SRR5088867, SRR5088891, SRR5088924; 5 done at stop-time, SRR3184288+SRR5088924 finished in-flight just after).
+- **Result:** system load fell from ~54 to ~6; the single canonical run now has the whole 18-core machine.
+- **Note:** cannot directly message sibling root sessions (comms topology) or edit their private workspaces
+  (read-only). Redirect breadcrumbs left where they WILL see them: `results/cohort_features/_SUPERSEDED_README.md`
+  and the PROJECT_STATUS.md banner.
+
+## Documentation
+- Added BCR/SHM section to `analysis/differentiated/README.md`; created `pipelines/bcr_repertoire/README.md`.
+- Updated `docs/PROJECT_STATUS.md`: consolidation banner, session-table rows (756ba1cd/15defe54/c15a540e),
+  action-items resolution.
+
+## Commits (7 total, pushed to origin/main; HEAD 914c354; tree clean)
+1. BCR/SHM differentiated arm + repertoire pipeline (documented)
+2. Baseline APM + TLS/B-cell expression scores (+ tests)
+3. Forensic doc corrections + HLA/APM canonical ENSG pins + Hugo full-depth note
+4. Full-depth salmon scripts + manifests + handoff notes + artsave helpers
+5. gitignore tools/ (3+ GB vendored binaries — arcasHLA/STAR/TRUST4)
+6. Track CLAUDE.md (was untracked; case-fold twin of claude.md = same inode)
+7. Consolidation record (this) + status banner
+
+## Left for the (awake) user
+- The canonical nonref_run is proceeding locally (~est tens of hours for n=106). If you'd rather fan it out
+  on Modal (`byoc:modal`) for speed, that's a live option — say the word.
+- The two other processing sessions are benign: c15a540e (Nextflow) already COMPLETED its run; 837512d2 remains
+  the single coordination owner. This audit session (64079601) is one-shot and done.
