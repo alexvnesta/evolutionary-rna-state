@@ -108,3 +108,8 @@ pipelines/nfcore/
 # --- Stray kernel image previews accidentally landing at repo root ---
 /_view_*.png
 pipelines/te_erv/vendor/build/
+
+# --- Vendored third-party binaries / built tool trees (3+ GB; not ours to vendor) ---
+# arcasHLA, STAR, TRUST4, etc. Rebuilt from source/release tarballs, not committed.
+# Kept on disk for the running pipelines; excluded from git.
+tools/
