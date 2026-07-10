@@ -16,13 +16,18 @@ SYNTHESIS_hypothesis_reconsideration.md) hold the detail. Figure: fig_master_ver
 >    not test the RNA phenotypes. The non-reference RNA features were quantified on **0/106** samples.
 > 3. **The DEAD verdicts at n=40 / n=66 are underpowered** (≈39% power for true AUROC 0.65; learned_rep
 >    95% CI [0.385, 0.743] spans chance→useful) — "no signal detectable at low power," not "no signal exists."
-> 4. **The immune floor was regressed out as a confounder, but a formal mediation analysis (added 2026-07-09)
->    shows it behaves as a MEDIATOR:** all three tumor-intrinsic axes drive infiltration (a-path p<0.0002, the
->    5000-permutation floor), and for the viral-mimicry/IFN axis the response effect runs entirely through
->    infiltration (indirect +0.66, 95% CI [+0.18, +1.39], excludes zero; direct effect null). For the
->    antigen-presentation and cytolytic axes the indirect estimate is positive but its CI spans zero at n=40
->    (mediation-consistent, not established). "Adjust for immune, nothing survives" is thus consistent with a
->    TRUE mediated hypothesis for at least one axis, not a clean falsification.
+> 4. **The immune floor was regressed out as a confounder without testing whether it is a confounder or a
+>    mediator.** A first mediation analysis (n=40, marker-proxy mediator) suggested a mediated chain; but a
+>    corrected re-analysis (2026-07-10, n=106, using a REAL reference-based deconvolution mediator — InstaPrism
+>    on the Pozniak 2024 melanoma atlas with a malignant compartment) supersedes it. With a real mediator and
+>    tumor-purity correction: (a) the phenotype→infiltration a-path is largely a **purity artifact** — it
+>    collapses to ~0 for both axes once purity is removed; (b) the n=40 viral-mimicry/IFN "mediation" does NOT
+>    survive; (c) **but the antigen-presentation axis retains a tumor-intrinsic DIRECT effect on response**
+>    (log-odds +0.58, 95% CI [+0.13, +1.15], P>0=0.995), independent of purity and infiltration. So "adjust for
+>    immune, nothing survives" is wrong as originally stated: one tumor-intrinsic expression axis does survive
+>    a proper purity+infiltration adjustment. It is still an expression-derived axis (cannot beat the immune
+>    floor as a predictor; value is mechanistic). See `AUDIT_SYNTHESIS.md` §Phase 1b and
+>    `mediation_purity_corrected_n106.png`.
 
 ## The hypothesis (as stated by the author)
 "The captured bulk RNA-sequenced transcriptome of a human tumor contains sufficient
