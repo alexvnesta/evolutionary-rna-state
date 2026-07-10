@@ -22,8 +22,8 @@ is the question COMPASS leaves open, not a re-run of it.
 1. **Unified Apple-Silicon Nextflow workflow** (`pipelines/main.nf`, `-profile apple_silicon`): one DSL2
    entry that fans a spine BAM channel to the validated editing / intron-retention / TE-ERV subworkflows.
    Compiles clean on Nextflow 26.04. (`README_UNIFIED.md`)
-2. **First cohort-scale non-reference matrix** (`results/predictor/nonref_matrix_cohort.parquet`): 21
-   samples × 66 features (editing 4, IR 4, splice 1, TE/ERV family 57), across 3 (Gide 14, Riaz 5, Hugo 2) cohorts.
+2. **First cohort-scale non-reference matrix** (`results/predictor/nonref_matrix_cohort.parquet`): 25
+   samples × 66 features (editing 4, IR 4, splice 1, TE/ERV family 57), across 3 cohorts (Gide 14, Hugo 6, Riaz 5) — deepened as Hugo alignment landed in the background.
    Built by running the four callers on existing HISAT2 BAMs (`callers_on_bam.sh` / `fast_callers.sh`).
 3. **Pre-registered evaluation** (`docs/EVAL_PROTOCOL.md` + `analysis/two_block_eval.py`), locked with a
    fixed success criterion, CV frame, and four rigor checks BEFORE any AUROC was computed.
@@ -49,15 +49,16 @@ the immune floor.** This is consistent across all three analyses:
 2. **Composition check (purity covariate):** adding InstaPrism tumor-purity barely moves anything
    (floor+nonref 0.479 → +purity 0.458; non-ref alone 0.313 with or without purity). The non-ref failure
    is **not** a purity confound — it is a genuine absence of signal.
-3. **Secondary cross-cohort LOCO (Gide↔Riaz, n=19, underpowered):** floor LOCO **0.700** (cross-cohort
-   transfer holds); non-ref LOCO **0.389**; floor+non-ref **0.389** — non-ref below chance and diluting the
-   floor even across cohorts.
+3. **Secondary 3-cohort LOCO (Gide/Hugo/Riaz, n=25):** floor LOCO **0.571**, non-ref LOCO **0.474**,
+   floor+non-ref **0.583** — non-ref at chance and adding nothing meaningful even in a genuine
+   leave-one-cohort-out frame across all three cohorts. (The floor's LOCO drops from its within-cohort 0.79
+   because cross-cohort transfer at n=25 is hard — but non-ref never contributes.)
 
 **Against the pre-registered success criterion** (B beats its null AND ΔC−A CI excludes 0): **not met on
 either count** — a decisive negative.
 
 **Why this is a real result, not a null-by-underpowering artifact:** the *positive control* (immune floor)
-is significant at the very same n (p=0.021 within-Gide, 0.700 LOCO). A frame that recovers the known
+is significant at the very same n (p=0.021 within-Gide). A frame that recovers the known
 predictor but not the non-ref block is informative about the non-ref block, not merely about power.
 
 **Context:** this matches the honest prior — the ADAR editing regulon LOCO collapsed 0.647→0.535 (p=0.31)
