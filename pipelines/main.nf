@@ -95,14 +95,18 @@ workflow {
 
     // ---- ARM 3: TE/ERV ----
     // TE_ERV take: (ch_reads, ch_bam[meta,bam], genome_fasta, te_gtf_locus, gene_gtf, te_gtf_family)
-    // Family-level (TEtranscripts) consumes the spine BAM directly. Locus-level (Telescope)
-    // needs reads for a bowtie2 -k100 re-align; only wired when --te_locus is set.
+    // Family-level (TEtranscripts) consumes the spine BAM directly and is what runs by default.
+    // Locus-level (Telescope) needs a bowtie2 -k100 re-align FROM READS. This unified entry consumes
+    // spine BAMs, not FASTQs, so a real read source is NOT available here. Rather than feed Telescope
+    // empty read lists (which would silently produce zero-alignment locus output), the locus path is
+    // hard-gated OFF: use the standalone te_erv/ entry with --input fastqs (or the cloud/Modal runner)
+    // when locus-level resolution is actually required.
+    if ( params.te_locus )
+        exit 1, "ERROR: --te_locus (Telescope locus-level) is not supported from the unified BAM-only entry — " +
+                "it requires a FASTQ read source for bowtie2 -k100. Run pipelines/te_erv/ with --input <fastqs> " +
+                "or the cloud runner instead. Family-level TE runs here by default."
     ch_bam_te = ch_bam.map { meta, bam, bai -> tuple(meta, bam) }
-    ch_reads  = params.te_locus
-        ? Channel.fromPath(params.bam_glob, checkIfExists: true).map { bam -> tuple([id: bam.getBaseName()], []) }
-        : Channel.empty()
-    te_locus  = params.te_locus ? file(params.te_gtf_locus, checkIfExists: true) : file(params.te_gtf_family)
-    TE_ERV( ch_reads, ch_bam_te, fasta, te_locus, gene_gtf, te_fam )
+    TE_ERV( Channel.empty(), ch_bam_te, fasta, file(params.te_gtf_family), gene_gtf, te_fam )
 
     // ---- cohort matrices (each arm merges internally) ----
     RNA_EDITING.out.cohort_aei.view      { "[unified] AEI cohort matrix -> ${it}" }

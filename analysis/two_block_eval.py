@@ -19,14 +19,28 @@ from sklearn.metrics import roc_auc_score
 ERS = "/Users/alex/OrchestratedBiosciences/evolutionary-rna-state"
 FLOOR_COLS = ["gep_tcell_inflamed", "ifng_score", "teff", "tgfb", "teff_tgfb_balance"]
 
-def _oof_auroc(X, y, groups, splits, seed=0):
-    """Out-of-fold AUROC, fold-internal scaling + L2 logit. splits: list of (tr_idx,te_idx)."""
+def _oof_auroc(X, y, groups, splits, seed=0, select_topk=None):
+    """Out-of-fold AUROC, fold-internal scaling + L2 logit. splits: list of (tr_idx,te_idx).
+
+    select_topk: if set and X has more columns than select_topk, an IN-FOLD univariate
+    feature selection (|t-stat| of each feature vs y, computed on the TRAIN fold only) keeps
+    the top-k features before the classifier. This implements the protocol's 'in-fold selection,
+    no peeking at the full matrix' for the high-dimensional TE block. Selection is refit per fold.
+    """
     oof = np.full(len(y), np.nan)
     for tr, te in splits:
         if len(np.unique(y[tr])) < 2:
             continue
-        scl = StandardScaler().fit(X[tr])
-        Xtr, Xte = scl.transform(X[tr]), scl.transform(X[te])
+        Xtr_raw, Xte_raw = X[tr], X[te]
+        if select_topk is not None and Xtr_raw.shape[1] > select_topk:
+            # in-fold univariate |t|: mean diff / pooled sd, computed on TRAIN ONLY
+            g1, g0 = Xtr_raw[y[tr] == 1], Xtr_raw[y[tr] == 0]
+            num = np.abs(g1.mean(0) - g0.mean(0))
+            den = np.sqrt(g1.var(0) + g0.var(0) + 1e-9)
+            keep_idx = np.argsort(num / den)[::-1][:select_topk]
+            Xtr_raw, Xte_raw = Xtr_raw[:, keep_idx], Xte_raw[:, keep_idx]
+        scl = StandardScaler().fit(Xtr_raw)
+        Xtr, Xte = scl.transform(Xtr_raw), scl.transform(Xte_raw)
         oof[te] = LogisticRegression(max_iter=2000, C=0.5).fit(Xtr, y[tr]).predict_proba(Xte)[:, 1]
     m = ~np.isnan(oof)
     return roc_auc_score(y[m], oof[m]) if len(np.unique(y[m])) > 1 else np.nan, oof
@@ -46,16 +60,17 @@ def _hanley_mcneil_ci(auc, n_pos, n_neg, z=1.96):
     se = np.sqrt((auc*(1-auc) + (n_pos-1)*(q1-auc**2) + (n_neg-1)*(q2-auc**2)) / (n_pos*n_neg))
     return (max(0, auc - z*se), min(1, auc + z*se))
 
-def _perm_p(build_X, y, groups, splits, obs, n_perm=5000, seed=0):
+def _perm_p(build_X, y, groups, splits, obs, n_perm=5000, seed=0, select_topk=None):
     rng = np.random.default_rng(seed)
-    # permute WITHIN cohort/group blocks (exchangeability)
+    # permute WITHIN cohort/group blocks (exchangeability). Feature selection is refit inside
+    # _oof_auroc on each permuted train fold, so the null correctly includes selection variance.
     ge = 0
     for _ in range(n_perm):
         yp = y.copy()
         for g in np.unique(groups):
             mask = groups == g
             yp[mask] = rng.permutation(y[mask])
-        a, _ = _oof_auroc(build_X, yp, groups, splits, seed)
+        a, _ = _oof_auroc(build_X, yp, groups, splits, seed, select_topk=select_topk)
         if not np.isnan(a) and a >= obs:
             ge += 1
     return (ge + 1) / (n_perm + 1)
@@ -75,8 +90,20 @@ def main():
     if "run_accession" not in nb.columns:
         nb = nb.reset_index().rename(columns={nb.index.name or "index": "run_accession"})
     fl = pd.read_parquet(args.floor)
-    frame = pd.read_parquet(args.frame) if args.frame else pd.read_parquet(
-        os.environ.get("N106_FRAME", f"{ERS}/results/predictor/frozen_analysis_set.parquet"))
+    # Protocol-locked label source: reconciled_frame_n106.parquet (has run_accession, cohort, y, loco_fold).
+    # patient_id, if needed for grouping, is joined from frozen_analysis_set as a secondary lookup.
+    default_frame = os.environ.get("N106_FRAME", f"{ERS}/data/reconciled_frame_n106.parquet")
+    if not args.frame and not os.path.exists(default_frame):
+        # fall back to the artifact copy staged in results if the repo path isn't present
+        default_frame = f"{ERS}/results/predictor/reconciled_frame_n106.parquet"
+    frame = pd.read_parquet(args.frame or default_frame)
+    if "patient_id" not in frame.columns:
+        try:
+            pid = pd.read_parquet(f"{ERS}/results/predictor/frozen_analysis_set.parquet")[
+                ["run_accession", "patient_id"]]
+            frame = frame.merge(pid, on="run_accession", how="left")
+        except Exception:
+            pass
     keep = ["run_accession", "cohort", "resp" if "resp" in frame.columns else "y"]
     if "patient_id" in frame.columns: keep.append("patient_id")
     lab = frame[keep].rename(columns={"resp": "y"})
@@ -108,10 +135,14 @@ def main():
     res = {"frame": frame_kind, "n": int(len(y)), "n_pos": npos, "n_neg": nneg,
            "cohorts": {c: int((cohort == c).sum()) for c in pd.unique(cohort)},
            "nonref_n_features": len(nonref_cols), "blocks": {}}
-    for name, X in [("A_floor", Xf), ("B_nonref", Xn), ("C_floor_plus_nonref", Xc)]:
-        auc, _ = _oof_auroc(X, y, groups, splits)
+    # Protocol: in-fold top-k selection for blocks containing the high-dim TE features (B, C).
+    # Floor (5 feats) uses all features. k scales with the smallest train fold to avoid overfit.
+    min_train = min(len(tr) for tr, _ in splits)
+    topk = max(5, min(20, min_train - 2))
+    for name, X, sel in [("A_floor", Xf, None), ("B_nonref", Xn, topk), ("C_floor_plus_nonref", Xc, topk)]:
+        auc, _ = _oof_auroc(X, y, groups, splits, select_topk=sel)
         ci = _hanley_mcneil_ci(auc, npos, nneg)
-        p = _perm_p(X, y, groups, splits, auc, n_perm=args.n_perm) if not np.isnan(auc) else np.nan
+        p = _perm_p(X, y, groups, splits, auc, n_perm=args.n_perm, select_topk=sel) if not np.isnan(auc) else np.nan
         res["blocks"][name] = {"auroc": None if np.isnan(auc) else round(float(auc), 4),
                                "ci95": [None if np.isnan(x) else round(float(x), 4) for x in ci],
                                "perm_p": None if np.isnan(p) else round(float(p), 4)}

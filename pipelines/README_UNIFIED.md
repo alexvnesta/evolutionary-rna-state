@@ -46,7 +46,13 @@ per-tool arm64 overrides (STAR skipped in favor of HISAT2, Qualimap/fq disabled,
 compile and build a valid DAG on Nextflow 26.04 against the 32-sample cohort BAM set.
 
 ## Status
-- Compiles clean, resolves all references, instantiates all three fan-out arms (`-preview` verified).
+- **Compiles clean on Nextflow 26.04** under `-profile apple_silicon`, resolves every reference path,
+  and the DSL for all three fan-out subworkflow calls parses with no errors (`-preview`). Note: NF 26's
+  `-preview` does not emit process nodes to the DAG file, so this is a clean-compile verification, not a
+  rendered fan-out graph — an actual `-resume` run on the 32 BAMs is the remaining end-to-end check.
 - Each arm was independently validated end-to-end on real arm64 data in its own directory prior to
   unification; this wrapper composes them off a single BAM channel.
-- Locus-level Telescope TE remains coded-but-unverified at cohort scale (the `--te_locus` escalation).
+- **`--te_locus` (Telescope locus-level) is hard-gated OFF from this BAM-only entry** — it needs a FASTQ
+  read source for bowtie2 -k100 re-alignment, which this entry does not consume. Run the standalone
+  `te_erv/` pipeline with `--input <fastqs>` (or the cloud runner) for locus-level resolution. Family-level
+  TE is what runs here.
