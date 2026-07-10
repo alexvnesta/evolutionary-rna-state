@@ -169,17 +169,36 @@ The original `R²(embedding ~ expression_PCs) > 0.95` gate is **broken**: comput
 
 ## 7. Compute — Apple Silicon is NOT a path for Evo 2 `[panel: genomic-FM, decisive]`
 
-Evo 2's stock implementation is **CUDA/FlashAttention-only; there is no MPS/Metal path** — any hour spent
-forcing it onto the M-series workstation is wasted. Split the work:
+**The blocker is the architecture port, not the number format.** Two things are needed to run Evo 2 on
+Apple: (1) a hardware-supported numeric format, and (2) a StripedHyena-2 implementation in MLX/Metal.
+- **(1) is solved:** the M-series lacks native FP8 hardware, but **MLX exposes NVFP4 / MXFP4 / INT4-8
+  quantization**, so the numeric-format objection does *not* hold — and 4-bit is in fact what would let the
+  40B *fit* in 64 GB unified memory (FP16-40B ≈ 80 GB does not fit; NVFP4-40B ≈ 20–24 GB does).
+- **(2) does NOT exist:** Evo 2's stock implementation is **CUDA/FlashAttention-only**; there is no MPS/Metal
+  StripedHyena-2 (FlashAttention substitute + custom Hyena short/long-conv kernels). Porting means
+  reimplementing and validating that whole architecture in MLX — **weeks of kernel work**, and the
+  quantization format being available does not reduce it. For a **run-once frozen inference pass**, that cost
+  is not worth it versus renting an NVIDIA GPU for an afternoon. (NVIDIA's Evo 2 NIM also lists x86_64/amd64
+  as the only supported CPU arch — Apple Silicon is not a target platform.)
+
+**Quantization caveat specific to OUR use `[likelihood-delta sensitivity]`:** we use Evo 2 for
+**delta-likelihood** scoring (a subtraction of two large, nearly-equal log-likelihoods). Quantization noise
+that is negligible for *text generation* is **amplified** in a likelihood *difference*. So any 4-bit run
+(local or cloud) requires an explicit **full-precision (bf16/FP16) concordance check** before its aberrancy
+scores are trusted — "fine for chatbots" is not "fine for likelihood deltas." Prefer bf16/FP16 for the
+scoring pass.
+
+Split the work:
 - **Locally (arm64, MPS/CPU):** develop and debug the ENTIRE pipeline on **HyenaDNA** (autoregressive,
   hg38-trained, small) — validate the variance filter, background normalisation, and anti-collapse gates.
   Build the **HLA + NetMHCpan presentation layer** here too (CPU-friendly).
 - **Final scoring pass:** **Evo 2-7B (bf16) on a single NVIDIA GPU via Modal** (`byoc:modal`, first-time env
-  image build required — documented, not yet built). Escalate to 20B/40B (FP8, Hopper-class) only as a
-  sensitivity check. The NVIDIA BioNeMo NIM hosted Evo 2 endpoint is a zero-setup alternative for
-  likelihood/embedding scoring (few-kb input cap — verify current docs; compatible with the recommended
-  windows). Inference-only forward passes — batch the windows, no training cost. Keep Evo 2 **frozen and
-  version-pinned**; log the exact event set and windows for reproducibility and batch-confound audits.
+  image build required — documented, not yet built). Escalate to 20B/40B (FP8, Hopper-class H100/H200) only
+  as a sensitivity check — the 40B is FP8-gated on NVIDIA (the authors note disabling FP8 breaks it). The
+  NVIDIA BioNeMo NIM hosted Evo 2 endpoint is a zero-setup alternative for likelihood/embedding scoring
+  (few-kb input cap — verify current docs; compatible with the recommended windows). Inference-only forward
+  passes — batch the windows, no training cost. Keep Evo 2 **frozen and version-pinned**; log the exact event
+  set and windows for reproducibility and batch-confound audits.
 
 ## 8. Honest expectation `[panel: all three converge]`
 The interpretable non-reference features carried no signal at n=25 (this session) and antigen *quantity*
