@@ -45,8 +45,7 @@ determines whether the hypothesis gets its first real cohort-scale test.
 
 **Non-ref redundancy — RESOLVED (audit `64079601`, commit `914c354`).** The redundancy-audit session found two sessions
 building overlapping non-reference features (Orthrus `results/nonref_run/` vs overview `results/cohort_work/cohort_features/`),
-designated **`nonref_run` as the single canonical non-ref build**, and stopped the redundant build. Verified here: 7 genuinely-built
-per-sample matrices in `nonref_run` (per audit commit `217e2fc`). The Nextflow `results/rnaseq_cohort/hisat2/` BAMs are orphaned
+designated **`nonref_run` as the single canonical non-ref build**, and stopped the redundant build. Verified on disk here (05:xx): `nonref_run/out/` has 8 per-sample dirs, of which 4 have the full caller set (aei/te_family/ir/junctions) complete and the rest are in progress — the build is actively running, not finished. (Note: the audit commit `217e2fc`'s "7 genuinely-built" refers to the STOPPED `cohort_features` build, not `nonref_run`.) The Nextflow `results/rnaseq_cohort/hisat2/` BAMs are orphaned
 (not consumed downstream — nonref_run self-aligns); do not start a third alignment pass. Remaining OPEN gate: the audit asks you
 to confirm the canonical feature pipeline going forward. Also noted: the BCR/SHM subsystem is committed as code but under-referenced
 in docs. Coordination ownership: single owner is this session (`837512d2`/PROJECT_STATUS.md); the audit was one-shot and is complete.
@@ -304,7 +303,8 @@ will report whatever it finds, no tuning-to-taste.
 
 
 ## 2026-07-09 (later) — Cohort runner CORRECTLY LAUNCHED; "process reaping" was a misdiagnosis
-- **ROOT CAUSE of earlier failures:** NOT process reaping. `pgrep`/`ps aux | grep` are UNRELIABLE on this sandbox — they return empty even for live processes. I misread that as "background processes die at ~75s." `lsof +D <workdir>` and file-state (sra shrinking->fastq appearing->bam->caller outputs) show the pipeline runs fine for 20-60 min/sample. The ONLY real failures were **orchestrator collisions**: I launched multiple orchestrator instances that grabbed the same manifest rows and collided (every sample FAIL(1)).
+- **PROCESS MONITORING IS UNRELIABLE on this sandbox:** `pgrep`/`ps aux | grep`/`ps -p` return empty even for demonstrably-live processes (lsof sees workers ps cannot). Use `lsof +D <workdir>` and file-state (sra->fastq->bam->caller outputs) to judge progress, NOT pgrep/ps. `os.kill(pid,0)` also gave a false-DEAD read on a running orchestrator whose children (via lsof) were still active and whose run kept advancing — treat single process-liveness reads with suspicion; trust done-count advancement + lsof workers.
+- **A CONFIRMED failure mode was orchestrator COLLISIONS** (multiple instances grabbing the same manifest rows -> every sample FAIL(1)); fixed with a singleton lockfile guard. But this was NOT necessarily the only failure: orchestrators have also read as dead (os.kill) intermittently even as a singleton, and ultra-deep Gide samples hang AEI (see below). Root cause of intermittent orchestrator death is UNRESOLVED — the run is treated as best-effort-resumable (done-markers + lock make relaunch safe).
 - **FIX:** added a singleton lockfile guard (`orchestrator.lock`, pid-checked) to `orchestrate.py` — refuses to start if another orchestrator is alive. Monitor the run with `lsof`/file-state, never `pgrep`.
 - **Verified per-sample timing (2 complete samples, all 4 layers):** SRR5088929 ~22 min, SRR5088840 ~59 min (IR featureCounts + AEI are the I/O-bound long poles; deeper samples slower). Est ~30h for remaining 104 at conc=2/threads=8.
 - **Disk:** 795 GB free after restart (sibling Nextflow cleaned up). Deep Gide samples (up to 280M reads/~98GB FASTQ) no longer a disk threat at conc=2.
