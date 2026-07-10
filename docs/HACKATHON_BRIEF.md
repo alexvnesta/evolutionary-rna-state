@@ -34,18 +34,18 @@ See `results/eval/nonref_vs_floor_grouped5fold.json`, `rigor_checks.json`, `two_
 | block | features | AUROC | 95% CI | perm p |
 |---|---|---|---|---|
 | A — immune floor | 5 | 0.792 | [0.54, 1.00] | 0.021 |
-| B — non-reference | 66 | 0.417 | [0.11, 0.73] | 0.499 |
-| C — floor + non-ref | 71 | 0.521 | [0.20, 0.84] | 0.330 |
+| B — non-reference | 66 | 0.333 | [0.04, 0.62] | 0.663 |
+| C — floor + non-ref | 71 | 0.542 | [0.23, 0.86] | 0.299 |
 
-**ΔAUROC (C − A) = -0.271.** CV frame: within-Gide 5-fold (grouped by patient); Riaz n=5 & Hugo n=2 below the pre-set ≥10 hold-out threshold. n = 14 (6R/8N).
+**ΔAUROC (C − A) = -0.250.** CV frame: within-Gide 5-fold (grouped by patient); Riaz n=5 & Hugo n=6 below the pre-set ≥10 hold-out threshold. n = 14 (6R/8N). (Full matrix n=25; primary frame is Gide-only, so its n is unchanged — the 4 new Hugo samples feed the 3-cohort LOCO below.)
 
 ## Honest verdict — NEGATIVE, and clean
 **The non-reference RNA layer carries no independent ICB-response signal at this n, and adding it degrades
 the immune floor.** This is consistent across all three analyses:
 
 1. **Primary (within-Gide, n=14):** floor AUROC **0.792** (perm p=0.021 — the established predictor
-   replicates); non-ref alone **0.417** (p=0.499, indistinguishable from chance); combined **0.521**,
-   **ΔAUROC(C−A) = −0.271** — non-ref *dilutes* the floor.
+   replicates); non-ref alone **0.333** (p=0.663, indistinguishable from chance); combined **0.542**,
+   **ΔAUROC(C−A) = −0.250** — non-ref *dilutes* the floor.
 2. **Composition check (purity covariate):** adding InstaPrism tumor-purity barely moves anything
    (floor+nonref 0.479 → +purity 0.458; non-ref alone 0.313 with or without purity). The non-ref failure
    is **not** a purity confound — it is a genuine absence of signal.
