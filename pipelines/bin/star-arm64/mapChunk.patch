@@ -1,0 +1,13 @@
+--- dist/patched_source/ReadAlignChunk_mapChunk.cpp.orig	2026-07-10 19:11:41
++++ dist/patched_source/ReadAlignChunk_mapChunk.cpp	2026-07-10 19:11:41
+@@ -13,6 +13,10 @@
+     RA->statsRA.resetN();
+ 
+     for (uint ii=0;ii<P.readNends;ii++) {//clear eof and rewind the input streams
++        //ARM64/macOS libc++ fix: basic_stringbuf::setbuf (pubsetbuf) is a no-op in libc++,
++        //so the pubsetbuf() wiring done in the constructor leaves the istringstream empty
++        //(=> "0 input reads"). Load the chunk buffer content directly via str() instead.
++        readInStream[ii]->str(string(chunkIn[ii], chunkInSizeBytesTotal[ii]));
+         RA->readInStream[ii]->clear();
+         RA->readInStream[ii]->seekg(0,ios::beg);
+     };

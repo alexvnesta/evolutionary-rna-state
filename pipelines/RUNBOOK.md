@@ -189,8 +189,54 @@ The same input reads are ingested correctly by **HISAT2** (verified: 100k real
 reads → 100% paired) and by **bowtie2**. Salmon pseudo-alignment is also
 unaffected (real: 42.2M processed, 85.14% mapped). The spine therefore uses
 `--aligner hisat2 --pseudo_aligner salmon`; the TE/ERV Telescope branch uses
-bowtie2. STAR remains wired only as the amd64/Docker fallback. UV/pip cannot help
-— STAR is a compiled C++ binary, not a Python package.
+bowtie2. UV/pip cannot help — STAR is a compiled C++ binary, not a Python package.
+
+### 7a. Root cause FOUND — it is libc++, not arm64, and it is fixable (one line)
+
+The "0 reads" bug is **not** arm64-specific, **not** a conda packaging defect, and
+**not** an x86-SIMD/codegen problem. A fresh native arm64 recompile (Apple clang,
+SIMDe→NEON, libomp) *still* ingests 0 reads — identical to the conda binary. The
+actual cause is a **libc++ vs libstdc++ standard-library difference**:
+
+STAR wires each read-chunk buffer to an `istringstream` via `pubsetbuf`
+(`readInStream[ii]->rdbuf()->pubsetbuf(chunkIn[ii], …)` in `ReadAlignChunk.cpp`).
+`std::basic_stringbuf::setbuf` (what `pubsetbuf` calls) is a **documented no-op in
+libc++** (the only practical C++ stdlib on macOS), whereas **libstdc++ (Linux)
+honors it**. Under libc++ the stream stays empty → first `peek()` returns EOF →
+"0 input reads", exit 0. HISAT2/bowtie2 don't use this buffer trick. `Log.out`
+fingerprint: `Thread #N end of input stream, nextChar=-1` before any read.
+
+**The fix** (one line in `source/ReadAlignChunk_mapChunk.cpp`, inside
+`ReadAlignChunk::mapChunk()`): load the chunk buffer via `.str()` (which libc++
+honors) instead of relying on the no-op `pubsetbuf`:
+```cpp
+readInStream[ii]->str(string(chunkIn[ii], chunkInSizeBytesTotal[ii]));  // added, before clear()/seekg
+```
+
+A patched arm64 STAR 2.7.11b built this way **ingests reads correctly** —
+independently verified in this repo (chr21 test: 15,056/15,056 input reads,
+13,221 uniquely mapped, 37,978 BAM records, and a non-empty
+`Chimeric.out.junction` — the input STAR-Fusion consumes).
+
+**Installed binary:** `pipelines/bin/star-arm64/STAR-arm64-native` (self-contained;
+bundles `lib/libomp.dylib` via `@loader_path/lib` rpath, code-signed). Build recipe
++ patch + STAR-Fusion setup notes: `pipelines/bin/star-arm64/BUILD-NOTE.md`.
+
+**Spine decision unchanged:** the 40-sample spine stays on HISAT2 — it is done,
+validated, and there is no reason to re-align. The patched STAR exists to **unblock
+nf-core/rnafusion** (see §7b), which categorically needs STAR's chimeric junctions.
+
+### 7b. rnafusion — now unblockable, still needs the CTAT resource library
+
+With the patched arm64 STAR, the only remaining rnafusion requirement is the
+**CTAT genome resource library** (`GRCh38_gencode_v??_CTAT_lib_*.plug-n-play.tar.gz`,
+~30–40 GB) — it bundles the full-genome STAR index, fusion-annotation databases,
+and coding-effect data. Use the prebuilt plug-n-play lib (building the full-genome
+STAR index directly needs ~30 GB RAM). Point rnafusion at
+`pipelines/bin/star-arm64/STAR-arm64-native` + a CTAT lib matching GENCODE. STAR-Fusion
+v1.15.1 itself installs on system Perl (bundled `Set::IntervalTree` XS patched for
+libc++/tr1; see BUILD-NOTE). This supersedes the earlier "rnafusion is arm64-blocked"
+ruling — it is blocked only on the CTAT download, not on the toolchain.
 
 ## 8. Disk: archival CRAM (post-processing)
 
