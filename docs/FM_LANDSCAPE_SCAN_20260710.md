@@ -36,7 +36,18 @@ Date: 2026-07-10 | Source: arXiv (via literature MCP) | Purpose: evidence the Ev
 - `1603.05915` — MSIQ: Joint Modeling of Multiple RNA-seq Samples for Accurate Isoform Quantification
 
 ## Interpretation
-- Real long-context genomic FMs surfaced: Evo 2 (StripedHyena, primary), Caduceus (2403.03234, bi-directional equivariant), HyenaDNA (2306.15794, local dev stand-in), Nucleotide Transformer, and 2025 SSM-genomics work (2504.06304).
-- **No genomic FM in this scan clearly supersedes Evo 2 as the long-context, single-nucleotide, autoregressive engine** needed for delta-likelihood scoring. Alternatives are mostly smaller / shorter-context.
-- CAVEAT: arXiv relevance ranking is noisy (off-topic hits filtered out); this is a ~15-min scan, NOT a systematic benchmarked review. It supports 'Evo 2 is a defensible primary choice', not 'Evo 2 is provably SOTA'.
-- Open question the protocol §6b resolves empirically: genome models are OOD on spliced/edited RNA, so an mRNA-specialised model may win for specific RNA-visible event classes. The ClinVar/splice-variant control task decides per class.
+- Genomic FMs the queries ACTUALLY returned (with the arXiv id located): Caduceus (2403.03234, bi-directional
+  equivariant), HyenaDNA (2306.15794, local dev stand-in), and 2025 SSM-genomics work (2504.06304); Nucleotide
+  Transformer appeared only as a keyword, not a located record.
+- **Evo 2 / StripedHyena was NOT located by any query** (the "Evo genome foundation model DNA" query returned
+  only off-topic hits — CAGI, DNA Brownian dynamics, an embedding-inversion-attack paper, a backdoor-poisoning
+  paper, a DNA-coding-theory paper). So this scan does **not** independently confirm Evo 2's status one way or
+  the other — it only shows the *alternatives* that surfaced are mostly smaller / shorter-context than Evo 2 is
+  known (from its 2025 publication) to be. Evo 2's own capabilities here rest on prior knowledge, not this scan.
+- What the scan supports: **no returned alternative is an obvious long-context superset of Evo 2**; it does NOT
+  establish "nothing supersedes Evo 2", because a superior model absent from these noisy keyword queries would
+  not appear. Treat as "no red flag found in a quick scan", not "confirmed non-supersession".
+- CAVEAT: arXiv relevance ranking is noisy (off-topic hits filtered out); this is a ~15-min scan, NOT a
+  systematic benchmarked review. It supports 'Evo 2 is a defensible primary choice', not 'Evo 2 is provably SOTA'.
+- This is exactly why model choice is NOT settled by this scan: the protocol's §6b ClinVar/splice control
+  benchmark is the actual gate that decides the model (per event class), empirically, before any GPU spend.
