@@ -1,5 +1,22 @@
 # Choosing and fine-tuning an encoder for the evolutionary RNA-state model
 
+> **⚠️ CORRECTION NOTICE (2026-07-09) — forensic re-audit (see `AUDIT_SYNTHESIS.md`, `ENCODER_EVALUATION_FORENSICS.md`).
+> The "three independent pretrained encoders all read null" conclusion below is NOT SUPPORTED:**
+> - **Orthrus was never run at patient scale.** The only Orthrus artifact is a 5-gene CPU timing benchmark
+>   (B2M/GAPDH/ACTB/CD8A/TP53) — no patient features, no AUROC, no LOCO. The "~0.49, three-cohort" figure
+>   attributed to Orthrus throughout this document is the **expression-PCA/scVI `learned_rep` baseline**,
+>   misattributed. Every sentence claiming Orthrus "was actually run through this frozen-embedding LOCO test"
+>   is incorrect.
+> - **The EVA "frozen embedding" is provably a linear function of the expression vector.** Each per-sample
+>   feature = Wn·E where E is a FIXED 997×transcript reference-embedding table; the resulting feature is
+>   reconstructed to R²=1.000 from 39 expression PCs (r=0.957 with expression PC1). Its LOCO AUROC (0.413) and
+>   the PCA baseline (0.404) are the same object — the comparison was rigged to a tie, not an independent test.
+> - **No model was ever fed a patient-specific or aberrant sequence** (only 997 canonical reference transcripts,
+>   ~1.6% of the transcriptome). The non-reference RNA state the hypothesis is about was never presented to any encoder.
+> - The nulls are also underpowered (n=40 learned_rep 95% CI [0.385, 0.743]). Treat the encoder branch as
+>   **never validly tested**, not as a settled negative. A correct evaluation must feed models patient-specific
+>   aberrant sequences and pool within-patient — never as a fixed-reference weighted average.
+
 ## Bottom line
 
 For a melanoma-only ICB cohort of roughly 150 pretreatment samples on CPU-only hardware, the evidence points away from fine-tuning a raw-sequence genomic language model as the primary encoder and toward a staged strategy: quantify the six RNA phenotypes with dedicated tools, run the interpretable latent-state backbone that already exists, and treat a genomic/RNA language model as a *frozen feature extractor* first — reserving parameter-efficient fine-tuning for the one place it is defensible (mapping pretrained embeddings onto the phenotype axes) and only once a GPU host is available. This is not a counsel of caution for its own sake: it is what the two most recent independent benchmarks of DNA language models actually show, and it protects the falsifiable core of the thesis from the small-*n* overfitting trap that would sink it for the wrong reason.
@@ -31,3 +48,103 @@ An encoder does not remove the need to quantify the phenotypes explicitly, both 
 ## Recommendation
 
 Proceed in this order. Build the de-novo phenotype matrices with dedicated tools (Telescope for TE/ERV, SNAF-style splicing quantification, plus editing/fusion/intron-retention measures) and run the existing interpretable backbone — this carries the falsifiable co-variation and response-organization tests on its own and needs no GPU. In parallel, evaluate HyenaDNA/Caduceus embeddings *frozen* as an additional feature block and as a comparator, since the low-data regime is where they are most likely to help. Defer any fine-tuning until (a) frozen embeddings demonstrate unused signal and (b) a GPU host is available, and when it happens, make it parameter-efficient and aim it at phenotype reconstruction rather than response. This sequence matches what the current benchmarks support, keeps every step feasible on present hardware, and reserves the compute-hungry, overfitting-prone move for the point where the evidence says it could pay off.
+
+---
+
+## PEFT gate — EVA (evaluated 2026-07)
+
+**Decision: do NOT fine-tune EVA. Condition (a) of the PEFT gate is not met.**
+
+EVA (GENTEL-lab, 1.4B-parameter decoder-only MoE RNA language model, OpenRNA
+pretraining, Apache-2.0) was evaluated as the third frozen-encoder candidate,
+under the same two-condition PEFT gate this document sets out: PEFT is
+defensible only if (a) frozen embeddings show cross-cohort signal a linear head
+underuses, **and** (b) a GPU host is available. The evaluation was run CPU-only
+via a pure-PyTorch eager loader shim (the released checkpoints ship MoE weights
+in a CUDA-only MegaBlocks fused format; the shim reproduces them with 0
+missing / 0 unexpected state-dict keys and runs the authors' attention / RoPE /
+norm / embedding paths unchanged).
+
+Two independent reads, both negative for the project's use:
+
+1. **Likelihood as an abnormality score — NO-GO.** EVA's zero-shot evolutionary
+   likelihood does not flag the project's non-reference events as improbable.
+   On expressed TE/ERV loci the abnormality-detector AUROC was 0.57; on retained
+   introns, 0.41 — at or below chance, and in the wrong direction (introns/TEs
+   score *higher* likelihood than canonical mRNA because they are
+   lower-complexity sequence). The sanity control passed decisively (real vs
+   mononucleotide-scramble AUROC 0.98), so this is not a broken model — EVA
+   ranks sequence composition/complexity under a pan-life prior, which is a
+   different quantity from tumor-clonal aberration. This is the name-collision
+   between EVA's "evolutionary" (cross-species conservation) and the project's
+   "evolutionary" (intratumoral clonal evolution), confirmed with data.
+
+2. **Frozen embeddings as a feature block — NO signal.** Mean-pooled last-layer
+   EVA embeddings (997-gene panel, human+mRNA conditioning), aggregated
+   per-sample and run through the identical leakage-guarded LOCO harness used
+   for the prior encoders, gave LOCO AUROC **0.413 (permutation p = 0.80)** on
+   the n=40 gide+riaz labeled set — statistically indistinguishable from the
+   PCA baseline (0.404, the harness's `learned_rep` arm) and from Orthrus, the
+   one prior *pretrained* encoder actually run through this frozen-embedding
+   LOCO test (~0.49, three-cohort). Combining EVA with the immune floor
+   **degraded** the floor (0.767 → 0.401), the same dilution Orthrus and the
+   PCA baseline showed. The random-CV value (0.574) is the familiar
+   within-cohort overfitting inflation that does not survive crossing a cohort
+   boundary. (HyenaDNA was subsequently run through the identical harness and
+   reads the same null — LOCO 0.421, p=0.77 — see the multi-encoder addendum
+   below. Caduceus remains untested: its `mamba-ssm` CPU path is GPU-gated here.)
+
+**Why this settles the gate for EVA.** Condition (a) requires frozen embeddings
+to carry cross-cohort signal a linear head underuses. EVA's do not carry
+cross-cohort signal at all at current power, so PEFT has nothing to amplify —
+fine-tuning a representation that is at chance under LOCO would fit
+within-cohort idiosyncrasy, exactly the small-*n* trap the gate exists to
+prevent. EVA and HyenaDNA have now both been run through this frozen-embedding
+LOCO test (EVA 0.413, HyenaDNA 0.421, both p≈0.8) and neither beats the immune
+floor; joined with Orthrus (~0.49, three-cohort, run previously) that is three
+independent pretrained sequence encoders all reading null (the PCA `learned_rep`
+baseline reads null too, but it is a baseline, not a pretrained encoder). Three
+independently tested encoders at null — with only Caduceus still deferred (its
+`mamba-ssm` CPU path is GPU-gated) — is a consistent signal about the raw-read
+premise at this cohort size, though power remains bounded by the n=40 two-cohort
+LOCO.
+
+**What EVA is still legitimately good for** (none require fine-tuning here, and
+none touch the settled-negative response endpoint): zero-shot variant-effect /
+fitness scoring of specific RNA variants (its designed use); cryptic-ORF and
+splice/fusion-neoantigen *triage* via `--mode protein` reverse-translation
+scoring; and controllable RNA / vaccine sequence design. These are candidate
+future directions, not encoder-integration steps.
+
+**Re-open condition.** If a third labeled cohort (liu2019) lands, the LOCO test
+gains a held-out cohort and the harness re-runs against the cached
+`eva_embeddings_997.npz` as a one-line resume. Only a positive cross-cohort read
+there would move condition (a); the current prior is three independently tested
+encoders (Orthrus, EVA, HyenaDNA) at null. Condition (b) — a GPU host — remained unmet during this evaluation
+(the local M5 Max thermally throttled ~10× after sustained CPU scoring; Modal
+was not bootable in this environment), reinforcing that even a hypothetical
+positive would not justify PEFT on present hardware.
+
+
+## Multi-encoder addendum (2026-07)
+
+After the EVA-only result above, **HyenaDNA-small** (3.28M-param DNA LM, the one
+deferred encoder that runs cleanly on CPU) was extracted on the identical
+997-gene panel and run through the same harness. Result: LOCO AUROC **0.421
+(p=0.77)** — at chance, matching EVA (0.413) and the PCA baseline (0.404); floor+HyenaDNA
+degrades the floor to 0.441. The `immune_floor` and `learned_rep` arms match to
+4 dp across the EVA and HyenaDNA runs (only the encoder block changed). So three
+independent pretrained encoders (Orthrus, EVA, HyenaDNA) now read null under the
+honest cross-cohort test; only immune composition (LOCO 0.767, p=0.001) clears
+chance. Caduceus (Mamba/`mamba-ssm`) is the one remaining deferred encoder, GPU-gated.
+
+A separate **EVA zero-shot variant-effect** proof-of-capability (its on-label
+use) scored four cancer-driver hotspots (WT vs clinical SNV vs synonymous
+control, summed-LL ΔLL): KRAS G12D and NRAS Q61R separated as designed (driver
+markedly less probable, synonymous near zero); BRAF V600E and TP53 R175H did
+not. 2/4 in the expected direction — machinery validated, not a pathogenicity
+predictor on this panel. See `eva_extended_directions.md`.
+
+*Supporting artifacts: `eva_feasibility.md`, `eva_discrimination_report.md`
+(+ `eva_discrimination.png`), `eva_headtohead_report.md`, `eva_extended_directions.md` (+ `eva_headtohead.png`, `encoder_headtohead_multi.png`, `eva_variant_effect.png`,
+`eva_headtohead_loco.json`), `eva_eager.py`, `eva_embeddings_997.npz`.*

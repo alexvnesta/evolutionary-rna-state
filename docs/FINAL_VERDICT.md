@@ -4,6 +4,26 @@ Consolidated across the full investigation. This document is the top-level read;
 per-thread notes (io_multicohort_clonality.md, io_move2_autorun_watch.md,
 SYNTHESIS_hypothesis_reconsideration.md) hold the detail. Figure: fig_master_verdict.png.
 
+> **⚠️ CORRECTION NOTICE (2026-07-09) — a four-track forensic re-audit found several verdicts below
+> are not supported by what was actually tested. See `AUDIT_SYNTHESIS.md`. Key corrections:**
+> 1. **The "LEARNED REPRESENTATION" row is not a foundation model.** It is PCA on the top-2000 variable
+>    genes — a linear summary of bulk expression. The "LOCO AUROC 0.49" attributed to Orthrus/encoders is
+>    this PCA/scVI baseline; **Orthrus was never run at patient scale** (only a 5-gene timing benchmark exists).
+>    The EVA "encoder" feature is provably a linear function of expression (R²=1.0 from 39 expression PCs).
+>    No foundation model was ever fed a patient-specific or aberrant sequence. → **verdict should read "never validly tested"**.
+> 2. **The 416/5-cohort "RNA antigen QUANTITY" row is a WES (DNA) exome-neoantigen proxy on ≤264 samples**,
+>    not direct transcriptome splice/ERV/fusion counts. The DEAD label is valid *for the DNA proxy*; it does
+>    not test the RNA phenotypes. The non-reference RNA features were quantified on **0/106** samples.
+> 3. **The DEAD verdicts at n=40 / n=66 are underpowered** (≈39% power for true AUROC 0.65; learned_rep
+>    95% CI [0.385, 0.743] spans chance→useful) — "no signal detectable at low power," not "no signal exists."
+> 4. **The immune floor was regressed out as a confounder, but a formal mediation analysis (added 2026-07-09)
+>    shows it behaves as a MEDIATOR:** all three tumor-intrinsic axes drive infiltration (a-path p<0.0002, the
+>    5000-permutation floor), and for the viral-mimicry/IFN axis the response effect runs entirely through
+>    infiltration (indirect +0.66, 95% CI [+0.18, +1.39], excludes zero; direct effect null). For the
+>    antigen-presentation and cytolytic axes the indirect estimate is positive but its CI spans zero at n=40
+>    (mediation-consistent, not established). "Adjust for immune, nothing survives" is thus consistent with a
+>    TRUE mediated hypothesis for at least one axis, not a clean falsification.
+
 ## The hypothesis (as stated by the author)
 "The captured bulk RNA-sequenced transcriptome of a human tumor contains sufficient
 information to reconstruct its latent evolutionary state in the context of immunotherapy
@@ -17,11 +37,11 @@ from bulk RNA, including via a LEARNED REPRESENTATION.
 ## Scorecard
 | Operationalization | Data | Verdict | Key statistic |
 |---|---|---|---|
-| RNA antigen QUANTITY (splice+ERV+fusion counts) | 416, 5 coh | **DEAD** | PC1 at null p=0.77; LOCO AUROC 0.44-0.50 < TMB 0.62 |
+| RNA antigen QUANTITY (WES exome-neoantigen proxy, *not* RNA counts) | ≤264, WES | **DEAD (for DNA proxy)** | PC1 at null p=0.77; LOCO AUROC 0.44-0.50 < TMB 0.62 — see correction note |
 | RNA load × CLONALITY interaction | 189, 3 coh | **DEAD** | pooled LR p=0.82; n=40 Riaz hint was noise |
 | Tumor-intrinsic RNA over IMMUNE floor (IFN) | 40, 2 coh | **DEAD** | joint p=0.37; 2 feats lingered p~0.10 |
 | Tumor-intrinsic over HARDENED floor (11 cell types) | 40, 2 coh | **DEAD** | joint p=0.54; lingering feats absorbed to p=0.28-0.34 |
-| LEARNED REPRESENTATION vs immune floor | 66, 3 coh | **DEAD** | LOCO AUROC 0.49 (chance), perm p=0.41; degrades the floor |
+| "LEARNED REPRESENTATION" (= expression PCA, NOT a foundation model) vs immune floor | 66, 3 coh | **NEVER VALIDLY TESTED** | LOCO AUROC 0.49 is the expr-PCA/scVI baseline (95% CI [0.35,0.63], underpowered); "degrades floor" is a multicollinearity artifact (92% collinear); Orthrus never run — see correction note |
 | — immune floor (positive control) | 66, 3 coh | **WEAK** | LOCO AUROC 0.59, perm p=0.044 (was 0.70 at 2 coh) |
 | Heterogeneity (MATH) → response | 189, 3 coh | **REAL** | p=0.014 — but DNA-side, not RNA |
 \*n=40 (2 of 5 cohorts); the powered re-test fires automatically when liu2019 lands (~n=132).

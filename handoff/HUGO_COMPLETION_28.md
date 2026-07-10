@@ -100,6 +100,39 @@ provenance block added), `results/fig_transfer_hugo_refresh.png`.
   If you regenerate it from your own notebook, the numbers above are what to
   expect at n=28.
 
+## Full-depth follow-up — COMPLETE (28/28)
+
+As a requested refinement, I re-quantified **all 28 Hugo runs at full read depth**
+(no subsample), producing `results/hugo_gene_tpm_fulldepth.parquet` (28 × 62,266
+genes) alongside the committed 3M-subsample matrix. Quant dirs in
+`results/hugo_fulldepth_salmon/`, index at its `pilot_index.csv`.
+
+**Fetch method — AWS SRA mirror (adopted from a sibling session's finding).**
+ENA's servers were the bottleneck (~1.2–4 MB/s). The AWS SRA mirror
+(`sra-pub-run-odp.s3.amazonaws.com`) served the same runs at ~18–28 MB/s (~5–7×)
+and was already reachable here (no allowlist grant needed). I validated the AWS
+`.sra`→`fasterq-dump`→salmon path byte-equivalent to the ENA/FASTQ path on
+SRR3184280: identical read count (50,084,443), identical mapping (96.9348%),
+gene-TPM Pearson 1.0. Runner: `analysis/pilot/run_salmon_fulldepth_aws.sh` (has a
+`MIN_FREE_MB` disk guard and a `MIN_FREE_MEM_MB` memory guard — the latter added
+after salmon was repeatedly OOM-killed for the two largest runs during sibling
+memory spikes on this shared 64 GB box; it waits for a RAM window before mapping).
+
+**Validation — the 3M subsample is a faithful proxy (all 28, median 21× depth):**
+
+- Mapping rate: full-depth vs subsample **mean Δ −0.035 pp, max |Δ| 0.35 pp**.
+- Gene-level expression: **Pearson (log1p) 0.977–0.988 (mean 0.982)**, Spearman
+  0.83–0.87.
+- Transfer test (Gide n=30 → Hugo n=28), full-depth vs subsample:
+  antigen-3gene 0.595 vs 0.590; **antigen-6gene 0.579 vs 0.595**; infiltration
+  0.477 vs 0.456; ant6 95% CI **[0.35, 0.80]** vs [0.37, 0.80] — both span chance.
+
+**Conclusion:** the Gide→Hugo antigen-axis **non-replication is a property of the
+data, not the subsampling depth** — it is unchanged at full read depth. The
+committed 3M-subsample matrices are validated as sound proxies. See
+`results/hugo_fulldepth_validation.json`, `results/hugo_fulldepth_vs_subsample.csv`
+(per-run table), and `results/fig_fulldepth_validation.png`.
+
 ## Not touched (owned by other live sessions)
 
 Left `analysis/`, `src/`, `pipelines/`, and the manuscript/figure-deck alone

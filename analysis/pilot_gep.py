@@ -22,6 +22,19 @@ KEY = ["run_accession", "cohort"]
 # any symbol not present here, so the map stays correct if signatures change.
 _STATIC_SYM2ENS = {
     "CTGF": "ENSG00000118523",  # CCN2 — old symbol not in symbol scope
+    # MHC-region genes: mygene.info returns ALT-HAPLOTYPE Ensembl ids for these
+    # (e.g. HLA-A -> ENSG00000235657) that are NOT in the GENCODE primary-assembly
+    # quant matrix. Pin the CANONICAL primary-assembly ENSG ids (all verified
+    # present in quant_gene_tpm.parquet). Without this the APM class-I/II scores
+    # silently lose their HLA/TAP/immunoproteasome genes.
+    "HLA-A": "ENSG00000206503", "HLA-B": "ENSG00000234745", "HLA-C": "ENSG00000204525",
+    "TAP2": "ENSG00000204267", "TAPBP": "ENSG00000231925", "PSMB8": "ENSG00000204264",
+    "PSMB9": "ENSG00000240065", "CANX": "ENSG00000127022",
+    "HLA-DRA": "ENSG00000204287", "HLA-DRB1": "ENSG00000196126",
+    "HLA-DPB1": "ENSG00000223865", "HLA-DQA1": "ENSG00000196735",
+    "HLA-DQB1": "ENSG00000179344", "HLA-DMA": "ENSG00000204257",
+    "HLA-DMB": "ENSG00000242574",
+    "CCL18": "ENSG00000275385",
 }
 
 
@@ -30,6 +43,21 @@ def _signature_symbols():
     for k in ("GEP_TCELL_INFLAMED_GENES", "IFNG_GENES", "AYERS_HOUSEKEEPING_GENES",
               "TEFF_GENES", "TGFB_GENES"):
         need |= set(getattr(_gs, k, []))
+    # APM / HLA-expression and TLS / B-cell baseline scores share this mapper so
+    # there is ONE ENSG<->symbol path for all gene-set baselines. Import lazily
+    # and defensively: if either module is absent the GEP mapping still works.
+    try:
+        from analysis.baseline import apm_scores as _apm
+        for k in ("APM_CLASS1_GENES", "APM_CLASS2_GENES", "B2M_HLA_ABC_GENES"):
+            need |= set(getattr(_apm, k, []))
+    except Exception:  # pragma: no cover - defensive
+        pass
+    try:
+        from analysis.baseline import tls_bcell_scores as _tls
+        for k in ("BCELL_LINEAGE_GENES", "TLS_CHEMOKINE_GENES"):
+            need |= set(getattr(_tls, k, []))
+    except Exception:  # pragma: no cover - defensive
+        pass
     return need
 
 
