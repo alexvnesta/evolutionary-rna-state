@@ -20,7 +20,7 @@ determines whether the hypothesis gets its first real cohort-scale test.
 |---|---|---|
 | Raw RNA-seq Feature Fine-tuning (`837512d2`) | processing | THIS session — cross-session coordination, roadmap, commits, monitoring; maintains PROJECT_STATUS.md. |
 | Audit Active Agents for Redundancy (`64079601`) | processing | Coordination audit (user-launched): checking redundant work + documentation/commit coverage — overlaps this doc. |
-| Project Status Overview and Prioritization (`756ba1cd`) | processing | Four-audit forensic synthesis (hypothesis UNTESTED); purity-corrected mediation; staged non-ref build (16-sample fast callers running); scale-up gate. |
+| Project Status Overview and Prioritization (`756ba1cd`) | processing | Four-audit forensic synthesis (hypothesis UNTESTED); purity-corrected mediation; posed the non-ref scale-up gate (16/106 BAMs; staged 16-sample-first recommended). Status: "verifying BAM tier driver" (its own words) — the staged run is presumably starting but I have not verified a run in progress. |
 | Find/Create Nextflow RNA-seq Pipelines (`c15a540e`) | processing | Raw-read pipeline (arm64). Cohort alignment: resume batch 1 (RSeQC), toward batch 2. |
 | Evaluate Orthrus for Genome Analysis (`15defe54`) | processing | Non-ref pipeline validated per-sample; cohort build running (long wait); Orthrus never run at patient scale. |
 | Evaluate Somatic Hypermutation for IO Response (`c8f0a686`) | completed | Advisory: SHM/MHC/antigenicity + neoantigen tools + APM/TLS/BCR feature set. COMPLETED. |
