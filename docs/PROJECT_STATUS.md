@@ -43,16 +43,13 @@ the 90-sample alignment could be parallelized in the cloud rather than run 50-90
 determines whether the hypothesis gets its first real cohort-scale test.
 
 
-**COORDINATION RISK flagged by the redundancy-audit session (`64079601`, `AGENT_REDUNDANCY_AUDIT_20260710.md`) — partially verified here.**
-The audit reports two sessions building overlapping non-reference features (Orthrus `15defe54` in `results/nonref_run/` and the
-overview session `756ba1cd` in `results/cohort_work/`), plus duplicated Gide FASTQ→BAM alignment (Nextflow + Orthrus, no shared
-BAM contract). Verified on disk NOW: `results/nonref_run/out/` holds 5 completed per-sample non-reference matrices
-(ERR2208890/894/895, SRR5088840, SRR5088929 — aei/te_family/ir/junctions each). The audit's `results/cohort_work/SRR5088840`
-duplicate is NOT present on disk now (finished, cleaned, or abandoned since the 02:45 audit) — so the "live double-run" is not
-currently reproducible, but the underlying risk stands: **there is no shared BAM/feature contract between the Orthrus and
-overview/Nextflow non-ref tracks, so they can produce divergent feature matrices.** Worth one owner consolidating the non-ref
-build onto a single output tree. Also flagged: the BCR/SHM subsystem (`analysis/differentiated/bcr_shm.*`, `pipelines/bcr_repertoire/`)
-is committed as code but not referenced in any doc, and ~26 working-tree entries are uncommitted (owned by their sessions, not mine to commit).
+**Non-ref redundancy — RESOLVED (audit `64079601`, commit `914c354`).** The redundancy-audit session found two sessions
+building overlapping non-reference features (Orthrus `results/nonref_run/` vs overview `results/cohort_work/cohort_features/`),
+designated **`nonref_run` as the single canonical non-ref build**, and stopped the redundant build. Verified here: 7 genuinely-built
+per-sample matrices in `nonref_run` (per audit commit `217e2fc`). The Nextflow `results/rnaseq_cohort/hisat2/` BAMs are orphaned
+(not consumed downstream — nonref_run self-aligns); do not start a third alignment pass. Remaining OPEN gate: the audit asks you
+to confirm the canonical feature pipeline going forward. Also noted: the BCR/SHM subsystem is committed as code but under-referenced
+in docs. Coordination ownership: single owner is this session (`837512d2`/PROJECT_STATUS.md); the audit was one-shot and is complete.
 
 ## Sessions
 
