@@ -151,8 +151,10 @@ The original `R²(embedding ~ expression_PCs) > 0.95` gate is **broken**: comput
 ## 6. Covariates, controls, and label harmonisation `[panel: immunology + ML]`
 
 - **Competing covariates the non-ref branch must beat, nested:** floor → floor+TMB → floor+TMB+purity →
-  +non-ref, each with Hanley-McNeil CIs. Add **HLA-I heterozygosity + HLA-I LOH** (independent ICB predictors,
-  Chowell 2018) as covariates/stratifiers.
+  +non-ref, each with Hanley-McNeil CIs. Add **HLA-I heterozygosity + somatic HLA-I LOH** (both established
+  ICB predictors — Chowell et al. 2018, *Science* 359:582, doi:10.1126/science.aao4572, which reports maximal
+  HLA-I heterozygosity improving post-ICB survival AND HLA-I LOH associated with poor outcome) as
+  covariates/stratifiers.
 - **Harmonise the response label** across Gide/Hugo/Riaz (RECIST vs irRECIST; CR/PR vs SD/PD; durable
   benefit) and **model regimen/prior therapy** (Riaz includes anti-CTLA4-progressed; Gide mixes mono and
   ipi+nivo). Confirm pre-treatment biopsies only; record biopsy site.
