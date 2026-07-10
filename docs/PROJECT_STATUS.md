@@ -42,6 +42,18 @@ pipeline end-to-end), THEN decide on the 90-sample alignment. Coordination note:
 the 90-sample alignment could be parallelized in the cloud rather than run 50-90 h locally. This is the decision that
 determines whether the hypothesis gets its first real cohort-scale test.
 
+
+**COORDINATION RISK flagged by the redundancy-audit session (`64079601`, `AGENT_REDUNDANCY_AUDIT_20260710.md`) — partially verified here.**
+The audit reports two sessions building overlapping non-reference features (Orthrus `15defe54` in `results/nonref_run/` and the
+overview session `756ba1cd` in `results/cohort_work/`), plus duplicated Gide FASTQ→BAM alignment (Nextflow + Orthrus, no shared
+BAM contract). Verified on disk NOW: `results/nonref_run/out/` holds 5 completed per-sample non-reference matrices
+(ERR2208890/894/895, SRR5088840, SRR5088929 — aei/te_family/ir/junctions each). The audit's `results/cohort_work/SRR5088840`
+duplicate is NOT present on disk now (finished, cleaned, or abandoned since the 02:45 audit) — so the "live double-run" is not
+currently reproducible, but the underlying risk stands: **there is no shared BAM/feature contract between the Orthrus and
+overview/Nextflow non-ref tracks, so they can produce divergent feature matrices.** Worth one owner consolidating the non-ref
+build onto a single output tree. Also flagged: the BCR/SHM subsystem (`analysis/differentiated/bcr_shm.*`, `pipelines/bcr_repertoire/`)
+is committed as code but not referenced in any doc, and ~26 working-tree entries are uncommitted (owned by their sessions, not mine to commit).
+
 ## Sessions
 
 | Session | Status | Role |
