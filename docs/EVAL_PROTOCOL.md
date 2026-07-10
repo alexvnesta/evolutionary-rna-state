@@ -69,6 +69,15 @@ If the non-ref block shows no independent signal: this is the **first honest tes
 features, not a proxy — a real, reportable negative at the achieved n. It does NOT retroactively validate the
 earlier proxy-based "DEAD" verdicts, and it does NOT test the learned-representation half (scoped separately).
 
+## Deviations (logged, dated)
+- **2026-07-10, after first run:** the permutation null was initially coded to shuffle labels within the
+  CV grouping variable (`patient_id`). In the within-Gide frame patients are singletons, so within-group
+  shuffling is a no-op → degenerate `perm_p=1.0` for every block. **Fix:** the permutation's exchangeable
+  unit is now the **cohort** (`perm_block=cohort`), decoupled from the CV split grouping. This is a
+  correctness fix to a degenerate null, not a change to the models, features, CV frame, or success
+  criterion — the point AUROCs and CIs are unaffected; only the perm-p values change from the degenerate
+  1.0 to their true values. Logged here per the pre-registration contract.
+
 ## Outputs (fixed)
 `results/eval/nonref_vs_floor_loco.json` (or `_gidecv.json`), `two_block_result.png`,
 and a row appended to the result brief. Analysis script: `analysis/two_block_eval.py` (committed with this

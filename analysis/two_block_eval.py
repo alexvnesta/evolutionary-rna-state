@@ -60,15 +60,21 @@ def _hanley_mcneil_ci(auc, n_pos, n_neg, z=1.96):
     se = np.sqrt((auc*(1-auc) + (n_pos-1)*(q1-auc**2) + (n_neg-1)*(q2-auc**2)) / (n_pos*n_neg))
     return (max(0, auc - z*se), min(1, auc + z*se))
 
-def _perm_p(build_X, y, groups, splits, obs, n_perm=5000, seed=0, select_topk=None):
+def _perm_p(build_X, y, groups, splits, obs, n_perm=5000, seed=0, select_topk=None, perm_block=None):
+    """Permutation null. Labels are shuffled WITHIN each perm_block (the exchangeable unit) —
+    this is COHORT, not the CV grouping variable. Using the CV grouping (patient) would be a no-op
+    when patients are singletons (every 'permutation' returns the original labels -> degenerate p=1).
+    Feature selection is refit inside _oof_auroc on each permuted train fold, so the null includes
+    selection variance. groups (CV split grouping) is passed through to _oof_auroc unchanged.
+    """
     rng = np.random.default_rng(seed)
-    # permute WITHIN cohort/group blocks (exchangeability). Feature selection is refit inside
-    # _oof_auroc on each permuted train fold, so the null correctly includes selection variance.
+    if perm_block is None:
+        perm_block = np.zeros(len(y), dtype=int)  # single block => global label shuffle
     ge = 0
     for _ in range(n_perm):
         yp = y.copy()
-        for g in np.unique(groups):
-            mask = groups == g
+        for b in np.unique(perm_block):
+            mask = perm_block == b
             yp[mask] = rng.permutation(y[mask])
         a, _ = _oof_auroc(build_X, yp, groups, splits, seed, select_topk=select_topk)
         if not np.isnan(a) and a >= obs:
@@ -142,7 +148,10 @@ def main():
     for name, X, sel in [("A_floor", Xf, None), ("B_nonref", Xn, topk), ("C_floor_plus_nonref", Xc, topk)]:
         auc, _ = _oof_auroc(X, y, groups, splits, select_topk=sel)
         ci = _hanley_mcneil_ci(auc, npos, nneg)
-        p = _perm_p(X, y, groups, splits, auc, n_perm=args.n_perm, select_topk=sel) if not np.isnan(auc) else np.nan
+        # perm_block = cohort (exchangeable unit). In a single-cohort frame this is a global shuffle
+        # of that cohort's labels; in LOCO it preserves per-cohort class balance.
+        p = _perm_p(X, y, groups, splits, auc, n_perm=args.n_perm, select_topk=sel,
+                    perm_block=cohort) if not np.isnan(auc) else np.nan
         res["blocks"][name] = {"auroc": None if np.isnan(auc) else round(float(auc), 4),
                                "ci95": [None if np.isnan(x) else round(float(x), 4) for x in ci],
                                "perm_p": None if np.isnan(p) else round(float(p), 4)}
