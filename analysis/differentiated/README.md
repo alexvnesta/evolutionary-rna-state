@@ -6,6 +6,28 @@ per-sample phenotype matrix and scores them through the **shared** antigen core
 (`analysis/antigen_core`), so every `*_neoantigen_burden` is defined
 identically and comparably.
 
+## Module index
+
+| Module | RNA phenotype | Feature(s) |
+|---|---|---|
+| `splicing_neoantigen.py` | tumor-specific splice junctions (SNAF) | `splice_neoantigen_burden` |
+| `te_antigen.py` | TE/ERV transcription | TE-antigen burden |
+| `intron_retention.py` | retained introns | IR-derived features |
+| `fusion_antigen.py` | fusion transcripts | fusion-neoantigen burden |
+| `rna_editing.py` | A-to-I editing (recoding) | editing-derived features |
+| `bcr_shm.py` | B-cell receptor repertoire, somatic hypermutation, class-switch, clonality (TRUST4) | SHM rate, isotype fractions, BCR clonality/diversity |
+
+`bcr_shm.py` is the RNA-native, repertoire-level reading of B-cell affinity
+maturation — the same biology as the population-level TLS/B-cell expression
+score (`analysis/baseline/tls_bcell_scores.py`), but measured from
+reconstructed immunoglobulin sequences via TRUST4 (Song et al., *Nat Methods*
+2021, doi:10.1038/s41592-021-01142-2). Repertoire reconstruction runs in
+`pipelines/bcr_repertoire/run_trust4_pilot.sh` (stream-align-delete, mirroring
+the salmon pilot); `build_bcr_features()` here turns the TRUST4 report dir into
+the per-sample feature table. Nextflow form: `bcr_shm.nf` +
+`modules/{trust4_assemble,bcr_shm_features,merge_bcr_features}.nf`. Tests in
+`test_bcr_shm.py`.
+
 ## `splicing_neoantigen.py` — splicing-derived neoantigen burden
 
 **Reference tool:** SNAF (Splicing Neo Antigen Finder), Li et al. 2024, *Sci.
