@@ -105,8 +105,12 @@ workflow {
         exit 1, "ERROR: --te_locus (Telescope locus-level) is not supported from the unified BAM-only entry — " +
                 "it requires a FASTQ read source for bowtie2 -k100. Run pipelines/te_erv/ with --input <fastqs> " +
                 "or the cloud runner instead. Family-level TE runs here by default."
+    // Family-level path only reaches TETRANSCRIPTS_COUNT (uses gene_gtf + te_gtf_family). The locus-GTF
+    // slot is only consumed by the Telescope branch, which is unreachable here (hard-gated above), so pass
+    // the real params.te_gtf_locus for signature correctness rather than duplicating the family GTF.
     ch_bam_te = ch_bam.map { meta, bam, bai -> tuple(meta, bam) }
-    TE_ERV( Channel.empty(), ch_bam_te, fasta, file(params.te_gtf_family), gene_gtf, te_fam )
+    te_locus_gtf = file(params.te_gtf_locus, checkIfExists: true)
+    TE_ERV( Channel.empty(), ch_bam_te, fasta, te_locus_gtf, gene_gtf, te_fam )
 
     // ---- cohort matrices (each arm merges internally) ----
     RNA_EDITING.out.cohort_aei.view      { "[unified] AEI cohort matrix -> ${it}" }

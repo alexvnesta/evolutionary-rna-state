@@ -43,7 +43,8 @@ nextflow run pipelines/main.nf -profile apple_silicon \
 `-profile apple_silicon` (alias `arm64`) layers on `conf/mac_arm64.config`: conda arm64 envs,
 micromamba solver, the local-channel repackaging that works around sandbox git-protection, and the
 per-tool arm64 overrides (STAR skipped in favor of HISAT2, Qualimap/fq disabled, etc.). Verified to
-compile and build a valid DAG on Nextflow 26.04 against the 32-sample cohort BAM set.
+compile clean on Nextflow 26.04 against the 32-sample cohort BAM set (see Status for the exact scope of
+that check — clean compile, not a rendered DAG).
 
 ## Status
 - **Compiles clean on Nextflow 26.04** under `-profile apple_silicon`, resolves every reference path,
