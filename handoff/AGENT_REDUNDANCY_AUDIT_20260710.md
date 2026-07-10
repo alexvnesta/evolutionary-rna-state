@@ -66,7 +66,7 @@ Auditor session: 64079601 (user-launched). Scope: all `processing` frames in pro
 3. Forensic doc corrections + HLA/APM canonical ENSG pins + Hugo full-depth note
 4. Full-depth salmon scripts + manifests + handoff notes + artsave helpers
 5. gitignore tools/ (3+ GB vendored binaries — arcasHLA/STAR/TRUST4)
-6. Track CLAUDE.md (was untracked; case-fold twin of claude.md = same inode)
+6. Track CLAUDE.md (was untracked). NOTE: the initial 'byte-identical / same file' claim was asserted from matching size+mtime BEFORE any content check; it was only actually verified later, during this audit, via `cmp -s` (byte-identical) + `ls -li` (both names share inode 196241998) — i.e. CLAUDE.md and claude.md are one file under a case-fold twin. The claim happens to be correct, but it was unverified at the time it was first written.
 7. Consolidation record (this) + status banner
 
 ## Left for the (awake) user
