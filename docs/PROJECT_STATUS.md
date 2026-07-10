@@ -57,7 +57,7 @@ the canonical non-ref build; that was reversed by audit `64079601` + a user dire
 The Orthrus session's own cross-check (commit `324`-era log, bottom of this doc) confirms the bash `-k10` build was
 methodologically sound (AEI 0.205% vs canonical 0.203% on shared SRR5088840) — the deprecation was about completeness
 (locus-level TE) and per-feature-alignment purity, not correctness. 4-5 bash samples remain on disk for concordance
-cross-checking only. The BCR/SHM subsystem is now documented + committed (audit `64079601`).
+cross-checking only. (The `nonref_run` crashes I earlier called a benign timeout artifact were in fact a real retry-hygiene bug — fasterq-dump SRA extraction failures on corrupt/incomplete `.sra` files plus samtools `tmp.NNNN.bam` collisions from re-running failed samples without cleaning the work dir, per the overview session's own diagnosis; correcting my earlier 'not a pipeline-logic failure' claim. Moot for the record now that the bash build is deprecated, but noted so the characterization is accurate.) The BCR/SHM subsystem is now documented + committed (audit `64079601`).
 
 ## Sessions
 
