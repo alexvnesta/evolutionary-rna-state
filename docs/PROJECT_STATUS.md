@@ -268,7 +268,7 @@ raw reads; do NOT drop in as-is (unit mismatch would pollute the multi-cohort ma
   transcripts). rnasplice now runs on arm64 (`d9e98c3`, genome_bam source); rnafusion still
   not-run-on-real-data.
 
-## DISK WATCH (2026-07-10 ~13:25, verified on disk) — pressure rising again
+## DISK WATCH (updated 2026-07-10 ~17:10, verified on disk) — RESOLVED, not a blocker
 Free space is **~177 GB (91% used)** as of 2026-07-10 ~17:10 (RECOVERED from a 96 GB trough at ~16:10; the Nextflow session confirms the dip was transient HISAT2/SALMON index-build scratch that freed on completion, NOT a leak — disk is NOT a blocker; baseline was ~339 GB / 82%, see DISK section below): the status session (`23cf8106`) is driving the final cohort samples ('waiting for final samples'), and the canonical pipeline is fetching+aligning batch 2 ('monitoring AWS batch 2 fetch to align') — the alignment phase is in its last stretch. Canonical BAMs now **32** (real progress). NOT yet critical, but if pressure continues the recorded guidance applies: use `nextflow clean` (keep latest run) on `results/large/nf_work_rnaseq/`, never a blanket `rm` while alignment is live. Note (verified): the deprecated `results/cohort_features/` (107 dirs) is UNCHANGED stub scaffold — only 7 have real caller outputs, the rest STATUS-only; it is NOT re-activated. `results/nonref_run/out/` is 14 dirs / 6 complete (in-flight samples drained as expected). Neither deprecated build is the feature source of record — canonical = Nextflow.
 
 ## DISK — RESOLVED (cleanup session `f0e43e33`, completed)
