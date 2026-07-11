@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Evolutionary RNA State — Hackathon Submission</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+       max-width:960px;margin:0 auto;padding:32px 28px;color:#1a1a1a;line-height:1.5;}
+  h1{font-size:25px;margin:0 0 4px;color:#12314e;}
+  h2{font-size:17px;margin:26px 0 8px;color:#12314e;border-bottom:2px solid #d7e3ee;padding-bottom:3px;}
+  .sub{color:#5a6b7a;font-size:13px;margin-bottom:18px;}
+  .lead{font-size:15px;background:#f3f7fb;border-left:4px solid #2c7fb8;padding:12px 16px;border-radius:3px;}
+  table{border-collapse:collapse;font-size:13px;margin:10px 0;width:100%;}
+  th,td{border:1px solid #cdd8e2;padding:5px 9px;text-align:center;}
+  th{background:#eaf1f7;} td:first-child,th:first-child{text-align:left;}
+  .null{color:#9a6a00;font-weight:600;} .pos{color:#1a6b2f;font-weight:600;}
+  figure{margin:14px 0;} img{width:100%;border:1px solid #dde5ec;border-radius:4px;}
+  figcaption{font-size:12px;color:#5a6b7a;margin-top:5px;}
+  .key{background:#fbf6ec;border:1px solid #e6d5ad;border-radius:4px;padding:12px 16px;font-size:14px;}
+  .foot{font-size:12px;color:#7a8794;margin-top:28px;border-top:1px solid #dde5ec;padding-top:10px;}
+  code{background:#eef2f6;padding:1px 4px;border-radius:3px;font-size:12px;}
+</style>
+</head>
+<body>
+
+<h1>Does bulk tumor RNA encode a latent evolutionary state that predicts immunotherapy response?</h1>
+<div class="sub"><b>evolutionary-rna-state</b> &middot; Built with Claude: Life Sciences hackathon &middot; 2026-07-11</div>
+
+<p class="lead"><b>One line:</b> We built the first cohort-scale <b>non-reference</b> RNA feature matrix and the
+learned-representation (Evo&nbsp;2) arm the hypothesis calls for, then ran pre-registered two-block tests against
+an established immune-composition floor. The non-reference layer carries <b>no independent, portable ICB-response
+signal</b> &mdash; and we identify the mechanism <b>why</b>.</p>
+
+<h2>The hypothesis, tested on its own terms</h2>
+<p>The claim: a tumor&rsquo;s bulk transcriptome contains an implicit <i>evolutionary</i> readout &mdash;
+alternative splicing, RNA editing, intron retention, transposable-element activity, novel junctions &mdash;
+that predicts checkpoint-blockade response <i>beyond</i> what gene expression already tells you. Every prior
+verdict in this project used expression, expression-PCA, or a DNA proxy. This is the first time the
+hypothesis&rsquo;s <b>own</b> features were computed at cohort scale and tested.</p>
+
+<h2>What we built</h2>
+<ul>
+<li><b>Unified Apple-Silicon Nextflow workflow</b> &mdash; one DSL2 spine fanning a BAM channel to the
+editing / intron-retention / TE-ERV / splicing subworkflows (<code>-profile apple_silicon</code>).</li>
+<li><b>First cohort-scale non-reference matrix</b> &mdash; RNA editing, IR, splicing burden, TE/ERV family activity
+across three melanoma ICB cohorts.</li>
+<li><b>Learned-representation arm on Modal GPUs</b> &mdash; <b>Evo&nbsp;2-7B</b> scoring the <i>sequence aberrancy</i>
+of novel splice junctions (local Apple GPU is unreachable from the sandbox; all FM scoring ran on Modal H100/A100).</li>
+</ul>
+
+<h2>The result: a null &mdash; in the only valid evaluation frame</h2>
+<p>Cross-cohort (LOCO) evaluation is <b>invalid</b> for this 3-cohort set: the immune floor itself fails to
+transfer across cohorts (its response-direction flips), so no feature block is interpretable cross-cohort.
+The valid frame is <b>within-cohort</b>. We ran the Evo&nbsp;2 two-block test in the best-powered valid frame
+(Gide) and <b>replicated it in a second independent within-cohort test</b> (Hugo).</p>
+
+<table>
+<tr><th>Block (20-seed 5-fold CV AUROC)</th><th>Gide n=32 (17R/15N)</th><th>Hugo n=22 (12R/10N)</th></tr>
+<tr><td>Immune floor (positive control)</td><td class="pos">0.792</td><td>0.593 <span style="color:#9a6a00">(weak)</span></td></tr>
+<tr><td>Evo&nbsp;2 aberrancy alone</td><td>0.513</td><td>0.502</td></tr>
+<tr><td>Floor + Evo&nbsp;2</td><td>0.768</td><td>0.593</td></tr>
+<tr><td>Evo&nbsp;2 residualized on floor (fold-contained)</td><td class="null">0.354</td><td class="null">0.576</td></tr>
+<tr><td>permutation p (residual)</td><td class="null">0.83</td><td class="null">0.259</td></tr>
+</table>
+
+<p>In the best-powered frame (Gide, floor 0.792) the encoder residual is below chance, p=0.83. The second
+within-cohort test (Hugo) agrees it is null (p=0.259) &mdash; with the caveat that Hugo&rsquo;s own floor is weak
+(0.593), so it is a supporting, not decisive, replication. Every interpretable caller layer (editing, IR, TE,
+splicing) behaved the same way.</p>
+
+<figure>
+<img src="{{artifact:art_803f302a-d659-4bb7-9df5-d0e1c38cc0c0}}" alt="Evo2 encoder two-block result">
+<figcaption><b>Fig 1.</b> Left: within-Gide two-block test (n=32) &mdash; Evo&nbsp;2 alone at chance, degrades the
+floor, residual below chance. Right: an apparent n=13 signal (0.643) was a single CV seed of the fold-contained
+procedure (20-seed mean 0.456); seed-averaging and doubling n both collapse it &mdash; a small-sample-variance
+artifact the anti-collapse control was built to catch.</figcaption>
+</figure>
+
+<h2>The insight: <i>why</i> the whole non-reference layer comes up empty</h2>
+<p>The hypothesis&rsquo;s real claim is not &ldquo;aberrant junctions predict response,&rdquo; but that a junction
+that is <b>both sequence-surprising and abundantly expressed</b> &mdash; the aberrant-<i>and</i>-expressed event
+&mdash; carries the signal. We built that <b>aberrancy&times;dosage interaction</b> explicitly and tested it.
+It is also null (residual p=0.92 Gide / 0.22 Hugo) &mdash; but <i>informatively</i>: it scores <b>0.612 alone</b>
+in Gide, then collapses to 0.421 once the floor is removed. That is the fingerprint of a <b>proxy</b>.</p>
+
+<div class="key"><b>Mechanism.</b> The aberrant-expressed junction burden is a <b>correlate of the inflamed-tumor
+state</b> (Gide: GEP &rho;=+0.36, IFN&gamma; +0.29) &mdash; and its coupling to inflammation <b>flips sign across
+cohorts</b> (same-feature GEP: burden +0.36&nbsp;Gide&nbsp;&rarr;&nbsp;&minus;0.15&nbsp;Hugo; aberrant-abundant
+fraction +0.31&nbsp;&rarr;&nbsp;&minus;0.37; systematic across all five inflammation axes). So the measurable
+non-reference &ldquo;aberrancy&rdquo; is <b>entangled with immune composition</b> and inherits the <b>same
+cross-cohort direction-flip</b> that sinks the immune floor itself. One unifying reason no non-reference layer
+&mdash; interpretable callers or an Evo&nbsp;2 sequence model &mdash; ever adds independent, portable signal:
+they are downstream readouts of the tumor-immune state, seen through a lens that reorients between cohorts.</div>
+
+<figure>
+<img src="{{artifact:art_4268a92c-e92f-41de-8e46-6f887cd4ff67}}" alt="Aberrancy-dosage interaction insight">
+<figcaption><b>Fig 2.</b> Left: the interaction adds no signal beyond the floor. Middle: aberrant-expressed
+burden couples to immune infiltration, but the slope flips sign Gide&rarr;Hugo. Right: the sign flip is
+systematic across all five inflammation axes.</figcaption>
+</figure>
+
+<h2>What would be needed to salvage the independent-signal claim</h2>
+<ul>
+<li>A feature that is aberrancy-driven but <b>decoupled from bulk immune infiltration</b> &mdash; e.g. per-neojunction
+HLA-presented peptide load (the presentation layer: patient HLA calling + MHC-binding on translated, NMD-escaping
+ORFs), not a bulk burden. Scoped in <code>ENCODER_PHASE_PROTOCOL.md</code>.</li>
+<li>A regime where the immune floor <b>transfers</b> &mdash; a single large cohort with internal splits, not three
+small cohorts whose response-direction flips.</li>
+</ul>
+
+<h2>Rigor &amp; honesty notes</h2>
+<ul>
+<li>Pre-registered two-block protocol; fold-contained residualization; cohort-internal permutation nulls.</li>
+<li>The one apparent positive (n=13, 0.643) was correctly diagnosed as single-seed variance, not signal.</li>
+<li>Verified single-source data inventory (<code>DATA_INVENTORY_20260711.md</code>): 106 labeled samples
+(Gide 69 / Hugo 27 / Riaz 10); feature coverage &mdash; floor 94, junctions 59, TE 41, IR 40, editing 43.</li>
+<li>Cross-cohort LOCO is declared invalid, not quietly used; every test is within-cohort with a stated positive control.</li>
+</ul>
+
+<div class="foot">Backing artifacts: <code>HACKATHON_BRIEF.md</code>, <code>EVO2_ENCODER_RESULT_20260711.md</code>,
+<code>EVO2_INTERACTION_INSIGHT_20260711.md</code>, <code>DATA_INVENTORY_20260711.md</code>,
+<code>ENCODER_PHASE_PROTOCOL.md</code>. Repo: evolutionary-rna-state.</div>
+
+</body>
+</html>
