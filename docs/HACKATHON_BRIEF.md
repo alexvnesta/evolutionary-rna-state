@@ -88,6 +88,21 @@ mean of that same procedure was already 0.456 (p=0.190) — single-split varianc
 artifact. Averaging over seeds and doubling n to 32 (via 19 newly-aligned Gide BAMs; 20-seed mean 0.354,
 p=0.83) both confirm the null. See `docs/EVO2_ENCODER_RESULT_20260711.md` and `evo2_encoder_result.png`.
 
+## The unifying result — WHY every non-reference layer fails (aberrancy×dosage)
+The hypothesis's real claim is not "aberrant junctions predict response" but that a junction which is BOTH
+sequence-surprising (Evo2 aberrancy) AND abundant (read support) — an aberrant-and-*expressed* event — carries
+the signal. We built that interaction explicitly (aberrancy × log-reads) and tested it in both valid cohorts.
+It is also null on the rigorous test (residual p=0.92 Gide / 0.22 Hugo), but *informatively* so: the
+interaction scores **0.612 alone in Gide** (above chance) yet collapses to 0.421 after residualizing on the
+floor — the signature of a **proxy**. Mechanism: the aberrant-expressed junction burden is a correlate of the
+inflamed-tumor state (Gide GEP ρ=+0.36, IFNγ +0.29), and **its coupling to inflammation flips sign across
+cohorts** (GEP +0.36 in Gide → −0.37 in Hugo, systematic across all 5 axes). So the measurable non-reference
+"aberrancy" is entangled with immune composition and inherits the SAME cross-cohort direction flip that sinks
+the immune floor itself (Phase 2). This is one unifying explanation for why no non-reference layer — callers
+or Evo2 — ever adds independent, portable ICB signal: they are downstream readouts of the tumor-immune state,
+seen through a lens that reorients between cohorts. See `docs/EVO2_INTERACTION_INSIGHT_20260711.md` and
+`evo2_interaction_insight.png`.
+
 ## Scope and limits (stated plainly)
 - **n is small** (14 samples). This is a first matrix built under a 3-day deadline on a single Apple Silicon
   machine, not the full n=106. The result bounds the effect size detectable at this n; it does not settle the
