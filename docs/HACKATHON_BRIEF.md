@@ -96,7 +96,8 @@ It is also null on the rigorous test (residual p=0.92 Gide / 0.22 Hugo), but *in
 interaction scores **0.612 alone in Gide** (above chance) yet collapses to 0.421 after residualizing on the
 floor — the signature of a **proxy**. Mechanism: the aberrant-expressed junction burden is a correlate of the
 inflamed-tumor state (Gide GEP ρ=+0.36, IFNγ +0.29), and **its coupling to inflammation flips sign across
-cohorts** (GEP +0.36 in Gide → −0.37 in Hugo, systematic across all 5 axes). So the measurable non-reference
+cohorts** (same-feature GEP: burden +0.36 Gide → −0.15 Hugo; aberrant-abundant fraction +0.31 → −0.37;
+systematic across all 5 axes for both). So the measurable non-reference
 "aberrancy" is entangled with immune composition and inherits the SAME cross-cohort direction flip that sinks
 the immune floor itself (Phase 2). This is one unifying explanation for why no non-reference layer — callers
 or Evo2 — ever adds independent, portable ICB signal: they are downstream readouts of the tumor-immune state,

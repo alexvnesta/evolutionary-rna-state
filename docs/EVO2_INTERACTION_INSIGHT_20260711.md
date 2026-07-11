@@ -34,8 +34,10 @@ The aberrant-expressed junction burden is a **correlate of the inflamed-tumor st
 evolutionary readout:
 - In Gide it correlates positively with every immune-infiltration axis (GEP +0.36, IFNγ +0.29, Teff +0.29)
   and trends with response (frac-aberrant-abundant vs y: ρ=+0.33, p=0.064).
-- **Its coupling to inflammation FLIPS sign across cohorts** — positive in Gide, negative in Hugo
-  (GEP +0.36 → −0.37; the flip is systematic across all five inflammation axes, see figure panel C).
+- **Its coupling to inflammation FLIPS sign across cohorts** — positive in Gide, negative in Hugo. Same-feature
+  GEP correlation: the aberrant-expressed *burden* (ix_sum_aberr×log-reads) goes +0.36 (Gide) → −0.15 (Hugo);
+  the aberrant-*and-abundant fraction* goes +0.31 (Gide) → −0.37 (Hugo). The flip is systematic across all five
+  inflammation axes for both features (see figure panels B and C).
 
 So the measurable non-reference "aberrancy burden" is entangled with immune composition and inherits the
 **exact same cross-cohort direction flip** that makes the immune floor itself fail to transfer (Phase 2).
