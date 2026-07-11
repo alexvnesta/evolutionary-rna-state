@@ -45,9 +45,15 @@ The positive control **FAILS the LOCO gate at n≈94**. Per the protocol's own l
 ## Covariate availability (honest inventory)
 - **Immune floor:** 94/106 samples. Available.
 - **HLA-I het/LOH:** het fraction for the 16 non-ref-matrix samples (mean 0.885). Available (this session).
-- **TMB: UNAVAILABLE for this cohort.** The on-disk `tmb_standardized.parquet` is keyed to dfci2019/liu2019
-  WES cohorts (generic `Sample*` ids) with ZERO overlap with our RNA accessions. There is no crosswalk. TMB
-  as a competing covariate cannot be assembled without new data. Documented, not silently skipped.
+- **TMB: present for 2/3 cohorts but not yet joined (ID-crosswalk gap, NOT missing data).** The on-disk
+  `tmb_standardized.parquet` (336 rows) covers dfci2019 (144) and liu2019 (122) — unrelated WES cohorts — but
+  ALSO carries **hugo2016 (26, real tmb_rate values, keyed `Pt1`-style) and riaz2017 (44, keyed `Pt10_pre`)**.
+  It has **NO gide2019 rows** (0), i.e. no TMB for our largest cohort. The Hugo/Riaz TMB is keyed by
+  patient-level ids, not `run_accession`, so a direct accession join gives zero overlap — but those ids are
+  joinable via the existing crosswalks (`data/registry/`). So TMB is assemblable for Hugo+Riaz with a
+  crosswalk step; it is genuinely absent only for Gide. This does not change the Phase-2 gate conclusion
+  (the floor-transfer failure is independent of TMB), but TMB is NOT "unavailable without new data" — that
+  earlier phrasing was wrong.
 - **Purity:** available for the 21–25 non-ref samples (prior InstaPrism frame).
 
 ## Recommendation
