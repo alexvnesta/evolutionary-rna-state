@@ -44,19 +44,25 @@ the immune-composition floor is not beaten by any non-reference RNA feature at t
 - Two H100 scoring jobs were orphaned by submit-helper timeouts (Friday queue congestion,
   not a code fault; actual scoring is ~2-3 min). Switching to A100-80GB resolved it.
 
-## Independent replication — within-Hugo (n=17, 10R/7N)
-Ran the identical pipeline within a second cohort (Hugo 2016), scoring 1,048 additional Hugo-specific
-novel junctions on A100 (job_wall_s=266).
+## Independent replication — within-Hugo (n=22, 12R/10N)
+Ran the identical pipeline within a second cohort (Hugo 2016), deepened to 22 samples (from 17) as more
+Hugo junction extractions became available. Scored the Hugo-specific novel junctions on A100.
 
 | Block | AUROC (20-seed mean) |
 |---|---|
-| Immune floor | 0.611 |
-| Evo2 alone | 0.221 |
-| Floor + Evo2 | 0.470 |
-| Evo2 residualized on floor (fold-contained) | 0.364 |
+| Immune floor | 0.593 |
+| Evo2 alone | 0.502 (chance) |
+| Floor + Evo2 | 0.593 (no gain, Δ 0.000) |
+| Evo2 residualized on floor (fold-contained) | 0.576 |
+| — permutation p (residual) | **0.259 (not significant)** |
 
-**Same verdict in a second cohort.** Evo2 alone and residualized are both below chance; adding Evo2 degrades
-the floor. Note Hugo's immune floor is itself weak (0.611 vs Gide's 0.792) — consistent with the Phase 3
-finding that Hugo's response biology differs — but Evo2 is below chance regardless, so the null is not a
-floor-strength artifact. Two independent within-cohort tests (Gide n=32, Hugo n=17) now agree: the Evo2
+**Same null verdict in a second cohort — confirmed by permutation.** The residual reads 0.576, but this is
+NOT significant: the cohort-internal permutation null gives p=0.259 (null mean 0.494), and the per-seed
+residual ranges 0.458–0.700 (std 0.065) — i.e. a single CV seed can land anywhere from chance to 0.70 at
+n=22. Critically, the direct tests agree it is null: Evo2 alone is exactly chance (0.502) and adding Evo2 to
+the floor yields zero gain (0.593→0.593). This is the same small-sample-variance signature the anti-collapse
+control was built to catch (cf. the n=13 Gide 0.643 that vanished on seed-averaging + more n). Hugo's own
+floor is weak (0.593) — consistent with the Phase 3 finding that Hugo's response biology differs — but the
+permutation test controls for that, and Evo2 still carries no significant independent signal. Two independent
+within-cohort tests (Gide n=32 p=0.83, Hugo n=22 p=0.259) now agree: the Evo2
 novel-junction aberrancy layer carries no independent ICB-response signal.
