@@ -35,8 +35,11 @@ prior non-reference layer tested (editing, IR, TE, splicing, learned expression 
 the immune-composition floor is not beaten by any non-reference RNA feature at this scale.
 
 ## Rigor notes
-- An in-sample (non-fold-contained) residualization gave a spurious 0.643 at n=13;
-  fold-contained residualization and doubling n to 32 both collapse it to chance —
-  a textbook small-sample optimism artifact, caught by the pre-registered anti-collapse control.
+- The residualization was fold-contained throughout (floor→evo regression fit on TRAIN only inside
+  each CV split). The eye-catching 0.643 at n=13 was a **single-seed (seed0)** value of that same
+  procedure; its **20-seed mean was already 0.456** (chance), with permutation p=0.190. In other words,
+  0.643 was single-split variance at tiny n, not a data-leakage artifact — averaging over seeds and
+  doubling n to 32 (20-seed mean 0.354, p=0.83) both confirm the null. Report the multi-seed mean, not a
+  single lucky split, at small n.
 - Two H100 scoring jobs were orphaned by submit-helper timeouts (Friday queue congestion,
   not a code fault; actual scoring is ~2-3 min). Switching to A100-80GB resolved it.

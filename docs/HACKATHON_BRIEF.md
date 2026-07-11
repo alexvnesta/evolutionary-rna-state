@@ -83,10 +83,10 @@ log-likelihood of the spliced junction sequence and the contiguous reference. 1,
 
 **Verdict: no independent signal.** The Evo2 sequence-aberrancy layer behaves exactly like every reference
 and non-reference block before it — chance-level alone, degrades the floor when added. A rigor note worth
-keeping: at the initial n=13 an *in-sample* residualization showed a spurious 0.643; the pre-registered
-fold-contained residualization and doubling n to 32 (via 19 newly-aligned Gide BAMs) both collapsed it to
-chance — a textbook small-sample optimism artifact the anti-collapse control was designed to catch. See
-`docs/EVO2_ENCODER_RESULT_20260711.md` and `evo2_encoder_result.png`.
+keeping: at the initial n=13 a *single CV seed* of the fold-contained residual read 0.643, but the 20-seed
+mean of that same procedure was already 0.456 (p=0.190) — single-split variance at tiny n, not a leakage
+artifact. Averaging over seeds and doubling n to 32 (via 19 newly-aligned Gide BAMs; 20-seed mean 0.354,
+p=0.83) both confirm the null. See `docs/EVO2_ENCODER_RESULT_20260711.md` and `evo2_encoder_result.png`.
 
 ## Scope and limits (stated plainly)
 - **n is small** (14 samples). This is a first matrix built under a 3-day deadline on a single Apple Silicon
