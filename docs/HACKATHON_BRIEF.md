@@ -67,13 +67,40 @@ unlike every prior "DEAD" verdict in this project (which used expression / expre
 antigen-quantity proxy), **this is the first test run on the hypothesis's actual non-reference features.**
 It is a legitimate, reportable negative — bounded by n — not a repeat of the proxy-based verdicts.
 
+## Encoder pass — Evo2-7B on novel splice junctions (n=32 within-Gide)
+Beyond the interpretable callers, we ran the **learned-representation** arm the hypothesis calls for, using
+a genomic foundation model (**Evo2-7B**, Arc Institute) on Modal H100/A100 GPUs. The sequence-visible feature
+was **novel-junction aberrancy**: per sample, the top-200 novel splice junctions by read support (canonical
+chroms, ≥10 reads, absent from GENCODE v46, recurrent ≥2 Gide), each scored by Evo2 as the delta between the
+log-likelihood of the spliced junction sequence and the contiguous reference. 1,887 unique junctions scored.
+
+| block | AUROC (20-seed 5-fold) |
+|---|---|
+| Immune floor (positive control) | **0.792** |
+| Evo2 junction-aberrancy alone | 0.513 (chance) |
+| Floor + Evo2 | 0.768 (Δ −0.024) |
+| Evo2 residualized on floor (fold-contained) | 0.354, perm p=0.83 |
+
+**Verdict: no independent signal.** The Evo2 sequence-aberrancy layer behaves exactly like every reference
+and non-reference block before it — chance-level alone, degrades the floor when added. A rigor note worth
+keeping: at the initial n=13 an *in-sample* residualization showed a spurious 0.643; the pre-registered
+fold-contained residualization and doubling n to 32 (via 19 newly-aligned Gide BAMs) both collapsed it to
+chance — a textbook small-sample optimism artifact the anti-collapse control was designed to catch. See
+`docs/EVO2_ENCODER_RESULT_20260711.md` and `evo2_encoder_result.png`.
+
 ## Scope and limits (stated plainly)
 - **n is small** (14 samples). This is a first matrix built under a 3-day deadline on a single Apple Silicon
   machine, not the full n=106. The result bounds the effect size detectable at this n; it does not settle the
   hypothesis.
-- **The learned-representation (encoder) half is NOT tested here** — scoped as future work
-  (`docs/ENCODER_PHASE_PROTOCOL.md`) precisely because a rushed run would reproduce the `Wn @ E`
-  expression-collapse (R²=1.000) the forensic audit caught.
+- **The learned-representation (encoder) half was tested in a bounded form** — Evo2-7B on novel-junction
+  aberrancy (above), within-Gide n=32, negative. The broader encoder program (multiple event classes, the
+  HLA→binding presentation layer) remains future work (`docs/ENCODER_PHASE_PROTOCOL.md`); a full expression-
+  conditioned encoder was deliberately NOT run because the forensic audit showed it reproduces the `Wn @ E`
+  expression-collapse (R²=1.000).
+- **GPU compute is Modal-only.** The local Apple GPU is unreachable from the sandbox (IOKit user-client
+  denied at the per-process boundary; `docs/MPS_INVESTIGATION_20260710.md`); all foundation-model scoring ran
+  on Modal (evo2_7b image `im-uKA9KVB0EQEU9zeFIcAMPx`, weights pre-hydrated). H100 hit repeated Friday-evening
+  submit-queue timeouts; A100-80GB was reliable.
 - Locus-level TE (Telescope) is family-level here; escalation to loci is a documented cloud step.
 
 ## Reproduce
