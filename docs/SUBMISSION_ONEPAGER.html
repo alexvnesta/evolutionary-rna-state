@@ -99,6 +99,25 @@ burden couples to immune infiltration, but the slope flips sign Gide&rarr;Hugo. 
 systematic across all five inflammation axes.</figcaption>
 </figure>
 
+<h2>Can a model <i>disentangle</i> aberrancy from immune composition? &mdash; No</h2>
+<p>The obvious rescue: build a model that separates tumor-intrinsic aberrancy from the immune-composition
+component and recovers independent signal. A disentangling model <i>is</i> a model predicting response from the
+aberrancy component <b>orthogonal to immune composition</b>. We built that residual against the richest immune
+basis available &mdash; the 5 immune signatures <b>plus all 11 InstaPrism deconvolution cell fractions</b>
+(malignant/purity, CD8/CD4&nbsp;T, Tregs, myeloid, B, plasma, pDC, mast, cycling), fold-contained.</p>
+<table>
+<tr><th>Evo&nbsp;2 aberrancy residualized on&hellip;</th><th>floor (5 sig)</th><th>rich basis (16: sig+deconv)</th><th>perm p (rich)</th></tr>
+<tr><td>Gide n=32</td><td class="null">0.354</td><td class="null">0.412</td><td class="null">0.905</td></tr>
+<tr><td>Hugo n=22</td><td>0.576</td><td class="null">0.488</td><td class="null">0.433</td></tr>
+</table>
+<p>The immune-orthogonal component is at/below chance in both cohorts. In Hugo the deconvolution correction pulls
+the residual <i>down</i> toward chance (0.576&rarr;0.488) &mdash; the cell fractions absorb the last apparent signal.
+This is not a modeling-power limit: a disentangling model can only recover a component that exists, and the
+orthogonal subspace is empty. It mirrors the project&rsquo;s expression-level result
+(<code>MEDIATION_PURITY_CORRECTED.md</code>): after purity correction the phenotype&rarr;infiltration a-path
+collapses to zero (antigen-presentation +0.563 p=0.0002 &rarr; +0.047 p=0.64). Two matched tests &mdash; expression
+mediation and sequence disentangling &mdash; both land on composition-entanglement.</p>
+
 <h2>What would be needed to salvage the independent-signal claim</h2>
 <ul>
 <li>A feature that is aberrancy-driven but <b>decoupled from bulk immune infiltration</b> &mdash; e.g. per-neojunction

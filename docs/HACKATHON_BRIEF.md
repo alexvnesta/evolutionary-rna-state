@@ -104,6 +104,14 @@ or Evo2 — ever adds independent, portable ICB signal: they are downstream read
 seen through a lens that reorients between cohorts. See `docs/EVO2_INTERACTION_INSIGHT_20260711.md` and
 `evo2_interaction_insight.png`.
 
+**Can a model disentangle it? No.** We residualized the Evo2 aberrancy on the richest immune basis available
+(5 signatures + all 11 InstaPrism deconvolution cell fractions), fold-contained — the disentangling model
+itself. The immune-orthogonal component is at/below chance in both cohorts (Gide 0.412 p=0.905; Hugo 0.488
+p=0.433), and in Hugo the deconvolution correction pulls the residual *down* toward chance (0.576→0.488). Not
+a modeling-power limit — the orthogonal subspace is empty. This matches the expression-level result in
+`MEDIATION_PURITY_CORRECTED.md` (purity-corrected phenotype→infiltration a-path collapses to zero). See
+`docs/DISENTANGLE_TEST_20260711.md`.
+
 ## Scope and limits (stated plainly)
 - **n is small** (14 samples). This is a first matrix built under a 3-day deadline on a single Apple Silicon
   machine, not the full n=106. The result bounds the effect size detectable at this n; it does not settle the
