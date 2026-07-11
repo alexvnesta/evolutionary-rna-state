@@ -80,6 +80,27 @@ methodologically sound (AEI 0.205% vs canonical 0.203% on shared SRR5088840) —
 (locus-level TE) and per-feature-alignment purity, not correctness. 4-5 bash samples remain on disk for concordance
 cross-checking only. (The `nonref_run` crashes I earlier called a benign timeout artifact were in fact a real retry-hygiene bug — fasterq-dump SRA extraction failures on corrupt/incomplete `.sra` files plus samtools `tmp.NNNN.bam` collisions from re-running failed samples without cleaning the work dir, per the overview session's own diagnosis; correcting my earlier 'not a pipeline-logic failure' claim. Moot for the record now that the bash build is deprecated, but noted so the characterization is accurate.) The BCR/SHM subsystem is now documented + committed (audit `64079601`).
 
+## MILESTONE (2026-07-11 ~05:10) — ENCODER PHASE COMPLETE: Evo2-7B on novel junctions, negative in TWO cohorts
+Session `23cf8106` ran the learned-representation arm the hypothesis calls for, using **Evo2-7B** (Arc
+Institute genomic FM) on Modal GPUs (local Apple GPU unreachable from sandbox — IOKit boundary, see
+`MPS_INVESTIGATION_20260710.md`). Feature = **novel-junction sequence aberrancy**: per sample, top-200
+novel splice junctions by read support (canonical, ≥10 reads, absent from GENCODE v46 [convention A,
+72.8% match-validated], recurrent ≥2), each scored as delta-LL(spliced vs contiguous reference). 2,935
+unique junctions scored across cohorts.
+- **Within-Gide n=32 (17R/15N):** floor **0.792**, Evo2 alone **0.513**, floor+Evo2 **0.768** (Δ −0.024),
+  Evo2 residualized-on-floor (fold-contained 20-seed) **0.354** (perm p=**0.83**). (`evo2_two_block_gide32.json`)
+- **Within-Hugo n=17 (10R/7N) replication:** floor 0.611, Evo2 alone 0.221, floor+Evo2 0.470, Evo2
+  residual 0.364. Same verdict; Hugo floor itself weak (0.611) but Evo2 below chance regardless. (`evo2_within_hugo.json`)
+- **Verdict:** the Evo2 sequence-aberrancy layer carries **no independent ICB signal** in either cohort —
+  chance-level alone, degrades the floor when added. Consistent with every prior reference and non-reference
+  block. Cross-cohort LOCO NOT used (invalid for this 3-cohort set: the floor itself fails LOCO, Phase 2).
+- **Rigor:** a single-CV-seed n=13 fold-contained residual read 0.643, but its 20-seed mean was 0.456 —
+  single-split variance at tiny n, not leakage. Seed-averaging + doubling n both confirm the null.
+- **Compute:** Evo2 env built + weights hydrated on Modal (image `im-uKA9KVB0EQEU9zeFIcAMPx`), reusable.
+  H100 hit repeated Friday submit-queue timeouts (2 jobs orphaned, ~$7-8); A100-80GB reliable. ~$22 of $30 left.
+- Artifacts: `EVO2_ENCODER_RESULT_20260711.md` (v`79cff608`), `evo2_encoder_result.png` (v`1c67e25e`),
+  `HACKATHON_BRIEF.md` (v`3b93090c`), `evo2_block_gide32.parquet` (v`54004f93`).
+
 ## MILESTONE (2026-07-10 ~15:05) — FIRST real non-reference two-block test RUN (underpowered first look; verified on disk here)
 The status session `23cf8106` built the project's **first genuine non-reference RNA feature matrix** (`nonref_matrix_cohort.parquet`, 21 samples × 66 features, Gide/Riaz/Hugo) and ran a **pre-registered two-block test** (immune floor vs non-reference features) — the first time the hypothesis's OWN features (splicing/editing/TE/IR), not an expression proxy, have been tested against ICB response. Verified from the committed result JSONs:
 - **Primary — within-Gide grouped 5-fold, n=14** (6 R / 8 NR), 66 non-ref features: immune floor AUROC **0.792** (perm p=**0.021**, replicates as a real predictor); non-ref alone **0.417** (perm p=**0.499**, chance); floor+non-ref **0.521** — adding non-ref **DEGRADES** the floor (Δ = **−0.271**). (`nonref_vs_floor_grouped5fold.json`)
