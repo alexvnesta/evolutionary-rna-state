@@ -39,8 +39,10 @@ composition differences). A single cross-cohort decision boundary cannot fit bot
 ## Firm consequences (updates the plan)
 1. **LOCO is not a valid frame for this 3-cohort set** — confirmed a second way (regimen-matched transfer
    also fails). Cross-cohort claims are off the table until more/harmonized cohorts exist.
-2. **Within-cohort (Gide, n=57) is the only frame with a working positive control** — any encoder test
-   must live here, reported descriptively, with cross-cohort generalization stated as untestable.
+2. **Within-cohort (Gide) is the only frame with a working positive control** — any encoder test must live
+   here, reported descriptively, with cross-cohort generalization stated as untestable. Gide is 69 samples
+   total; the floor positive control runs on the 57 with complete floor features + labels (n=57 is the
+   analysis subset, NOT the cohort size).
 3. **TMB is worth adding for Hugo/Riaz** (crosswalk-joinable; see Phase 2 doc) since inflammation is NOT
    Hugo's predictor — a TMB/burden axis may be what transfers there. This is a concrete no-GPU follow-up.
 4. The encoder GPU pass remains correctly deferred: the frame it would be judged in does not support
