@@ -55,3 +55,28 @@ Do NOT proceed to a cross-cohort encoder scoring pass until the floor-transfer f
 highest-value next work is batch harmonization + a re-test of floor LOCO transfer — a no-GPU experiment that
 gates everything downstream. Within-cohort (Gide, n=57) analyses remain valid and are where any encoder
 signal should first be sought.
+
+## ROOT CAUSE (Phase 2b) — the association DIRECTION flips across cohorts
+Harmonization (within-cohort rank-normalization, within-cohort z-scoring) does NOT restore transfer
+(0.507 → 0.531 / 0.519). Reason, from per-cohort point-biserial correlation of each floor feature with
+response:
+
+| feature | Gide (n=57) | Hugo (n=27) | Riaz (n=10) |
+|---|---|---|---|
+| gep_tcell_inflamed | +0.59 | −0.05 | +0.24 |
+| ifng_score | +0.60 | −0.05 | +0.13 |
+| teff | +0.58 | −0.08 | +0.15 |
+| tgfb | −0.02 | **−0.50** | **+0.61** |
+| teff_tgfb_balance | +0.43 | +0.31 | −0.44 |
+
+The canonical inflammation features (GEP/IFNG/teff) are strong positive predictors in Gide, ~null in Hugo,
+weak in Riaz; `tgfb` points in OPPOSITE directions in Hugo vs Riaz. A classifier trained on one cohort's
+direction is miscalibrated or reversed on another. **This is not removable by feature-space batch correction**
+— it reflects genuine cohort heterogeneity (regimen mix: Gide mono+combo, Riaz anti-CTLA4-progressed;
+biopsy/label differences; small-n noise in Hugo/Riaz). It is the mechanistic reason LOCO collapses.
+
+**Firm consequence:** cross-cohort (LOCO) is not a valid evaluation frame for THIS 3-cohort set at THIS n,
+for ANY feature block including a sequence encoder. Within-cohort (Gide, n=57) is the only frame where a
+positive control holds. The encoder hypothesis, if pursued now, must be tested WITHIN Gide with the honest
+caveat that cross-cohort generalization is untestable until the cohort-heterogeneity/regimen confounds are
+resolved (more cohorts, harmonized regimens, or per-regimen stratification).
