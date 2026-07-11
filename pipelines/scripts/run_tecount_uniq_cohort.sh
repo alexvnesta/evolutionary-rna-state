@@ -23,6 +23,10 @@ GENE_GTF="$REPO/reference/GRCh38/gencode.v46.primary_assembly.annotation.gtf"
 TE_GTF="$REPO/reference/te/GRCh38_rmsk_TE.gtf"
 BIN="$ENV/bin"
 mkdir -p "$OUT"
+# make OUT absolute: run_one does `cd "$OUT"` then checks "$OUT/<sample>.cntTable";
+# with a relative OUT that check resolves to $OUT/$OUT/... after the cd, giving a
+# false [FAIL] even though the cntTable was written correctly. Absolute OUT fixes it.
+OUT="$(cd "$OUT" && pwd)"
 
 # reverse-stranded library -> TEcount --stranded reverse
 run_one() {
