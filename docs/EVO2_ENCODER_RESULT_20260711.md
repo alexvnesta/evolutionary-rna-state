@@ -56,8 +56,9 @@ Hugo junction extractions became available. Scored the Hugo-specific novel junct
 | Evo2 residualized on floor (fold-contained) | 0.576 |
 | — permutation p (residual) | **0.259 (not significant)** |
 
-**Same null verdict in a second cohort — confirmed by permutation.** The residual reads 0.576, but this is
-NOT significant: the cohort-internal permutation null gives p=0.259 (null mean 0.494), and the per-seed
+**Same null verdict in a second cohort — confirmed by permutation.** The residual reads 0.576 (20-seed mean;
+0.586 at the 10-seed setting used for the permutation), but this is NOT significant: the cohort-internal
+permutation null gives p=0.259 (observed 0.586 vs null mean 0.494), and the per-seed
 residual ranges 0.458–0.700 (std 0.065) — i.e. a single CV seed can land anywhere from chance to 0.70 at
 n=22. Critically, the direct tests agree it is null: Evo2 alone is exactly chance (0.502) and adding Evo2 to
 the floor yields zero gain (0.593→0.593). This is the same small-sample-variance signature the anti-collapse
