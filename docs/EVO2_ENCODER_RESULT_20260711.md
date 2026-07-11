@@ -43,3 +43,20 @@ the immune-composition floor is not beaten by any non-reference RNA feature at t
   single lucky split, at small n.
 - Two H100 scoring jobs were orphaned by submit-helper timeouts (Friday queue congestion,
   not a code fault; actual scoring is ~2-3 min). Switching to A100-80GB resolved it.
+
+## Independent replication — within-Hugo (n=17, 10R/7N)
+Ran the identical pipeline within a second cohort (Hugo 2016), scoring 1,048 additional Hugo-specific
+novel junctions on A100 (job_wall_s=266).
+
+| Block | AUROC (20-seed mean) |
+|---|---|
+| Immune floor | 0.611 |
+| Evo2 alone | 0.221 |
+| Floor + Evo2 | 0.470 |
+| Evo2 residualized on floor (fold-contained) | 0.364 |
+
+**Same verdict in a second cohort.** Evo2 alone and residualized are both below chance; adding Evo2 degrades
+the floor. Note Hugo's immune floor is itself weak (0.611 vs Gide's 0.792) — consistent with the Phase 3
+finding that Hugo's response biology differs — but Evo2 is below chance regardless, so the null is not a
+floor-strength artifact. Two independent within-cohort tests (Gide n=32, Hugo n=17) now agree: the Evo2
+novel-junction aberrancy layer carries no independent ICB-response signal.
