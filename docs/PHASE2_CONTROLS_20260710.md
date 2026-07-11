@@ -59,7 +59,7 @@ The positive control **FAILS the LOCO gate at n≈94**. Per the protocol's own l
 ## Recommendation
 Do NOT proceed to a cross-cohort encoder scoring pass until the floor-transfer failure is addressed. The
 highest-value next work is batch harmonization + a re-test of floor LOCO transfer — a no-GPU experiment that
-gates everything downstream. Within-cohort (Gide, n=57) analyses remain valid and are where any encoder
+gates everything downstream. Within-cohort Gide analyses (n=57 floor-complete of 69) remain valid and are where any encoder
 signal should first be sought.
 
 ## ROOT CAUSE (Phase 2b) — the association DIRECTION flips across cohorts
@@ -82,7 +82,7 @@ direction is miscalibrated or reversed on another. **This is not removable by fe
 biopsy/label differences; small-n noise in Hugo/Riaz). It is the mechanistic reason LOCO collapses.
 
 **Firm consequence:** cross-cohort (LOCO) is not a valid evaluation frame for THIS 3-cohort set at THIS n,
-for ANY feature block including a sequence encoder. Within-cohort (Gide, n=57) is the only frame where a
+for ANY feature block including a sequence encoder. Within-cohort Gide (n=57 floor-complete of 69 total) is the only frame where a
 positive control holds. The encoder hypothesis, if pursued now, must be tested WITHIN Gide with the honest
 caveat that cross-cohort generalization is untestable until the cohort-heterogeneity/regimen confounds are
 resolved (more cohorts, harmonized regimens, or per-regimen stratification).
