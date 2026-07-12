@@ -1,0 +1,13 @@
+{
+  "cohort": "gide2019",
+  "n": 30,
+  "n_pos": 16,
+  "floor": 0.854,
+  "presented_alone": 0.581,
+  "floor_plus_presented": 0.846,
+  "presented_resid_floor": 0.472,
+  "presented_resid_obs10": 0.467,
+  "presented_resid_perm_p": 0.552,
+  "presented_resid_null_mean": 0.478,
+  "presented_resid_rich": 0.413
+}

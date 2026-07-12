@@ -100,9 +100,17 @@ key2jid={jkey(v):jid for jid,v in neojp.items()}
 # --- 3. mhcflurry presentation predictor ---
 pred=Class1PresentationPredictor.load()
 SUPPORTED=set(pred.supported_alleles)
+from mhcflurry.common import normalize_allele_name
+def _norm(a):
+    try: return normalize_allele_name(a)   # 'A*01:01' -> 'HLA-A*01:01'
+    except Exception: return None
 
 def presented_features(err):
-    alleles=[a for a in hla[err] if a in SUPPORTED]
+    alleles=[]
+    for a in hla[err]:
+        na=_norm(a)
+        if na and na in SUPPORTED: alleles.append(na)
+    alleles=sorted(set(alleles))
     if not alleles: return None
     items=top[err]  # [[chrom,istart,iend,strand,reads],...]
     # collect this sample's junction peptides (9-mers) with read weight

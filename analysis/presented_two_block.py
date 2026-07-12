@@ -26,7 +26,13 @@ try:
 except Exception: frac=None
 # load deconv fractions from artifact path staged locally
 FRACP="results/eval/instaprism_fractions_n106.parquet"
-frac=pd.read_parquet(FRACP).reset_index().rename(columns={'index':'run_accession'}) if os.path.exists(FRACP) else None
+if os.path.exists(FRACP):
+    frac=pd.read_parquet(FRACP)
+    if 'run_accession' not in frac.columns:
+        frac=frac.reset_index().rename(columns={'index':'run_accession'})
+    frac=frac.loc[:,~frac.columns.duplicated()]  # drop any duplicated run_accession col
+else:
+    frac=None
 FRAC=[c for c in (frac.columns if frac is not None else []) if c!='run_accession']
 
 d=cov[cov.cohort==COHORT].merge(pres,on='run_accession').dropna(subset=FLOOR+['y']).reset_index(drop=True)
@@ -59,6 +65,7 @@ obs=float(np.mean([oof_resid(d,PRES,FLOOR,y,s) for s in range(10)]))
 null=np.array([float(np.mean([oof_resid(d,PRES,FLOOR,rng.permutation(y),s) for s in range(3)])) for _ in range(200)])
 res["presented_resid_obs10"]=round(obs,3); res["presented_resid_perm_p"]=round(float((np.sum(null>=obs)+1)/201),3)
 res["presented_resid_null_mean"]=round(float(null.mean()),3)
+np.save(f"results/eval/presented_perm_null_{COHORT}.npy", null)   # real null draws for the figure
 # rich-basis disentangling frame (if fractions available)
 if frac is not None:
     dr=d.merge(frac,on='run_accession',how='left')
