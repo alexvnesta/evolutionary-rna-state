@@ -1,0 +1,16 @@
+{
+  "check1_composition_withinGide_n14": {
+    "floor": 0.7708,
+    "floor+purity": 0.75,
+    "floor+nonref": 0.4792,
+    "floor+nonref+purity": 0.4583,
+    "nonref_only": 0.3125,
+    "nonref+purity": 0.3125
+  },
+  "check2_secondary_LOCO_gide_riaz_n19": {
+    "floor": 0.7,
+    "nonref": 0.3889,
+    "floor_plus_nonref": 0.3889,
+    "note": "Hugo (n=2) dropped as too small to hold out; underpowered probe, not primary"
+  }
+}

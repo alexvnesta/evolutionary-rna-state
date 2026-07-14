@@ -113,3 +113,9 @@ pipelines/te_erv/vendor/build/
 # arcasHLA, STAR, TRUST4, etc. Rebuilt from source/release tarballs, not committed.
 # Kept on disk for the running pipelines; excluded from git.
 tools/
+
+# --- Compiled binaries & runtime libs (rebuilt from source, not committed) ---
+pipelines/bin/STAR-arm64-native
+pipelines/lib/
+# --- Tool run logs ---
+logs/
