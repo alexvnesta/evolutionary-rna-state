@@ -20,15 +20,18 @@ tumor's antigenic RNA state" — the antigenicity layers are barely instrumented
 
 ## 2. Exists as code but NOT run at cohort scale (demo/synthetic only)
 
-All six antigen/burden callers below have a caller + a test, but the tests are
+The four **antigen** callers below have a caller + a test, but the tests are
 **synthetic-fixture logic checks** (peptide generation + MHC binding logic is
-validated; no real per-sample burdens computed). None is in the matrix.
+validated; no real per-sample burdens computed). **None of the four antigen
+callers is in the matrix.** (The two burden callers `intron_retention.py` and
+`rna_editing.py` DO already feed the matrix — see §1 table — and are listed here
+only for completeness of the caller inventory.)
 
-- `fusion_antigen.py` (.nf) — Arriba-based fusion detection + fusion-junction neoepitopes. Closest to ready.
-- `splicing_neoantigen.py` (.nf) — SNAF-style neojunction peptides.
-- `snv_indel_neoantigen.py` — SNV/indel neoantigens (missense + frameshift).
-- `te_antigen.py` (.nf) — TE/ERV-derived peptides (needs locus-level TE).
-- `intron_retention.py`, `rna_editing.py` — cohort versions already feed the matrix.
+- `fusion_antigen.py` (.nf) — Arriba-based fusion detection + fusion-junction neoepitopes. Closest to ready. NOT in matrix.
+- `splicing_neoantigen.py` (.nf) — SNAF-style neojunction peptides. NOT in matrix.
+- `snv_indel_neoantigen.py` — SNV/indel neoantigens (missense + frameshift). NOT in matrix.
+- `te_antigen.py` (.nf) — TE/ERV-derived peptides (needs locus-level TE). NOT in matrix.
+- `intron_retention.py`, `rna_editing.py` — burden callers, cohort versions ALREADY feed the matrix (in powered test).
 
 Dependency gap for all neoantigen arms: **HLA typing exists for only 16/106
 samples** (`results/hla/`, the editing subset). Cohort neoantigen burden needs
@@ -72,7 +75,9 @@ only **3 arms**, all consuming the shared spine BAM:
 
 Its own header states splicing (rnasplice) and fusion (rnafusion) are run as
 **separate nf-core entries** (they re-align from FASTQ, not the spine BAM) and
-merged later by `build_nonref_matrix.py`. Neoantigen / ORF / circRNA / APOBEC /
+merged later by the matrix builder (`build_powered_n106_matrix.py`; the pipeline
+header refers to a `build_nonref_matrix.py`, which is not present in the repo —
+the powered builder is the actual merge script). Neoantigen / ORF / circRNA / APOBEC /
 repertoire / junction-annotation are **not in any pipeline** — standalone
 callers or absent.
 
