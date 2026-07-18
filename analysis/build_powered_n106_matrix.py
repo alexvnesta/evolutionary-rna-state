@@ -3,21 +3,26 @@
 build_powered_n106_matrix.py
 
 Powered n=106 two-block test builder — READY TO RUN once the external-box
-alignment lands the remaining 66 BAMs.
+alignment finishes all 106 BAMs (83/106 done as of 2026-07-18, ~23 remaining).
 
 Context (see docs/PROJECT_STATUS.md):
   - The first-look two-block test was negative but underpowered (n=14-25); the
     immune floor itself fails to transfer LOCO at that n, so cross-cohort is not
-    yet interpretable.
-  - Alignment of the remaining 66 samples (39 gide2019 + 27 hugo2016; all 10
-    riaz already done) is being driven on the external box, output at
-    /data/rnaseq_cohort/hisat2/, keyed on run_accession.
-  - This script joins the 66-feature non-reference matrix (25 samples currently
-    banked in nonref_matrix_cohort.parquet — NOT 40; 40 is the count of aligned
-    BAMs on disk, a superset that the feature callers have not all been run on
-    yet — plus the newly-aligned samples as their caller outputs land) to the
-    pre-assembled immune-floor covariates (phase2_covariates_n106.parquet, keyed
-    on run_accession) and runs the pre-registered floor-vs-nonref eval.
+    yet interpretable. The powered n=106 test exists precisely because the
+    outcome is NOT yet known — do not prejudge it.
+  - APPROACH PIVOTED (2026-07-12): the Nextflow/HISAT2 plan failed validation and
+    was replaced by a UNIFORM full-cohort direct-STAR re-alignment of all 106.
+    BAMs land at **/data/rnaseq_cohort/star_salmon/*.markdup.sorted.bam** on the
+    box (NOT hisat2/), aligner is **STAR** (not HISAT2), keyed on run_accession.
+    Because the aligner changed, the non-reference feature callers must be re-run
+    on the STAR BAMs for uniformity — the old 25-sample HISAT2-derived
+    nonref_matrix_cohort.parquet is a TEMPLATE for the schema only, NOT a set of
+    rows to reuse (mixing HISAT2- and STAR-derived features would confound the
+    aligner with cohort). Rebuild all 106 feature rows from the STAR BAMs.
+  - This script joins the 66-feature non-reference matrix (rebuilt from the STAR
+    BAMs, keyed on run_accession) to the pre-assembled immune-floor covariates
+    (phase2_covariates_n106.parquet, keyed on run_accession) and runs the
+    pre-registered floor-vs-nonref eval.
 
 It is an OBSERVER/downstream script: it reads feature outputs, it does NOT run
 alignment or touch the run's dirs. Run it from wherever the per-sample
@@ -114,14 +119,31 @@ def parse_sample_features(sample_dir: Path, feature_cols: list[str]) -> dict | N
 
 def build_nonref_matrix(existing: pd.DataFrame,
                         new_feature_root: Path,
-                        manifest: pd.DataFrame) -> pd.DataFrame:
-    """Combine the existing feature rows with newly-aligned samples' feature rows."""
+                        manifest: pd.DataFrame,
+                        reuse_existing_rows: bool = False) -> pd.DataFrame:
+    """
+    Build the n=106 non-reference feature matrix from per-sample caller outputs.
+
+    IMPORTANT (post-STAR-pivot default): `reuse_existing_rows=False`. The `existing`
+    matrix is used ONLY for its column schema (the 66 feature names / TE families),
+    NOT to seed rows — because those rows were derived from HISAT2 BAMs and the
+    n=106 run is a uniform STAR re-alignment. Reusing HISAT2-derived rows alongside
+    STAR-derived rows would confound the aligner with the cohort/response split.
+    Every row here is rebuilt from `new_feature_root` (the STAR-BAM feature outputs).
+
+    Set `reuse_existing_rows=True` only if the feature callers were genuinely run on
+    the SAME aligner's BAMs as `new_feature_root` (e.g. a pure resumption, not a
+    pivot) — then samples already present in `existing` are kept and only missing
+    ones are parsed.
+    """
     feature_cols = list(existing.columns)
-    rows = {acc: existing.loc[acc].to_dict() for acc in existing.index}
-    added, skipped = 0, 0
+    rows = {}
+    if reuse_existing_rows:
+        rows = {acc: existing.loc[acc].to_dict() for acc in existing.index}
+    added, skipped, reused = 0, 0, len(rows)
     for acc in manifest["run_accession"]:
         if acc in rows:
-            continue  # already have it (the 40 subset)
+            continue
         sdir = new_feature_root / acc
         if not sdir.exists():
             skipped += 1
@@ -135,8 +157,8 @@ def build_nonref_matrix(existing: pd.DataFrame,
     mat = pd.DataFrame.from_dict(rows, orient="index")
     mat = mat.reindex(columns=feature_cols)
     mat.index.name = "run_accession"
-    print(f"[matrix] existing={len(existing)} added={added} skipped={skipped} total={len(mat)}",
-          file=sys.stderr)
+    print(f"[matrix] reused={reused} added={added} skipped={skipped} total={len(mat)} "
+          f"(reuse_existing_rows={reuse_existing_rows})", file=sys.stderr)
     return mat
 
 
@@ -306,9 +328,15 @@ def two_block_eval(mat: pd.DataFrame, cov: pd.DataFrame,
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--existing-matrix", required=True, type=Path,
-                    help="nonref_matrix_cohort.parquet (the 40/n<=25 template, keyed on run_accession)")
+                    help="nonref_matrix_cohort.parquet — used for COLUMN SCHEMA ONLY (its 25 rows "
+                         "are HISAT2-derived and are NOT reused post-STAR-pivot unless --reuse-existing-rows)")
     ap.add_argument("--new-feature-root", required=True, type=Path,
-                    help="dir holding per-sample non-ref caller outputs, one subdir per run_accession")
+                    help="dir of per-sample non-ref caller outputs (run on the STAR BAMs at "
+                         "/data/rnaseq_cohort/star_salmon/), one subdir per run_accession")
+    ap.add_argument("--reuse-existing-rows", action="store_true",
+                    help="reuse rows from --existing-matrix instead of rebuilding them (ONLY safe if "
+                         "those rows came from the SAME aligner as --new-feature-root; default off "
+                         "because the n=106 run is a STAR re-alignment, existing rows are HISAT2)")
     ap.add_argument("--covariates", required=True, type=Path,
                     help="phase2_covariates_n106.parquet (immune floor + y + cohort, keyed on run_accession)")
     ap.add_argument("--manifest", required=True, type=Path,
@@ -321,7 +349,8 @@ def main():
     manifest = pd.read_csv(args.manifest)
     cov = pd.read_parquet(args.covariates)
 
-    mat = build_nonref_matrix(existing, args.new_feature_root, manifest)
+    mat = build_nonref_matrix(existing, args.new_feature_root, manifest,
+                              reuse_existing_rows=args.reuse_existing_rows)
     mat.to_parquet(args.out_matrix)
 
     # immune floor = the standard composition/inflammation features in the covariates
