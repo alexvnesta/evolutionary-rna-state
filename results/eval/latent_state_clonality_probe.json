@@ -1,0 +1,78 @@
+{
+  "question": "Does an RNA representation reconstruct the tumor's evolutionary (clonal) state? \u2014 the hypothesis's literal claim, tumor-intrinsic by construction",
+  "representation": "scVI 30-dim latent (primary); HVG-2000 expression PCA-20 (robustness)",
+  "targets": [
+    "heterogeneity_index",
+    "subclonal_fraction",
+    "mean_ccf"
+  ],
+  "method": "within-cohort multi-seed 5-fold CV RidgeCV, OOF Spearman, 500x cohort-internal permutation null",
+  "caveat_cross_cohort": "Hugo (purity-corrected CCF) and Riaz (purity-free VAF proxy) clonality are NOT cross-cohort comparable (see _joins_provenance.json); Gide has no WES. Reported within-cohort only.",
+  "results": {
+    "hugo_n27": {
+      "heterogeneity_index": {
+        "oof_rho": -0.27,
+        "perm_p": 0.489,
+        "null": -0.225
+      },
+      "subclonal_fraction": {
+        "oof_rho": -0.316,
+        "perm_p": 0.631,
+        "null": -0.21
+      },
+      "mean_ccf": {
+        "oof_rho": -0.298,
+        "perm_p": 0.611,
+        "null": -0.202
+      }
+    },
+    "hugo_ex_lowpurity_n21": {
+      "heterogeneity_index": {
+        "oof_rho": -0.374,
+        "perm_p": 0.689,
+        "null": -0.234
+      },
+      "subclonal_fraction": {
+        "oof_rho": -0.267,
+        "perm_p": 0.475,
+        "null": -0.223
+      },
+      "mean_ccf": {
+        "oof_rho": -0.322,
+        "perm_p": 0.643,
+        "null": -0.212
+      }
+    },
+    "riaz_n33": {
+      "heterogeneity_index": {
+        "oof_rho": -0.23,
+        "perm_p": 0.535,
+        "null": -0.182
+      },
+      "subclonal_fraction": {
+        "oof_rho": -0.422,
+        "perm_p": 0.932,
+        "null": -0.196
+      },
+      "mean_ccf": {
+        "oof_rho": -0.391,
+        "perm_p": 0.876,
+        "null": -0.193
+      }
+    }
+  },
+  "best_single_dim_insample": {
+    "hugo_n27": {
+      "het": 0.41,
+      "subcl": 0.355,
+      "ccf": 0.263
+    },
+    "riaz_exprPC_n10_only": {
+      "het": 0.515,
+      "subcl": 0.745,
+      "ccf": 0.648
+    }
+  },
+  "verdict": "NULL. OOF Spearman equals the permutation null for every target in both cohorts (all perm_p 0.47-0.93, ns). Best-single-dim in-sample correlations sit at the multiple-comparison null (HUGO) or are on n=10 only (RIAZ expr-PC). The RNA representation does not reconstruct the tumor's clonal/evolutionary state at achievable within-cohort n (21-33). This is the FIRST powered test of the hypothesis's literal 'reconstruct the evolutionary state' claim (prior probe was n=10, |rho|<0.19).",
+  "power_note": "n=21-33 within cohort; a true |rho|~0.5 would be detectable, |rho|~0.3 marginal. A powered cross-cohort test requires recomputing Hugo+Riaz clonality with one pipeline (PyClone-VI + FACETS/ASCAT) so they are comparable, plus WES on Gide (absent)."
+}

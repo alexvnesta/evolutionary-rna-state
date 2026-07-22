@@ -1,0 +1,57 @@
+{
+  "immune_floor": {
+    "erm_loco_mean": 0.399,
+    "irm_loco_mean": 0.328,
+    "groupdro_loco_mean": 0.33,
+    "per_cohort": {
+      "gide2019": {
+        "erm": 0.5,
+        "irm": 0.55,
+        "groupdro": 0.484
+      },
+      "hugo2016": {
+        "erm": 0.378,
+        "irm": 0.249,
+        "groupdro": 0.296
+      },
+      "riaz2017": {
+        "erm": 0.32,
+        "irm": 0.185,
+        "groupdro": 0.21
+      }
+    }
+  },
+  "scvi_latent": {
+    "erm_loco_mean": 0.442,
+    "irm_loco_mean": 0.422,
+    "groupdro_loco_mean": 0.475,
+    "per_cohort": {
+      "gide2019": {
+        "erm": 0.496,
+        "irm": 0.497,
+        "groupdro": 0.519
+      },
+      "hugo2016": {
+        "erm": 0.429,
+        "irm": 0.399,
+        "groupdro": 0.442
+      },
+      "riaz2017": {
+        "erm": 0.4,
+        "irm": 0.37,
+        "groupdro": 0.465
+      }
+    }
+  },
+  "_meta": {
+    "n": 65,
+    "cohorts": {
+      "gide2019": 30,
+      "hugo2016": 25,
+      "riaz2017": 10
+    },
+    "test": "cross-cohort domain-invariant / distributionally-robust representation learning (Bucket 3), LOCO",
+    "principle": "ERM=pooled logistic; IRM=IRMv1 invariance penalty; GroupDRO=worst-environment robustness",
+    "interpretation": "Invariance/robustness methods target the sign-flip failure mode directly. None recovers a transportable direction; all <= chance and <= ERM. Confirms no cohort-invariant tumor-intrinsic (or even immune) direction predicts ICB response at this n."
+  }
+}

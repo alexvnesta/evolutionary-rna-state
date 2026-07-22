@@ -62,14 +62,41 @@ raw reads, with additional public IO cohorts inventoried for extension:
 See `docs/DATA_INVENTORY.md` and `data/dataset_summary.csv` for the full table,
 access levels, and accessions.
 
-## Results & submission
+## Status: ARCHIVED (2026-07-22) — rigorous negative with mechanism
 
-**Headline:** A de-novo antigen-presentation axis built from raw-read RNA
-separates ICB responders *within* a cohort (LOO AUROC 0.87) but is
-infiltration-driven (ρ=0.77) and does **not** transfer to two independent
-held-out cohorts (Riaz 0.36, Hugo 0.58). Standard WES-derived neoantigen
-proxies show no structure beyond mutational burden (perm p=0.78) in a
-well-powered test. A rigorous cautionary negative that sharpens the hypothesis.
+**Start here if reopening:** [`docs/ARCHIVE_SUMMARY_20260722.md`](docs/ARCHIVE_SUMMARY_20260722.md)
+— one-page re-entry point (verdict, what's dead, the one live path, where everything lives).
+
+**Final verdict.** The strong form of the hypothesis is **falsified on bulk RNA-seq**: no
+tumor-intrinsic RNA representation carries ICB-response information beyond immune composition,
+and the immune signal itself does not transport across cohorts. The response-tracking signal in
+bulk tumor RNA *is* immune composition. This is a cautionary negative **with a mechanism**: the
+tumor-intrinsic aberrancy signal is a downstream readout of the inflamed state whose coupling to
+inflammation **sign-flips across cohorts**, which is why cross-cohort transfer (LOCO) fails.
+
+**Diligence is complete on bulk.** Tested and null: WES antigen quantity (416 samples, perm
+p=0.78); every non-reference RNA burden layer; four frozen sequence encoders (EVA, HyenaDNA,
+Evo2, Caduceus — 4/4); trained MLP and deep VAE (scVI); a structure-aware dsRNA/viral-mimicry
+feature (novel: decoupled from interferon, yet still null); the literal latent-state-vs-clonality
+claim (first powered test, n≈60); and the domain-invariance method class (IRM/GroupDRO) built
+specifically for the sign-flip. The remaining open path is **substrate, not method**: a matched
+single-cell malignant compartment, not more architecture search.
+
+**Dated deliverables (2026-07-22):**
+
+| Deliverable | Path |
+|---|---|
+| **Archive summary (re-entry point)** | [`docs/ARCHIVE_SUMMARY_20260722.md`](docs/ARCHIVE_SUMMARY_20260722.md) |
+| Deep-learning diligence ledger | [`docs/DEEP_LEARNING_DILIGENCE_20260722.md`](docs/DEEP_LEARNING_DILIGENCE_20260722.md) |
+| dsRNA viral-mimicry + latent-state results | [`docs/RESULTS_VIRALMIMICRY_LATENTSTATE_20260722.md`](docs/RESULTS_VIRALMIMICRY_LATENTSTATE_20260722.md) |
+| Gemini-exchange assessment | [`docs/GEMINI_ASSESSMENT_20260722.md`](docs/GEMINI_ASSESSMENT_20260722.md) |
+| Pre-registered fine-tune design (next step) | [`docs/EXPERIMENT_SCOPE_FINETUNE_RAWREADS_20260722.md`](docs/EXPERIMENT_SCOPE_FINETUNE_RAWREADS_20260722.md) |
+
+<details><summary>Earlier submission deliverables (pre-archival, superseded headline)</summary>
+
+An earlier de-novo antigen-presentation axis separated responders *within* a cohort (LOO AUROC
+0.87) but was infiltration-driven (ρ=0.77) and did not transfer (Riaz 0.36, Hugo 0.58) — the
+first signature of the non-transportability now explained mechanistically above.
 
 | Deliverable | Path |
 |---|---|
@@ -85,6 +112,8 @@ well-powered test. A rigorous cautionary negative that sharpens the hypothesis.
 | Demo video script + slideshow | [`docs/VIDEO_SCRIPT.md`](docs/VIDEO_SCRIPT.md), `results/demo_slideshow.gif` |
 | Daily-refresh skill | `evolutionary-rna-state-refresh` (published; trigger with "run the refresh") |
 | BioArt figure skill | `niaid-bioart` (published; search + download NIH BioArt illustrations for figures) |
+
+</details>
 
 ## Provenance & compliance
 

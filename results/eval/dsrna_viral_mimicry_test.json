@@ -1,0 +1,148 @@
+{
+  "feature": "IR-Alu dsRNA structural signature (ViennaRNA duplexfold \u0394G of 286,368 proximal opposite-strand Alu pairs in 20,380 expressed gene bodies; per-sample = expression-weighted structure signature, global-expression residualized)",
+  "n_pairs_scored": 286368,
+  "n_genes": 20380,
+  "gene_set_size": 2038,
+  "two_block": {
+    "gide2019": {
+      "n": 30,
+      "R": 16,
+      "N": 14,
+      "floor": [
+        0.8533482142857143,
+        0.013707247426646429
+      ],
+      "dsrna": [
+        0.30959821428571427,
+        0.04997757389289108
+      ],
+      "combined": [
+        0.854,
+        0.017
+      ]
+    },
+    "hugo2016": {
+      "n": 25,
+      "R": 13,
+      "N": 12,
+      "floor": [
+        0.676602564102564,
+        0.039122262797757885
+      ],
+      "dsrna": [
+        0.33141025641025645,
+        0.07365102871137144
+      ],
+      "combined": [
+        0.638,
+        0.05
+      ]
+    },
+    "_note": "combined block: dsRNA feature residualized on global expression FOLD-CONTAINED (train-fit only), matching the 'alone' arm and the documented method."
+  },
+  "perm_null": {
+    "gide2019": {
+      "obs_resid_auroc": 0.4,
+      "null_mean": 0.46,
+      "perm_p": 0.643
+    },
+    "hugo2016": {
+      "obs_resid_auroc": 0.514,
+      "null_mean": 0.459,
+      "perm_p": 0.363
+    }
+  },
+  "ifn_diagnostic": {
+    "dsrna_sig_resid": {
+      "ALL": {
+        "n": 68,
+        "rho_ifng": -0.09,
+        "p_ifng": 0.465,
+        "rho_gep": -0.08,
+        "p_gep": 0.516
+      },
+      "gide2019": {
+        "n": 30,
+        "rho_ifng": -0.045,
+        "p_ifng": 0.814,
+        "rho_gep": -0.088,
+        "p_gep": 0.644
+      },
+      "hugo2016": {
+        "n": 25,
+        "rho_ifng": -0.248,
+        "p_ifng": 0.233,
+        "rho_gep": -0.178,
+        "p_gep": 0.395
+      },
+      "riaz2017": {
+        "n": 10,
+        "rho_ifng": -0.139,
+        "p_ifng": 0.701,
+        "rho_gep": 0.042,
+        "p_gep": 0.907
+      }
+    },
+    "dsrna_struct_spec": {
+      "ALL": {
+        "n": 68,
+        "rho_ifng": -0.061,
+        "p_ifng": 0.623,
+        "rho_gep": -0.07,
+        "p_gep": 0.57
+      },
+      "gide2019": {
+        "n": 30,
+        "rho_ifng": -0.116,
+        "p_ifng": 0.542,
+        "rho_gep": -0.063,
+        "p_gep": 0.741
+      },
+      "hugo2016": {
+        "n": 25,
+        "rho_ifng": -0.194,
+        "p_ifng": 0.353,
+        "rho_gep": -0.21,
+        "p_gep": 0.314
+      },
+      "riaz2017": {
+        "n": 10,
+        "rho_ifng": 0.261,
+        "p_ifng": 0.467,
+        "rho_gep": 0.139,
+        "p_gep": 0.701
+      }
+    },
+    "dsrna_sig": {
+      "ALL": {
+        "n": 68,
+        "rho_ifng": -0.009,
+        "p_ifng": 0.945,
+        "rho_gep": -0.067,
+        "p_gep": 0.585
+      },
+      "gide2019": {
+        "n": 30,
+        "rho_ifng": 0.05,
+        "p_ifng": 0.795,
+        "rho_gep": 0.026,
+        "p_gep": 0.89
+      },
+      "hugo2016": {
+        "n": 25,
+        "rho_ifng": -0.142,
+        "p_ifng": 0.497,
+        "rho_gep": -0.195,
+        "p_gep": 0.349
+      },
+      "riaz2017": {
+        "n": 10,
+        "rho_ifng": 0.164,
+        "p_ifng": 0.651,
+        "rho_gep": -0.079,
+        "p_gep": 0.829
+      }
+    }
+  },
+  "verdict": "dsRNA structure feature is DECOUPLED from immune floor (all |rho|<0.26 vs IFN/GEP, none sig) yet carries NO independent ICB signal (alone AUROC 0.31/0.33; residualized-on-floor 0.40/0.51, perm p 0.64/0.36; combined \u0394 ~0). Distinct from prior non-ref nulls which were immune-composition proxies; this is a decoupled-but-null structural feature."
+}

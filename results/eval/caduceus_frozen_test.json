@@ -1,0 +1,31 @@
+{
+  "model": "caduceus-ps_seqlen-1k_d_model-256_n_layer-4",
+  "test": "frozen embedding-delta (spliced-contig), per-sample top-200 aggregation, same substrate as Evo2",
+  "gide_n11": {
+    "n": 11,
+    "R": 5,
+    "N": 6,
+    "floor_auroc": 1.0,
+    "caduceus_alone": 0.671,
+    "floor_plus_cad": 0.979,
+    "delta": -0.021,
+    "resid_on_floor_auroc": 0.502,
+    "perm_p": 0.47,
+    "null_mean": 0.494
+  },
+  "note": "Frozen Caduceus embedding-delta, both n=11 (1153-junction set) and powered n=30 (1864-junction gide32 set matching the Evo2 within-Gide test). Powered result: floor+Caduceus \u0394 -0.026, residual-on-floor AUROC 0.343 perm_p 0.860 \u2014 essentially identical to Evo2 within-Gide (residual 0.354 perm_p 0.83). Frozen-encoder verdict is now 4-for-4 null (EVA, HyenaDNA, Evo2, Caduceus) against the immune floor, powered.",
+  "gide_n30_powered": {
+    "n": 30,
+    "R": 16,
+    "N": 14,
+    "substrate": "gide32_top200, 1864 junctions \u2014 matches Evo2 within-Gide test exactly",
+    "floor_auroc": 0.852,
+    "caduceus_alone": 0.684,
+    "floor_plus_cad": 0.826,
+    "delta": -0.026,
+    "resid_on_floor_auroc": 0.343,
+    "perm_p": 0.86,
+    "null_mean": 0.471,
+    "modal_job": "c7e1f54b-77cb-4681-9565-9a5136763a91 (A100, 80s)"
+  }
+}
